@@ -1,3 +1,7 @@
+# 정리 자료 링크
+
+https://tis-blog.vercel.app/blog/books/making-clean-architecture/1
+
 # 1주차 
 ## 이민의민족 - 쿠폰서비스 
 이스트소프트는 최근, 배달서비스를 런칭했습니다. 해당 서비스는 MSA로 나뉘어있고 이 중 쿠폰서버의 아키텍처를 구성해야 한다는 미션을 받았습니다.
