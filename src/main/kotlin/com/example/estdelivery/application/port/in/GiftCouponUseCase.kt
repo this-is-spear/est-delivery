@@ -4,9 +4,9 @@ import com.example.estdelivery.application.port.`in`.command.GiftCouponCommand
 
 interface GiftCouponUseCase {
     /**
-     * 선물 할 쿠폰과 선물 할 회원의 이름을 입력해 쿠폰을 나눠준다.
+     * 선물 할 쿠폰과 선물 할 회원의 식별자를 입력해 쿠폰을 나눠준다.
      *
-     * 1. 이름으로 회원을 조회한다.
+     * 1. 식별자로 회원을 조회한다.
      * 2. 선물 할 쿠폰을 조회한다.
      * 3. 선물받을 회원 쿠폰북에 해당 쿠폰을 추가한다.
      * 4. 선물한 회원 쿠폰북에 해당 쿠폰을 삭제한다.
