@@ -17,9 +17,7 @@ class GiftCouponService(
     private val transactionArea: TransactionArea,
     private val getReceiver: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.receiverId).toMember() },
     private val getSender: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.senderId).toMember() },
-    private val getCoupon: (GiftCouponCommand) -> Coupon = {
-        loadCouponStatePort.findByCouponId(it.couponId).toCoupon()
-    },
+    private val getCoupon: (GiftCouponCommand) -> Coupon = { loadCouponStatePort.findByCouponId(it.couponId).toCoupon() },
     private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(MemberState.from(it)) },
 ) : GiftCouponUseCase {
     /**
