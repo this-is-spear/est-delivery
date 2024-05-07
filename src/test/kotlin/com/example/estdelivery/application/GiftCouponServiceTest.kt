@@ -63,7 +63,7 @@ class GiftCouponServiceTest : FreeSpec({
         val senderId = 2L
         val giftCouponCommand = GiftCouponCommand(1L, senderId, receiverId)
 
-        every { loadMemberStatePort.findById(senderId) } returns MemberState("주는자",  listOf(), senderId)
+        every { loadMemberStatePort.findById(senderId) } returns MemberState("주는자", listOf(), senderId)
         every { loadMemberStatePort.findById(receiverId) } returns MemberState("받는자", listOf(), receiverId)
 
         // when &  then
