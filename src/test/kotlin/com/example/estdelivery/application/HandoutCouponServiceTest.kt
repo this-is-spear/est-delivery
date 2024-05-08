@@ -7,6 +7,7 @@ import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.fixture.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContain
@@ -19,6 +20,7 @@ class HandoutCouponServiceTest : FreeSpec({
     val loadCouponStatePort = mockk<LoadCouponStatePort>()
     val updateShopOwnerStatePort = mockk<UpdateShopOwnerStatePort>()
     val createCouponStatePort = mockk<CreateCouponStatePort>()
+    val transactionArea = TransactionArea()
 
     lateinit var handoutCouponService: HandoutCouponService
 
@@ -27,7 +29,8 @@ class HandoutCouponServiceTest : FreeSpec({
             loadShopOwnerStatePort,
             loadCouponStatePort,
             updateShopOwnerStatePort,
-            createCouponStatePort
+            createCouponStatePort,
+            transactionArea
         )
     }
 

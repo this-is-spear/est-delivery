@@ -5,6 +5,7 @@ import com.example.estdelivery.application.port.out.*
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.domain.fixture.나눠준_쿠폰을_가진_삼건창
 import com.example.estdelivery.domain.fixture.나눠준_쿠폰이_있는_프리퍼
@@ -25,6 +26,7 @@ class UseCouponServiceTest : FreeSpec({
     val loadCouponStatePort = mockk<LoadCouponStatePort>()
     val updateMemberStatePort = mockk<UpdateMemberStatePort>()
     val updateShopOwnerStatePort = mockk<UpdateShopOwnerStatePort>()
+    val transactionArea = TransactionArea()
 
     lateinit var useCouponService: UseCouponService
 
@@ -34,7 +36,8 @@ class UseCouponServiceTest : FreeSpec({
             loadCouponStatePort,
             loadShopOwnerStatePort,
             updateMemberStatePort,
-            updateShopOwnerStatePort
+            updateShopOwnerStatePort,
+            transactionArea
         )
     }
 

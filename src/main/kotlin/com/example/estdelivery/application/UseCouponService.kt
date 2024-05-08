@@ -5,6 +5,7 @@ import com.example.estdelivery.application.port.`in`.command.UseCouponCommand
 import com.example.estdelivery.application.port.out.*
 import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.member.Member
 import com.example.estdelivery.domain.shop.ShopOwner
@@ -15,6 +16,7 @@ class UseCouponService(
     loadShopOwnerStatePort: LoadShopOwnerStatePort,
     updateMemberStatePort: UpdateMemberStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
+    private val transactionArea: TransactionArea,
     private val getMember: (UseCouponCommand) -> Member = { loadMemberStatePort.findById(it.memberId).toMember() },
     private val getCoupon: (UseCouponCommand) -> Coupon = { loadCouponStatePort.findById(it.couponId).toCoupon() },
     private val getShopOwner: (UseCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findByShopId(it.shopId).toShopOwner() },
@@ -30,14 +32,16 @@ class UseCouponService(
      * @param useCouponCommand 사용할 쿠폰 정보와 회원 정보
      */
     override fun useCoupon(useCouponCommand: UseCouponCommand) {
-        val member = getMember(useCouponCommand)
-        val coupon = getCoupon(useCouponCommand)
-        val shopOwner = getShopOwner(useCouponCommand)
+        transactionArea.run {
+            val member = getMember(useCouponCommand)
+            val coupon = getCoupon(useCouponCommand)
+            val shopOwner = getShopOwner(useCouponCommand)
 
-        member.useCoupon(coupon)
-        shopOwner.receiveCoupon(coupon)
+            member.useCoupon(coupon)
+            shopOwner.receiveCoupon(coupon)
 
-        updateMember(member)
-        updateShopOwner(shopOwner)
+            updateMember(member)
+            updateShopOwner(shopOwner)
+        }
     }
 }

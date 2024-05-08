@@ -8,6 +8,7 @@ import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.shop.ShopOwner
 
@@ -16,6 +17,7 @@ class HandoutCouponService(
     loadCouponStatePort: LoadCouponStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     createCouponStatePort: CreateCouponStatePort,
+    private val transactionArea: TransactionArea,
     private val getShopOwner: (HandoutCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findById(it.shopOwnerId).toShopOwner() },
     private val notExistCoupon: (Long) -> Boolean = { loadCouponStatePort.exists(it).not() },
     private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it).toCoupon() },
@@ -30,10 +32,12 @@ class HandoutCouponService(
      * @param handoutCouponCommand 나눠줄 쿠폰 정보와 가게 주인 정보
      */
     override fun handoutCoupon(handoutCouponCommand: HandoutCouponCommand) {
-        val shopOwner = getShopOwner(handoutCouponCommand)
-        val handoutCoupon: Coupon = getHandoutCoupon(handoutCouponCommand)
-        shopOwner.handOutCouponToRoyalCustomersInShop(handoutCoupon)
-        updateShopOwner(shopOwner)
+        transactionArea.run {
+            val shopOwner = getShopOwner(handoutCouponCommand)
+            val handoutCoupon: Coupon = getHandoutCoupon(handoutCouponCommand)
+            shopOwner.handOutCouponToRoyalCustomersInShop(handoutCoupon)
+            updateShopOwner(shopOwner)
+        }
     }
 
     private fun getHandoutCoupon(handoutCouponCommand: HandoutCouponCommand): Coupon {

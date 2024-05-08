@@ -5,6 +5,7 @@ import com.example.estdelivery.application.port.`in`.command.IssuePublishedCoupo
 import com.example.estdelivery.application.port.out.*
 import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.member.Member
 import com.example.estdelivery.domain.shop.ShopOwner
@@ -15,6 +16,7 @@ class IssuePublishedCouponService(
     loadShopOwnerStatePort: LoadShopOwnerStatePort,
     updateMemberStatePort: UpdateMemberStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
+    private val transactionArea: TransactionArea,
     private val getMember: (IssuePublishedCouponCommand) -> Member = { loadMemberStatePort.findById(it.memberId).toMember() },
     private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = { loadCouponStatePort.findByCouponId(it.couponId).toCoupon() },
     private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findByShopId(it.shopId).toShopOwner() },
@@ -31,12 +33,14 @@ class IssuePublishedCouponService(
      * @param issuePublishedCouponCommand 발행된 쿠폰을 사용자에게 발급하는 명령
      */
     override fun issuePublishedCoupon(issuePublishedCouponCommand: IssuePublishedCouponCommand) {
-        val member = getMember(issuePublishedCouponCommand)
-        val shopOwner = getShopOwner(issuePublishedCouponCommand)
-        val coupon = getCoupon(issuePublishedCouponCommand)
-        member.receiveCoupon(shopOwner.issuePublishedCouponInShop(coupon))
-        updateMember(member)
-        addRoyalCustomers(shopOwner, member)
+        transactionArea.run {
+            val member = getMember(issuePublishedCouponCommand)
+            val shopOwner = getShopOwner(issuePublishedCouponCommand)
+            val coupon = getCoupon(issuePublishedCouponCommand)
+            member.receiveCoupon(shopOwner.issuePublishedCouponInShop(coupon))
+            updateMember(member)
+            addRoyalCustomers(shopOwner, member)
+        }
     }
 
     private fun addRoyalCustomers(
