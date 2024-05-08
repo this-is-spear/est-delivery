@@ -5,15 +5,21 @@ import com.example.estdelivery.application.port.`in`.command.IssuePublishedCoupo
 import com.example.estdelivery.application.port.out.*
 import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.member.Member
 import com.example.estdelivery.domain.shop.ShopOwner
 
 class IssuePublishedCouponService(
-    private val loadMemberStatePort: LoadMemberStatePort,
-    private val loadCouponStatePort: LoadCouponStatePort,
-    private val loadShopOwnerStatePort: LoadShopOwnerStatePort,
-    private val updateMemberStatePort: UpdateMemberStatePort,
-    private val updateShopOwnerStatePort: UpdateShopOwnerStatePort,
+    loadMemberStatePort: LoadMemberStatePort,
+    loadCouponStatePort: LoadCouponStatePort,
+    loadShopOwnerStatePort: LoadShopOwnerStatePort,
+    updateMemberStatePort: UpdateMemberStatePort,
+    updateShopOwnerStatePort: UpdateShopOwnerStatePort,
+    private val getMember: (IssuePublishedCouponCommand) -> Member = { loadMemberStatePort.findById(it.memberId).toMember() },
+    private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = { loadCouponStatePort.findByCouponId(it.couponId).toCoupon() },
+    private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findByShopId(it.shopId).toShopOwner() },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(MemberState.from(it)) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
 ) : IssuePublishedCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.
@@ -39,20 +45,7 @@ class IssuePublishedCouponService(
     ) {
         if (!shopOwner.showRoyalCustomersInShop().contains(member)) {
             shopOwner.addRoyalCustomersInShop(member)
-            updateShopOwnerStatePort.update(ShopOwnerState.from(shopOwner))
+            updateShopOwner(shopOwner)
         }
     }
-
-    private fun updateMember(member: Member) {
-        updateMemberStatePort.update(MemberState.from(member))
-    }
-
-    private fun getShopOwner(issuePublishedCouponCommand: IssuePublishedCouponCommand) =
-        loadShopOwnerStatePort.findByShopId(issuePublishedCouponCommand.shopId).toShopOwner()
-
-    private fun getCoupon(issuePublishedCouponCommand: IssuePublishedCouponCommand) =
-        loadCouponStatePort.findByCouponId(issuePublishedCouponCommand.couponId).toCoupon()
-
-    private fun getMember(issuePublishedCouponCommand: IssuePublishedCouponCommand) =
-        loadMemberStatePort.findById(issuePublishedCouponCommand.memberId).toMember()
 }
