@@ -6,6 +6,7 @@ import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.CouponBook
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import com.example.estdelivery.domain.fixture.게시할_쿠폰
@@ -23,6 +24,7 @@ class PublishCouponServiceTest : FreeSpec({
     val loadShopOwnerPort = mockk<LoadShopOwnerStatePort>()
     val createCouponStatePort = mockk<CreateCouponStatePort>()
     val updateShopOwnerStatePort = mockk<UpdateShopOwnerStatePort>()
+    val transactionArea = TransactionArea()
 
     lateinit var publishCouponService: PublishCouponService
 
@@ -30,7 +32,8 @@ class PublishCouponServiceTest : FreeSpec({
         publishCouponService = PublishCouponService(
             loadShopOwnerPort,
             createCouponStatePort,
-            updateShopOwnerStatePort
+            updateShopOwnerStatePort,
+            transactionArea
         )
     }
 

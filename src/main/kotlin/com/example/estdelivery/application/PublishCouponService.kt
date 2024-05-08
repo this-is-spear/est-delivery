@@ -7,6 +7,7 @@ import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.shop.ShopOwner
 
@@ -14,6 +15,7 @@ class PublishCouponService(
     loadShopOwnerPort: LoadShopOwnerStatePort,
     createCouponStatePort: CreateCouponStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
+    private val transactionArea: TransactionArea,
     private val findShopOwner: (PublishCouponCommand) -> ShopOwner = { loadShopOwnerPort.findById(it.shopOwnerId).toShopOwner() },
     private val createCoupon: (PublishCouponCommand) -> Coupon = { createCouponStatePort.create(CouponState.from(it.coupon)).toCoupon() },
     private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
@@ -27,9 +29,11 @@ class PublishCouponService(
      * @param publishCouponCommand 게시할 쿠폰 정보와 가게 주인 정보
      */
     override fun publishCoupon(publishCouponCommand: PublishCouponCommand) {
-        val shopOwner = findShopOwner(publishCouponCommand)
-        val publishedCoupon = createCoupon(publishCouponCommand)
-        shopOwner.publishCouponInShop(publishedCoupon)
-        updateShopOwner(shopOwner)
+        transactionArea.run {
+            val shopOwner = findShopOwner(publishCouponCommand)
+            val publishedCoupon = createCoupon(publishCouponCommand)
+            shopOwner.publishCouponInShop(publishedCoupon)
+            updateShopOwner(shopOwner)
+        }
     }
 }
