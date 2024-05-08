@@ -5,6 +5,7 @@ import com.example.estdelivery.application.port.out.*
 import com.example.estdelivery.application.port.out.state.CouponState
 import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.port.out.state.ShopOwnerState
+import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import com.example.estdelivery.domain.fixture.게시된_쿠폰이_있는_프리퍼
 import com.example.estdelivery.domain.fixture.새로_창업해서_아무것도_없는_프리퍼
@@ -29,6 +30,7 @@ class IssuePublishedCouponServiceTest : FreeSpec({
     val loadMemberStatePort = mockk<LoadMemberStatePort>()
     val updateMemberStatePort = mockk<UpdateMemberStatePort>()
     val updateShopOwnerStatePort = mockk<UpdateShopOwnerStatePort>()
+    val transactionArea = TransactionArea()
 
     lateinit var issuePublishedCouponUseCase: IssuePublishedCouponService
 
@@ -38,7 +40,8 @@ class IssuePublishedCouponServiceTest : FreeSpec({
             loadCouponStatePort,
             loadShopOwnerStatePort,
             updateMemberStatePort,
-            updateShopOwnerStatePort
+            updateShopOwnerStatePort,
+            transactionArea
         )
     }
 
