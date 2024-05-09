@@ -2,6 +2,7 @@ package com.example.estdelivery.domain.shop
 
 import com.example.estdelivery.domain.fixture.게시할_쿠폰
 import com.example.estdelivery.domain.fixture.나눠줄_쿠폰
+import com.example.estdelivery.domain.fixture.이벤트_쿠폰
 import com.example.estdelivery.domain.member.Member
 import com.example.estdelivery.domain.member.UnusedCouponBook
 import io.kotest.core.spec.style.FreeSpec
@@ -65,5 +66,16 @@ class ShopOwnerTest : FreeSpec({
         // then
         가게_주인.showRoyalCustomersInShop().contains(홍길동) shouldBe true
         가게_주인.showRoyalCustomersInShop().contains(김철수) shouldBe true
+    }
+
+    "이벤트 쿠폰을 가게에 발행한다." {
+        // given
+        val 가게_주인 = ShopOwner(프리퍼)
+
+        // when
+        가게_주인.issueEventCoupon(이벤트_쿠폰)
+
+        // then
+        가게_주인.showShop().showEventCoupons().contains(이벤트_쿠폰) shouldBe true
     }
 })
