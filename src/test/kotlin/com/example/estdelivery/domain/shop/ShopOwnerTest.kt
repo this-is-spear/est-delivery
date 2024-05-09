@@ -8,7 +8,14 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 class ShopOwnerTest : FreeSpec({
-    val 프리퍼 = Shop(PublishedCouponBook(), HandOutCouponBook(), UsedCouponBook(), RoyalCustomers(), "프리퍼")
+    val 프리퍼 = Shop(
+        PublishedCouponBook(),
+        PublishedEventCouponBook(),
+        HandOutCouponBook(),
+        UsedCouponBook(),
+        RoyalCustomers(),
+        "프리퍼"
+    )
 
     "모든 회원에게 쿠폰을 나눠줄 수 있다." {
         // given
@@ -17,7 +24,16 @@ class ShopOwnerTest : FreeSpec({
         val 김철수 = Member(2, "김철수", UnusedCouponBook())
         단골_리스트.addRoyalCustomers(홍길동, 김철수)
 
-        val 프리퍼_가게_사장님 = ShopOwner(Shop(PublishedCouponBook(), HandOutCouponBook(), UsedCouponBook(), 단골_리스트, "프리퍼"))
+        val 프리퍼_가게_사장님 = ShopOwner(
+            Shop(
+                PublishedCouponBook(),
+                PublishedEventCouponBook(),
+                HandOutCouponBook(),
+                UsedCouponBook(),
+                단골_리스트,
+                "프리퍼"
+            )
+        )
 
         // when
         프리퍼_가게_사장님.handOutCouponToRoyalCustomersInShop(나눠줄_쿠폰)

@@ -72,6 +72,7 @@ class PublishCouponServiceTest : FreeSpec({
         )
         val 이미_쿠폰을_게시한_프리퍼 = Shop(
             PublishedCouponBook(CouponBook(listOf(게시된_고정_할인_쿠폰))),
+            PublishedEventCouponBook(),
             HandOutCouponBook(CouponBook(listOf())),
             UsedCouponBook(CouponBook(listOf())),
             RoyalCustomers(listOf()),
