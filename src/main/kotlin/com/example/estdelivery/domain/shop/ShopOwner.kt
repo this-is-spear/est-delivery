@@ -14,7 +14,9 @@ class ShopOwner(
     fun showHandOutCouponInShop() = shop.showHandOutCoupon()
     fun showPublishedCouponsInShop() = shop.showPublishedCoupons()
     fun showRoyalCustomersInShop() = shop.showRoyalCustomers()
+    fun showEventCouponInShop() = shop.showEventCoupons()
     fun showShop() = shop
     fun showUsedCouponBook() = shop.showUsedCoupons()
     fun issuePublishedCouponInShop(coupon: Coupon) = shop.issueCoupon(coupon)
+    fun issueEventCouponInShop(coupon: Coupon) = shop.issueEventCoupon(coupon)
 }

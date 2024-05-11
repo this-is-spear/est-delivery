@@ -6,6 +6,7 @@ import com.example.estdelivery.domain.member.Member
 
 class Shop(
     private val publishedCoupons: PublishedCouponBook,
+    private val publishedEventCoupons: PublishedEventCouponBook,
     private val handOutCouponBook: HandOutCouponBook,
     private val usedCouponBook: UsedCouponBook,
     private val royalCustomers: RoyalCustomers,
@@ -17,7 +18,14 @@ class Shop(
     }
 
     fun receiveCoupon(coupon: Coupon) {
-        usedCouponBook.useCoupon(coupon, CouponBook(publishedCoupons + handOutCouponBook))
+        usedCouponBook.useCoupon(
+            coupon,
+            CouponBook(
+                publishedCoupons.showPublishedCoupons()
+                        + handOutCouponBook.showHandOutCoupon()
+                        + publishedEventCoupons.showEventCoupons()
+            )
+        )
     }
 
     fun addRoyalCustomers(vararg members: Member) {
@@ -37,7 +45,11 @@ class Shop(
 
     fun showUsedCoupons() = usedCouponBook.showUsedCoupons()
 
+    fun showEventCoupons() = publishedEventCoupons.showEventCoupons()
+
     fun issueCoupon(coupon: Coupon) = publishedCoupons.issueCoupon(coupon)
+
+    fun issueEventCoupon(coupon: Coupon) = publishedEventCoupons.issueEventCoupon(coupon)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -50,6 +62,3 @@ class Shop(
 
     override fun hashCode() = id?.hashCode() ?: 0
 }
-
-private operator fun PublishedCouponBook.plus(coupon: HandOutCouponBook) =
-    showPublishedCoupons() + coupon.showHandOutCoupon()

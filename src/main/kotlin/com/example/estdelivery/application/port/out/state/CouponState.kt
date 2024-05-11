@@ -2,11 +2,9 @@ package com.example.estdelivery.application.port.out.state
 
 import com.example.estdelivery.application.port.out.state.CouponStateAmountType.FIX
 import com.example.estdelivery.application.port.out.state.CouponStateAmountType.RATE
-import com.example.estdelivery.application.port.out.state.CouponStateType.HANDOUT
-import com.example.estdelivery.application.port.out.state.CouponStateType.PUBLISHED
+import com.example.estdelivery.application.port.out.state.CouponStateType.*
 import com.example.estdelivery.domain.coupon.Coupon
-import com.example.estdelivery.domain.coupon.CouponType.IS_HAND_OUT
-import com.example.estdelivery.domain.coupon.CouponType.IS_PUBLISHED
+import com.example.estdelivery.domain.coupon.CouponType.*
 
 data class CouponState(
     private val name: String,
@@ -46,6 +44,7 @@ data class CouponState(
             return when (coupon.couponType) {
                 IS_PUBLISHED -> PUBLISHED
                 IS_HAND_OUT -> HANDOUT
+                IS_EVENT -> EVENT
             }
         }
 
@@ -60,5 +59,6 @@ data class CouponState(
     private fun getCouponType(type: CouponStateType) = when (type) {
         PUBLISHED -> IS_PUBLISHED
         HANDOUT -> IS_HAND_OUT
+        EVENT -> IS_EVENT
     }
 }

@@ -25,11 +25,11 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly("com.h2database:h2")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
     testImplementation("org.assertj", "assertj-core", "3.22.0")
     testImplementation("io.kotest", "kotest-runner-junit5", "5.4.0")
+    testImplementation("io.kotest", "kotest-property", "5.4.0")
     testImplementation("io.mockk:mockk:1.13.9")
 }
 
