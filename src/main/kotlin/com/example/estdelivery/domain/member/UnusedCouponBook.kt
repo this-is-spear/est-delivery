@@ -4,19 +4,19 @@ import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.coupon.CouponBook
 
 class UnusedCouponBook(
-    private val unUsedCouponBook: CouponBook = CouponBook(),
+    private val unUsedCoupons: CouponBook = CouponBook(),
 ) {
     fun showUnusedCoupons(): List<Coupon> {
-        return unUsedCouponBook.showCoupons()
+        return unUsedCoupons.showCoupons()
     }
 
     fun addUnusedCoupon(coupon: Coupon) {
-        require(unUsedCouponBook.showCoupons().contains(coupon).not()) { "이미 존재하는 쿠폰입니다." }
-        unUsedCouponBook.addCoupon(coupon)
+        require(unUsedCoupons.showCoupons().contains(coupon).not()) { "이미 존재하는 쿠폰입니다." }
+        unUsedCoupons.addCoupon(coupon)
     }
 
     fun removeUsedCoupon(coupon: Coupon) {
-        require(unUsedCouponBook.showCoupons().contains(coupon)) { "존재하지 않는 쿠폰입니다." }
-        unUsedCouponBook.deleteCoupon(coupon)
+        require(unUsedCoupons.showCoupons().contains(coupon)) { "존재하지 않는 쿠폰입니다." }
+        unUsedCoupons.deleteCoupon(coupon)
     }
 }
