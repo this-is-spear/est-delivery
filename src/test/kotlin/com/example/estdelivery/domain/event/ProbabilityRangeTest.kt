@@ -2,7 +2,6 @@ package com.example.estdelivery.domain.event
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.shouldBe
 
 class ProbabilityRangeTest : FreeSpec({
 
