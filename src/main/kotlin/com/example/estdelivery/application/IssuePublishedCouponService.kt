@@ -3,8 +3,6 @@ package com.example.estdelivery.application
 import com.example.estdelivery.application.port.`in`.IssuePublishedCouponUseCase
 import com.example.estdelivery.application.port.`in`.command.IssuePublishedCouponCommand
 import com.example.estdelivery.application.port.out.*
-import com.example.estdelivery.application.port.out.state.MemberState
-import com.example.estdelivery.application.port.out.state.ShopOwnerState
 import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.member.Member
@@ -17,11 +15,11 @@ class IssuePublishedCouponService(
     updateMemberStatePort: UpdateMemberStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
-    private val getMember: (IssuePublishedCouponCommand) -> Member = { loadMemberStatePort.findById(it.memberId).toMember() },
-    private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = { loadCouponStatePort.findByCouponId(it.couponId).toCoupon() },
-    private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findByShopId(it.shopId).toShopOwner() },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(MemberState.from(it)) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
+    private val getMember: (IssuePublishedCouponCommand) -> Member = { loadMemberStatePort.findById(it.memberId) },
+    private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = { loadCouponStatePort.findById(it.couponId) },
+    private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findByShopId(it.shopId) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
 ) : IssuePublishedCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.

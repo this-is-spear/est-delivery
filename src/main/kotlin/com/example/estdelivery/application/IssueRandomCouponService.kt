@@ -3,9 +3,6 @@ package com.example.estdelivery.application
 import com.example.estdelivery.application.port.`in`.IssueEventCouponUseCase
 import com.example.estdelivery.application.port.`in`.command.IssueEventCouponCommand
 import com.example.estdelivery.application.port.out.*
-import com.example.estdelivery.application.port.out.state.CouponState
-import com.example.estdelivery.application.port.out.state.MemberState
-import com.example.estdelivery.application.port.out.state.ShopOwnerState
 import com.example.estdelivery.application.port.out.state.UpdateRandomCouponIssueEventState
 import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
@@ -23,19 +20,17 @@ class IssueRandomCouponService(
     createCouponStatePort: CreateCouponStatePort,
     private val transactionArea: TransactionArea,
     private val getMember: (IssueEventCouponCommand) -> Member = {
-        loadMemberStatePort.findById(it.memberId).toMember()
+        loadMemberStatePort.findById(it.memberId)
     },
     private val getCouponIssueRandomCouponIssueEvent: (IssueEventCouponCommand) -> RandomCouponIssueEvent = {
         loadRandomCouponIssueEventStatePort.findById(it.eventId).toEvent()
     },
     private val getShopOwner: (IssueEventCouponCommand) -> ShopOwner = {
-        loadShopOwnerStatePort.findByShopId(it.shopId).toShopOwner()
+        loadShopOwnerStatePort.findByShopId(it.shopId)
     },
-    private val createCoupon: (Coupon) -> Coupon = {
-        createCouponStatePort.create(CouponState.from(it)).toCoupon()
-    },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(MemberState.from(it)) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
+    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
     private val updateEvent: (RandomCouponIssueEvent) -> Unit = {
         updateRandomCouponIssueEventStatePort.update(UpdateRandomCouponIssueEventState.from(it))
     }

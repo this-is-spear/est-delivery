@@ -4,11 +4,11 @@ import com.example.estdelivery.application.port.`in`.command.GiftCouponCommand
 import com.example.estdelivery.application.port.out.LoadCouponStatePort
 import com.example.estdelivery.application.port.out.LoadMemberStatePort
 import com.example.estdelivery.application.port.out.UpdateMemberStatePort
-import com.example.estdelivery.application.port.out.state.CouponState
-import com.example.estdelivery.application.port.out.state.CouponStateAmountType
-import com.example.estdelivery.application.port.out.state.CouponStateType
-import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.utils.TransactionArea
+import com.example.estdelivery.domain.coupon.Coupon
+import com.example.estdelivery.domain.coupon.CouponType
+import com.example.estdelivery.domain.fixture.이건창
+import com.example.estdelivery.domain.fixture.일건창
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
@@ -33,22 +33,22 @@ class GiftCouponServiceTest : FreeSpec({
 
     "회원은 주변 회원에게 쿠폰을 선물할 수 있다" - {
         // given
-        val receiverId = 3L
-        val senderId = 2L
-        val giftCouponCommand = GiftCouponCommand(1L, senderId, receiverId)
-        val couponState = CouponState(
+        val coupon = Coupon.FixDiscountCoupon(
+            1000,
             "쿠폰",
             "나눠줄 쿠폰",
-            CouponStateAmountType.FIX,
-            CouponStateType.HANDOUT,
-            1000,
+            CouponType.IS_PUBLISHED,
             1L
         )
-        val receiverCouponBook = listOf(couponState.toCoupon())
+        val 주는자 = 이건창().apply {
+            receiveCoupon(coupon)
+        }
+        val 받는자 = 일건창()
+        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
-        every { loadMemberStatePort.findById(senderId) } returns MemberState("주는자", receiverCouponBook, senderId)
-        every { loadMemberStatePort.findById(receiverId) } returns MemberState("받는자", listOf(), receiverId)
-        every { loadCouponStatePort.findByCouponId(giftCouponCommand.couponId) } returns couponState
+        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findById(받는자.id) } returns 받는자
+        every { loadCouponStatePort.findById(giftCouponCommand.couponId) } returns coupon
         every { updateMemberStatePort.update(any()) } returns Unit
 
         // when &  then
@@ -59,12 +59,12 @@ class GiftCouponServiceTest : FreeSpec({
 
     "쿠폰이 존재해야 하고 사용하지 않은 쿠폰이어야 한다." {
         // given
-        val receiverId = 3L
-        val senderId = 2L
-        val giftCouponCommand = GiftCouponCommand(1L, senderId, receiverId)
+        val 주는자 = 이건창()
+        val 받는자 = 일건창()
+        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
-        every { loadMemberStatePort.findById(senderId) } returns MemberState("주는자", listOf(), senderId)
-        every { loadMemberStatePort.findById(receiverId) } returns MemberState("받는자", listOf(), receiverId)
+        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findById(받는자.id) } returns 받는자
 
         // when &  then
         shouldThrow<IllegalArgumentException> {
@@ -74,21 +74,20 @@ class GiftCouponServiceTest : FreeSpec({
 
     "동일한 회원이어서는 안된다." {
         // given
-        val receiverId = 3L
-        val senderId = 3L
-        val giftCouponCommand = GiftCouponCommand(1L, senderId, receiverId)
-        val couponState = CouponState(
+        val coupon = Coupon.FixDiscountCoupon(
+            1000,
             "쿠폰",
             "나눠줄 쿠폰",
-            CouponStateAmountType.FIX,
-            CouponStateType.HANDOUT,
-            1000,
+            CouponType.IS_PUBLISHED,
             1L
         )
-        val receiverCouponBook = listOf(couponState.toCoupon())
+        val 주는자 = 이건창().apply {
+            receiveCoupon(coupon)
+        }
+        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 주는자.id)
 
-        every { loadMemberStatePort.findById(senderId) } returns MemberState("주는자", receiverCouponBook, senderId)
-        every { loadMemberStatePort.findById(receiverId) } returns MemberState("받는자", listOf(), receiverId)
+        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
 
         // when &  then
         shouldThrow<Exception> {

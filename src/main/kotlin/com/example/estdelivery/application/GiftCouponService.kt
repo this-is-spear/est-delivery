@@ -5,7 +5,6 @@ import com.example.estdelivery.application.port.`in`.command.GiftCouponCommand
 import com.example.estdelivery.application.port.out.LoadCouponStatePort
 import com.example.estdelivery.application.port.out.LoadMemberStatePort
 import com.example.estdelivery.application.port.out.UpdateMemberStatePort
-import com.example.estdelivery.application.port.out.state.MemberState
 import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.member.Member
@@ -15,10 +14,10 @@ class GiftCouponService(
     loadCouponStatePort: LoadCouponStatePort,
     updateMemberStatePort: UpdateMemberStatePort,
     private val transactionArea: TransactionArea,
-    private val getReceiver: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.receiverId).toMember() },
-    private val getSender: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.senderId).toMember() },
-    private val getCoupon: (GiftCouponCommand) -> Coupon = { loadCouponStatePort.findByCouponId(it.couponId).toCoupon() },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(MemberState.from(it)) },
+    private val getReceiver: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.receiverId) },
+    private val getSender: (GiftCouponCommand) -> Member = { loadMemberStatePort.findById(it.senderId) },
+    private val getCoupon: (GiftCouponCommand) -> Coupon = { loadCouponStatePort.findById(it.couponId) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
 ) : GiftCouponUseCase {
     /**
      * 선물 할 쿠폰과 선물 할 회원의 식별자를 입력해 쿠폰을 나눠준다.

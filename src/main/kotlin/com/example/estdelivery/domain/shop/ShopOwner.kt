@@ -19,4 +19,17 @@ class ShopOwner(
     fun showUsedCouponBook() = shop.showUsedCoupons()
     fun issuePublishedCouponInShop(coupon: Coupon) = shop.issueCoupon(coupon)
     fun issueEventCouponInShop(coupon: Coupon) = shop.issueEventCoupon(coupon)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ShopOwner
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
 }

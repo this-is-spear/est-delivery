@@ -23,6 +23,14 @@ class ShopEntity(
 
     @ManyToMany
     @JoinTable(
+        name = "publish_event_coupon_book",
+        joinColumns = [JoinColumn(name = "shop_id")],
+        inverseJoinColumns = [JoinColumn(name = "coupon_id")]
+    )
+    val publishedEventCouponBook: List<CouponEntity>,
+
+    @ManyToMany
+    @JoinTable(
         name = "handout_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],
         inverseJoinColumns = [JoinColumn(name = "coupon_id")]

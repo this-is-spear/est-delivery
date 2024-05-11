@@ -50,6 +50,7 @@ private fun getCouponStateType(coupon: Coupon): CouponStateType {
     return when (coupon.couponType) {
         CouponType.IS_PUBLISHED -> CouponStateType.PUBLISHED
         CouponType.IS_HAND_OUT -> CouponStateType.HANDOUT
+        CouponType.IS_EVENT -> CouponStateType.EVENT
     }
 }
 
@@ -63,4 +64,5 @@ private fun getCouponStateAmountType(coupon: Coupon): CouponStateAmountType {
 private fun getCouponType(type: CouponStateType) = when (type) {
     CouponStateType.PUBLISHED -> CouponType.IS_PUBLISHED
     CouponStateType.HANDOUT -> CouponType.IS_HAND_OUT
+    CouponStateType.EVENT -> CouponType.IS_EVENT
 }

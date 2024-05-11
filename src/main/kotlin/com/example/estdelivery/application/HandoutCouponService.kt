@@ -6,8 +6,6 @@ import com.example.estdelivery.application.port.out.CreateCouponStatePort
 import com.example.estdelivery.application.port.out.LoadCouponStatePort
 import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
-import com.example.estdelivery.application.port.out.state.CouponState
-import com.example.estdelivery.application.port.out.state.ShopOwnerState
 import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.shop.ShopOwner
@@ -18,11 +16,11 @@ class HandoutCouponService(
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     createCouponStatePort: CreateCouponStatePort,
     private val transactionArea: TransactionArea,
-    private val getShopOwner: (HandoutCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findById(it.shopOwnerId).toShopOwner() },
+    private val getShopOwner: (HandoutCouponCommand) -> ShopOwner = { loadShopOwnerStatePort.findById(it.shopOwnerId) },
     private val notExistCoupon: (Long) -> Boolean = { loadCouponStatePort.exists(it).not() },
-    private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it).toCoupon() },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
-    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(CouponState.from(it)).toCoupon() },
+    private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
 ) : HandoutCouponUseCase {
     /**
      * 1. 가게 주인 정보를 조회한다.

@@ -5,8 +5,6 @@ import com.example.estdelivery.application.port.`in`.command.PublishCouponComman
 import com.example.estdelivery.application.port.out.CreateCouponStatePort
 import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
 import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
-import com.example.estdelivery.application.port.out.state.CouponState
-import com.example.estdelivery.application.port.out.state.ShopOwnerState
 import com.example.estdelivery.application.utils.TransactionArea
 import com.example.estdelivery.domain.coupon.Coupon
 import com.example.estdelivery.domain.shop.ShopOwner
@@ -16,9 +14,9 @@ class PublishCouponService(
     createCouponStatePort: CreateCouponStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
-    private val findShopOwner: (PublishCouponCommand) -> ShopOwner = { loadShopOwnerPort.findById(it.shopOwnerId).toShopOwner() },
-    private val createCoupon: (PublishCouponCommand) -> Coupon = { createCouponStatePort.create(CouponState.from(it.coupon)).toCoupon() },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(ShopOwnerState.from(it)) },
+    private val findShopOwner: (PublishCouponCommand) -> ShopOwner = { loadShopOwnerPort.findById(it.shopOwnerId) },
+    private val createCoupon: (PublishCouponCommand) -> Coupon = { createCouponStatePort.create(it.coupon) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
 ) : PublishCouponUseCase {
     /**
      * 1. 가게 주인 정보를 조회한다.
