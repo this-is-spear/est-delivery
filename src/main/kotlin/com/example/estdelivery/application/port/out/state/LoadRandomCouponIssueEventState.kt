@@ -4,7 +4,7 @@ import com.example.estdelivery.domain.event.DiscountAmountProbability
 import com.example.estdelivery.domain.event.EventDiscountType
 import com.example.estdelivery.domain.event.RandomCouponIssueEvent
 
-class RandomCouponIssueEventState(
+class LoadRandomCouponIssueEventState(
     private val id: Long,
     private val description: String,
     private val isProgress: Boolean,

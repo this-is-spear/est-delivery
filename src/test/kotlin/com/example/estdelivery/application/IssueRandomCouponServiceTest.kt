@@ -25,7 +25,7 @@ class IssueRandomCouponServiceTest : FreeSpec({
     val createCouponStatePort = mockk<CreateCouponStatePort>()
     val transactionArea = TransactionArea()
     val loadRandomCouponIssueEventStatePort = mockk<LoadRandomCouponIssueEventStatePort>()
-    val updateEventStatePort = mockk<UpdateEventStatePort>()
+    val updateRandomCouponIssueEventStatePort = mockk<UpdateRandomCouponIssueEventStatePort>()
 
     lateinit var issueRandomCouponService: IssueRandomCouponService
 
@@ -36,7 +36,7 @@ class IssueRandomCouponServiceTest : FreeSpec({
             loadShopOwnerStatePort,
             updateMemberStatePort,
             updateShopOwnerStatePort,
-            updateEventStatePort,
+            updateRandomCouponIssueEventStatePort,
             createCouponStatePort,
             transactionArea
         )
@@ -48,7 +48,7 @@ class IssueRandomCouponServiceTest : FreeSpec({
         eventId = 1L
     )
     val 가게주인 = ShopOwner(새로_창업해서_아무것도_없는_프리퍼(), 2L)
-    val 랜덤_쿠폰_뽑기_이벤트_상태 = RandomCouponIssueEventState(
+    val 랜덤_쿠폰_뽑기_이벤트_상태 = LoadRandomCouponIssueEventState(
         id = 1L,
         description = "고정 할인 쿠폰 제공 이벤트",
         isProgress = true,
@@ -85,7 +85,7 @@ class IssueRandomCouponServiceTest : FreeSpec({
         every { loadShopOwnerStatePort.findByShopId(1L) } returns ShopOwnerState.from(가게주인)
         every { updateMemberStatePort.update(capture(상태가_변경된_회원)) } returns Unit
         every { updateShopOwnerStatePort.update(capture(상태가_변경된_가게주인)) } returns Unit
-        every { updateEventStatePort.update(capture(상태가_변경된_이벤트)) } returns Unit
+        every { updateRandomCouponIssueEventStatePort.update(capture(상태가_변경된_이벤트)) } returns Unit
         every { createCouponStatePort.create(any()) } returns 생성된_쿠폰_상태
 
         issueRandomCouponService.issueEventCoupon(이벤트_쿠폰_발급)
