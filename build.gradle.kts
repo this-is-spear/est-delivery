@@ -1,45 +1,69 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.spring") version "1.9.22"
-    kotlin("plugin.jpa") version "1.9.22"
+    id("com.google.osdetector") version "1.7.1"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
 }
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    runtimeOnly("com.h2database:h2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
-    testImplementation("org.assertj", "assertj-core", "3.22.0")
-    testImplementation("io.kotest", "kotest-runner-junit5", "5.4.0")
-    testImplementation("io.kotest", "kotest-property", "5.4.0")
-    testImplementation("io.mockk:mockk:1.13.9")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+allprojects {
+    repositories {
+        mavenCentral()
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+subprojects {
+    apply {
+        plugin("io.spring.dependency-management")
+        plugin("org.springframework.boot")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("com.google.osdetector")
+    }
+
+    group = "com.example.estdelivery"
+    version = "1.0-SNAPSHOT"
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    extra["springCloudVersion"] = "2023.0.1"
+
+    dependencies {
+        // https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
+        if (osdetector.classifier == "osx-aarch_64") {
+            runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.77.Final:${osdetector.classifier}")
+        }
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        runtimeOnly("com.h2database:h2")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.2")
+        testImplementation("org.assertj", "assertj-core", "3.22.0")
+        testImplementation("io.kotest", "kotest-runner-junit5", "5.4.0")
+        testImplementation("io.kotest", "kotest-property", "5.4.0")
+        testImplementation("io.mockk:mockk:1.13.9")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        }
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
+    }
+
+    tasks.test {
+        useJUnitPlatform()
+    }
 }
