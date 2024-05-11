@@ -18,7 +18,14 @@ class Shop(
     }
 
     fun receiveCoupon(coupon: Coupon) {
-        usedCouponBook.useCoupon(coupon, CouponBook(publishedCoupons + handOutCouponBook))
+        usedCouponBook.useCoupon(
+            coupon,
+            CouponBook(
+                publishedCoupons.showPublishedCoupons()
+                        + handOutCouponBook.showHandOutCoupon()
+                        + publishedEventCoupons.showEventCoupons()
+            )
+        )
     }
 
     fun addRoyalCustomers(vararg members: Member) {
@@ -55,6 +62,3 @@ class Shop(
 
     override fun hashCode() = id?.hashCode() ?: 0
 }
-
-private operator fun PublishedCouponBook.plus(coupon: HandOutCouponBook) =
-    showPublishedCoupons() + coupon.showHandOutCoupon()

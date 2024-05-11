@@ -1,9 +1,6 @@
 package com.example.estdelivery.domain.shop
 
-import com.example.estdelivery.domain.fixture.게시되지_않은_쿠폰
-import com.example.estdelivery.domain.fixture.게시할_쿠폰
-import com.example.estdelivery.domain.fixture.나눠주지_않은_쿠폰
-import com.example.estdelivery.domain.fixture.나눠줄_쿠폰
+import com.example.estdelivery.domain.fixture.*
 import com.example.estdelivery.domain.member.Member
 import com.example.estdelivery.domain.member.UnusedCouponBook
 import io.kotest.assertions.throwables.shouldThrow
@@ -49,6 +46,10 @@ class ShopTest : FreeSpec({
 
     "나눠준 쿠폰이 아닌 경우 사용 할 수 없다." {
         shouldThrow<IllegalArgumentException> { 프리퍼.receiveCoupon(나눠주지_않은_쿠폰) }
+    }
+
+    "진행된 이벤트 쿠폰이 아닌 경우 사용 할 수 없다." {
+        shouldThrow<IllegalArgumentException> { 프리퍼.receiveCoupon(이벤트하지_않은_쿠폰) }
     }
 
     "모든 회원에게 쿠폰을 나눠줄 수 있다." {

@@ -22,13 +22,13 @@ class UsedCouponBookTest : FreeSpec({
             .message shouldBe "이미 사용한 쿠폰입니다."
     }
 
-    "게시하지 않는 쿠폰인 경우 사용 할 수 없다." {
+    "존재하지 않는 쿠폰인 경우 사용 할 수 없다." {
         // given
         val usedCouponBook = UsedCouponBook()
         val shopCouponBook = CouponBook()
 
         // then
         shouldThrow<IllegalArgumentException> { usedCouponBook.useCoupon(게시되지_않은_쿠폰, shopCouponBook) }
-            .message shouldBe "게시하거나 나눠주지 않은 쿠폰입니다."
+            .message shouldBe "게시하거나 나눠주지 않았거나 이벤트를 진행하지 않은 쿠폰입니다."
     }
 })
