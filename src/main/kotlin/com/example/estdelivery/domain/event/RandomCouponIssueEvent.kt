@@ -11,9 +11,9 @@ import com.example.estdelivery.domain.member.Member
 class RandomCouponIssueEvent(
     discountAmountProbability: DiscountAmountProbability,
     val id: Long,
-    private val isProgress: Boolean,
-    private val description: String,
-    private val discountType: EventDiscountType,
+    val isProgress: Boolean,
+    val description: String,
+    val discountType: EventDiscountType,
     private val discountAmount: () -> Int = {
         discountAmountProbability.getAmountBetween()
     },
@@ -43,6 +43,8 @@ class RandomCouponIssueEvent(
             )
         }
     }
+
+    fun showParticipatedMembers(): List<Member> = participatedMembers
 
     private fun addParticipatedMember(member: Member) {
         participatedMembers = participatedMembers + member
