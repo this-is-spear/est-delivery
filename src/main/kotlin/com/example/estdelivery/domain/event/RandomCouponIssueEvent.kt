@@ -11,14 +11,22 @@ import com.example.estdelivery.domain.member.Member
 class RandomCouponIssueEvent(
     discountAmountProbability: DiscountAmountProbability,
     val id: Long,
+    private val isProgress: Boolean,
     private val description: String,
     private val discountType: EventDiscountType,
     private val discountAmount: () -> Int = {
         discountAmountProbability.getAmountBetween()
     },
-    private val participatedMembers: List<Member> = emptyList(),
+    private var participatedMembers: List<Member> = emptyList(),
 ) {
-    fun createCoupon(): Coupon {
+    init {
+        require(isProgress) { "진행 중인 이벤트가 아닙니다." }
+    }
+
+    fun participateCreateCouponEvent(member: Member): Coupon {
+        require(ensureParticipatedMember(member)) { "이미 참여한 사용자입니다." }
+        addParticipatedMember(member)
+
         return when (discountType) {
             RATE -> RateDiscountCoupon(
                 discountRate = discountAmount(),
@@ -36,6 +44,9 @@ class RandomCouponIssueEvent(
         }
     }
 
-    fun addParticipatedMember(member: Member) = participatedMembers + member
-    fun alreadyParticipatedMember(member: Member) = participatedMembers.contains(member)
+    private fun addParticipatedMember(member: Member) {
+        participatedMembers = participatedMembers + member
+    }
+
+    private fun ensureParticipatedMember(member: Member) = !participatedMembers.contains(member)
 }

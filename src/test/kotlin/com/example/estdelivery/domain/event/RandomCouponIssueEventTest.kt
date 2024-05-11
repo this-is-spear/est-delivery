@@ -1,48 +1,38 @@
 package com.example.estdelivery.domain.event
 
 import com.example.estdelivery.domain.coupon.Coupon
+import com.example.estdelivery.domain.fixture.랜덤_고정_할인_이벤트
+import com.example.estdelivery.domain.fixture.랜덤_비율_할인_이벤트
+import com.example.estdelivery.domain.fixture.이건창
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.ints.shouldBeInRange
 
 class RandomCouponIssueEventTest : FreeSpec({
-
     "이벤트로 고정 할인 쿠폰을 발급한다." {
-        val event = RandomCouponIssueEvent(
-            DiscountAmountProbability(
-                listOf(
-                    ProbabilityRange(1000, 1500, 0.2),
-                    ProbabilityRange(1600, 2000, 0.3),
-                    ProbabilityRange(2100, 2500, 0.3),
-                    ProbabilityRange(2600, 3000, 0.2),
-                ),
-                DiscountRange(1000, 3000)
-            ),
-            1,
-            "고정 할인 쿠폰 이벤트 시작~",
-            EventDiscountType.FIXED
-        )
-
-        val coupon = event.createCoupon() as Coupon.FixDiscountCoupon
+        val coupon = 랜덤_고정_할인_이벤트().participateCreateCouponEvent(이건창()) as Coupon.FixDiscountCoupon
         coupon.discountAmount shouldBeInRange 1000..3000
     }
 
     "이벤트로 비율 할인 쿠폰을 발급한다." {
-        val event = RandomCouponIssueEvent(
-            DiscountAmountProbability(
-                listOf(
-                    ProbabilityRange(10, 20, 0.2),
-                    ProbabilityRange(21, 30, 0.3),
-                    ProbabilityRange(31, 40, 0.3),
-                    ProbabilityRange(41, 50, 0.2),
-                ),
-                DiscountRange(10, 50)
-            ),
-            1,
-            "비율 할인 쿠폰 이벤트 시작~",
-            EventDiscountType.RATE
-        )
-
-        val coupon = event.createCoupon() as Coupon.RateDiscountCoupon
+        val coupon = 랜덤_비율_할인_이벤트().participateCreateCouponEvent(이건창()) as Coupon.RateDiscountCoupon
         coupon.discountRate shouldBeInRange 10..50
+    }
+
+    "진행중인 이벤트여야 한다." {
+        shouldThrow<IllegalArgumentException> {
+            랜덤_고정_할인_이벤트(isProgress = false)
+        }
+    }
+
+    "이미 발급한 사용자는 발급할 수 없다." {
+        val 랜덤비율할인이벤트 = 랜덤_비율_할인_이벤트()
+        val 동일한_사용자 = 이건창()
+
+        랜덤비율할인이벤트.participateCreateCouponEvent(동일한_사용자)
+
+        shouldThrow<IllegalArgumentException> {
+            랜덤비율할인이벤트.participateCreateCouponEvent(동일한_사용자)
+        }
     }
 })
