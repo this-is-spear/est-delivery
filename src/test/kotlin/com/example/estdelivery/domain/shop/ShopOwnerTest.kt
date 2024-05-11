@@ -73,7 +73,7 @@ class ShopOwnerTest : FreeSpec({
         val 가게_주인 = ShopOwner(프리퍼)
 
         // when
-        가게_주인.issueEventCoupon(이벤트_쿠폰)
+        가게_주인.issueEventCouponInShop(이벤트_쿠폰)
 
         // then
         가게_주인.showShop().showEventCoupons().contains(이벤트_쿠폰) shouldBe true

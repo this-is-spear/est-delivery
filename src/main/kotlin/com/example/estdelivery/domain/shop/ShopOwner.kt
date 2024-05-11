@@ -17,5 +17,5 @@ class ShopOwner(
     fun showShop() = shop
     fun showUsedCouponBook() = shop.showUsedCoupons()
     fun issuePublishedCouponInShop(coupon: Coupon) = shop.issueCoupon(coupon)
-    fun issueEventCoupon(coupon: Coupon) = shop.issueEventCoupon(coupon)
+    fun issueEventCouponInShop(coupon: Coupon) = shop.issueEventCoupon(coupon)
 }
