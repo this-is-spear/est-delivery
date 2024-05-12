@@ -3,12 +3,17 @@ package com.example.estdelivery.event.entity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 
 @Entity
 class ProbabilityRange(
     val min: Int,
     val max: Int,
     val probability: Double,
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    val event: Event? = null,
     @Id
     @GeneratedValue
     val id: Long? = null,
