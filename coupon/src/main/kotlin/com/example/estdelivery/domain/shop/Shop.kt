@@ -22,8 +22,8 @@ class Shop(
             coupon,
             CouponBook(
                 publishedCoupons.showPublishedCoupons() +
-                    handOutCouponBook.showHandOutCoupon() +
-                    publishedEventCoupons.showEventCoupons(),
+                        handOutCouponBook.showHandOutCoupon() +
+                        publishedEventCoupons.showEventCoupons(),
             ),
         )
     }

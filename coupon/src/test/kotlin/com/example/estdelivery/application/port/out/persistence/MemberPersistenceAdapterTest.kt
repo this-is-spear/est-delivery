@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.*
+import java.util.Optional
 
 class MemberPersistenceAdapterTest : FreeSpec({
 
