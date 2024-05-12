@@ -14,7 +14,9 @@ import jakarta.persistence.Table
 @Table(name = "member")
 class MemberEntity(
     var name: String,
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = CouponEntity::class
+    )
     @JoinTable(
         name = "member_coupon_book",
         joinColumns = [JoinColumn(name = "member_id")],
