@@ -1,4 +1,4 @@
-package com.example.estdelivery
+package com.example.estdelivery.member
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -13,35 +13,45 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "shop")
 class ShopEntity(
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = CouponEntity::class
+    )
     @JoinTable(
         name = "publish_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],
         inverseJoinColumns = [JoinColumn(name = "coupon_id")],
     )
     val publishedCouponBook: List<CouponEntity>,
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = CouponEntity::class
+    )
     @JoinTable(
         name = "publish_event_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],
         inverseJoinColumns = [JoinColumn(name = "coupon_id")],
     )
     val publishedEventCouponBook: List<CouponEntity>,
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = CouponEntity::class
+    )
     @JoinTable(
         name = "handout_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],
         inverseJoinColumns = [JoinColumn(name = "coupon_id")],
     )
     var handOutCouponBook: List<CouponEntity>,
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = CouponEntity::class
+    )
     @JoinTable(
         name = "use_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],
         inverseJoinColumns = [JoinColumn(name = "coupon_id")],
     )
     var usedCouponBook: List<CouponEntity>,
-    @ManyToMany
+    @ManyToMany(
+        targetEntity = MemberEntity::class
+    )
     @JoinTable(
         name = "use_coupon_book",
         joinColumns = [JoinColumn(name = "shop_id")],

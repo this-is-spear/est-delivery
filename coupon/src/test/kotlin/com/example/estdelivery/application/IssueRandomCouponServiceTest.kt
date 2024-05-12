@@ -66,14 +66,14 @@ class IssueRandomCouponServiceTest : FreeSpec({
             isProgress = true,
             disCountType = EventDiscountType.FIXED,
             probabilityRanges =
-                DiscountAmountProbability(
-                    listOf(
-                        ProbabilityRange(1000, 1500, 0.5),
-                        ProbabilityRange(1200, 2000, 0.3),
-                        ProbabilityRange(2100, 3000, 0.2),
-                    ),
-                    DiscountRange(1000, 3000),
+            DiscountAmountProbability(
+                listOf(
+                    ProbabilityRange(1000, 1500, 0.5),
+                    ProbabilityRange(1200, 2000, 0.3),
+                    ProbabilityRange(2100, 3000, 0.2),
                 ),
+                DiscountRange(1000, 3000),
+            ),
             participatedMembers = emptyList(),
         )
     val 이벤트_쿠폰 = 이벤트_쿠폰

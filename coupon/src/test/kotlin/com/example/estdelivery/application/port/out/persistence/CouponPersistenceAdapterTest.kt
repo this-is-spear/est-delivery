@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import java.util.*
+import java.util.Optional
 
 class CouponPersistenceAdapterTest : FreeSpec({
     var couponRepository = mockk<CouponRepository>()

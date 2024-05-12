@@ -5,7 +5,9 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     id("com.google.osdetector") version "1.7.1"
     kotlin("jvm") version "1.9.23"
+    kotlin("plugin.allopen") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    kotlin("plugin.jpa") version "1.9.23"
 }
 
 allprojects {
@@ -20,6 +22,8 @@ subprojects {
         plugin("org.springframework.boot")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.jpa")
+        plugin("org.jetbrains.kotlin.plugin.allopen")
         plugin("com.google.osdetector")
     }
 
@@ -65,5 +69,11 @@ subprojects {
 
     tasks.test {
         useJUnitPlatform()
+    }
+
+    allOpen {
+        annotation("jakarta.persistence.Entity")
+        annotation("jakarta.persistence.Embeddable")
+        annotation("jakarta.persistence.MappedSuperclass")
     }
 }

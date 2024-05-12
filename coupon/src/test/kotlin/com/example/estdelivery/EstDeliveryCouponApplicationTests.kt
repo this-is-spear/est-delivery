@@ -6,5 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class EstDeliveryCouponApplicationTests {
     @Test
-    fun contextLoads() {}
+    fun contextLoads() {
+    }
 }
