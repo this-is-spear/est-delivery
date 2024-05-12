@@ -5,6 +5,7 @@ plugins {
 }
 
 group = "com.example.estdelivery.shop"
+version = "1.0-SNAPSHOT"
 
 tasks.withType<Jar> {
     enabled = true
@@ -19,14 +20,9 @@ tasks.contractTest {
     useJUnitPlatform()
 }
 
-tasks.withType<Delete> {
-    doFirst {
-        delete("~/.m2/repository/com/example/estdelivery/shop")
-    }
-}
-
 contracts {
     contractsDslDir.set(file("src/test/resources/contracts"))
     testFramework.set(JUNIT5)
     packageWithBaseClasses.set("com.example.estdelivery.shop")
+    stubsOutputDir.set(file("../contract-stubs"))
 }

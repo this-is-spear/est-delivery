@@ -5,6 +5,7 @@ plugins {
 }
 
 group = "com.example.estdelivery.member"
+version = "1.0-SNAPSHOT"
 
 tasks.withType<Jar> {
     enabled = true
@@ -23,6 +24,7 @@ contracts {
     contractsDslDir.set(file("src/test/resources/contracts"))
     testFramework.set(JUNIT5)
     packageWithBaseClasses.set("com.example.estdelivery.member")
+    stubsOutputDir.set(file("../contract-stubs"))
 }
 
 tasks.withType<Delete> {
