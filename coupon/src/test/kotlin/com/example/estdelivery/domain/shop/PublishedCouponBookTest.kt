@@ -1,5 +1,6 @@
 package com.example.estdelivery.domain.shop
 
+import com.example.estdelivery.coupon.domain.shop.PublishedCouponBook
 import com.example.estdelivery.domain.fixture.게시할_쿠폰
 import com.example.estdelivery.domain.fixture.나눠줄_쿠폰
 import io.kotest.assertions.throwables.shouldThrow

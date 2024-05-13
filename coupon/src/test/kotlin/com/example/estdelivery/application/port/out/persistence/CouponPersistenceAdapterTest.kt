@@ -1,7 +1,7 @@
 package com.example.estdelivery.application.port.out.persistence
 
-import com.example.estdelivery.application.port.out.persistence.mapper.fromCoupon
-import com.example.estdelivery.application.port.out.persistence.repository.CouponRepository
+import com.example.estdelivery.coupon.application.port.out.persistence.mapper.fromCoupon
+import com.example.estdelivery.coupon.application.port.out.persistence.repository.CouponRepository
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import com.example.estdelivery.domain.fixture.게시할_쿠폰
 import io.kotest.assertions.throwables.shouldThrow
@@ -13,11 +13,13 @@ import java.util.Optional
 
 class CouponPersistenceAdapterTest : FreeSpec({
     var couponRepository = mockk<CouponRepository>()
-    var couponPersistenceAdapter = CouponPersistenceAdapter(couponRepository)
+    var couponPersistenceAdapter =
+        com.example.estdelivery.coupon.application.port.out.persistence.CouponPersistenceAdapter(couponRepository)
 
     beforeTest {
         couponRepository = mockk<CouponRepository>()
-        couponPersistenceAdapter = CouponPersistenceAdapter(couponRepository)
+        couponPersistenceAdapter =
+            com.example.estdelivery.coupon.application.port.out.persistence.CouponPersistenceAdapter(couponRepository)
     }
 
     "create" - {
@@ -26,7 +28,9 @@ class CouponPersistenceAdapterTest : FreeSpec({
             val coupon = 게시할_쿠폰
 
             // when
-            every { couponRepository.save(any()) } returns fromCoupon(게시된_고정_할인_쿠폰)
+            every { couponRepository.save(any()) } returns fromCoupon(
+                게시된_고정_할인_쿠폰
+            )
             val createdCoupon = couponPersistenceAdapter.create(coupon)
 
             // then
@@ -48,7 +52,8 @@ class CouponPersistenceAdapterTest : FreeSpec({
     "findById" - {
         "쿠폰을 조회한다." {
             // given
-            val couponEntity = fromCoupon(게시된_고정_할인_쿠폰)
+            val couponEntity =
+                fromCoupon(게시된_고정_할인_쿠폰)
 
             // when
             every { couponRepository.findById(couponEntity.id!!) } returns Optional.of(couponEntity)

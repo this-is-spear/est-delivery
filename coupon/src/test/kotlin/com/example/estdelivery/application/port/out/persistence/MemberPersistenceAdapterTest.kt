@@ -1,7 +1,8 @@
 package com.example.estdelivery.application.port.out.persistence
 
-import com.example.estdelivery.application.port.out.persistence.mapper.fromMember
-import com.example.estdelivery.application.port.out.persistence.repository.MemberRepository
+import com.example.estdelivery.coupon.application.port.out.persistence.MemberPersistenceAdapter
+import com.example.estdelivery.coupon.application.port.out.persistence.mapper.fromMember
+import com.example.estdelivery.coupon.application.port.out.persistence.repository.MemberRepository
 import com.example.estdelivery.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.domain.fixture.일건창
 import io.kotest.assertions.throwables.shouldThrow
@@ -57,7 +58,9 @@ class MemberPersistenceAdapterTest : FreeSpec({
             // when
             member.receiveCoupon(나눠준_비율_할인_쿠폰)
 
-            every { memberRepository.save(any()) } returns fromMember(member)
+            every { memberRepository.save(any()) } returns fromMember(
+                member
+            )
 
             memberPersistenceAdapter.update(member)
 

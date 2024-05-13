@@ -1,8 +1,8 @@
 package com.example.estdelivery.domain.fixture
 
-import com.example.estdelivery.domain.coupon.CouponBook
-import com.example.estdelivery.domain.member.Member
-import com.example.estdelivery.domain.member.UnusedCouponBook
+import com.example.estdelivery.coupon.domain.coupon.CouponBook
+import com.example.estdelivery.coupon.domain.member.Member
+import com.example.estdelivery.coupon.domain.member.UnusedCouponBook
 
 fun 일건창() = Member(1L, "일건창", UnusedCouponBook())
 

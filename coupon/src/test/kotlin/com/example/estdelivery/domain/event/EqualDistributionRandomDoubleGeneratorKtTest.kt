@@ -1,5 +1,7 @@
 package com.example.estdelivery.domain.event
 
+import com.example.estdelivery.coupon.domain.event.generateDouble
+import com.example.estdelivery.coupon.domain.event.generateInt
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.property.checkAll
 

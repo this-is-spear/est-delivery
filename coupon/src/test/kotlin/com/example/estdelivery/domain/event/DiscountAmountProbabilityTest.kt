@@ -1,5 +1,8 @@
 package com.example.estdelivery.domain.event
 
+import com.example.estdelivery.coupon.domain.event.DiscountAmountProbability
+import com.example.estdelivery.coupon.domain.event.DiscountRange
+import com.example.estdelivery.coupon.domain.event.ProbabilityRange
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec

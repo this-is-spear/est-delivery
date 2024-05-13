@@ -1,18 +1,19 @@
 package com.example.estdelivery.application
 
-import com.example.estdelivery.application.port.`in`.command.HandoutCouponCommand
-import com.example.estdelivery.application.port.out.CreateCouponStatePort
-import com.example.estdelivery.application.port.out.LoadCouponStatePort
-import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
-import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
-import com.example.estdelivery.application.utils.TransactionArea
+import com.example.estdelivery.coupon.application.HandoutCouponService
+import com.example.estdelivery.coupon.application.port.`in`.command.HandoutCouponCommand
+import com.example.estdelivery.coupon.application.port.out.CreateCouponStatePort
+import com.example.estdelivery.coupon.application.port.out.LoadCouponStatePort
+import com.example.estdelivery.coupon.application.port.out.LoadShopOwnerStatePort
+import com.example.estdelivery.coupon.application.port.out.UpdateShopOwnerStatePort
+import com.example.estdelivery.coupon.application.utils.TransactionArea
+import com.example.estdelivery.coupon.domain.shop.ShopOwner
 import com.example.estdelivery.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.domain.fixture.나눠준_쿠폰을_가진_삼건창
 import com.example.estdelivery.domain.fixture.나눠줄_쿠폰
 import com.example.estdelivery.domain.fixture.단골이_있는_멋진_프리퍼
 import com.example.estdelivery.domain.fixture.이건창
 import com.example.estdelivery.domain.fixture.일건창
-import com.example.estdelivery.domain.shop.ShopOwner
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.mockk.every
@@ -48,7 +49,11 @@ class HandoutCouponServiceTest : FreeSpec({
         val shopId = 가게.id!!
         val shopOwnerId = 프리퍼_주인.id!!
 
-        val handoutCouponCommand = HandoutCouponCommand(shopOwnerId, shopId, 나눠줄_쿠폰)
+        val handoutCouponCommand = HandoutCouponCommand(
+            shopOwnerId,
+            shopId,
+            나눠줄_쿠폰
+        )
         every { loadShopOwnerStatePort.findById(shopOwnerId) } returns 프리퍼_주인
         every { loadCouponStatePort.exists(any()) } returns false
         every { createCouponStatePort.create(나눠줄_쿠폰) } returns 나눠준_비율_할인_쿠폰
@@ -74,7 +79,11 @@ class HandoutCouponServiceTest : FreeSpec({
 
         val shopId = 가게.id!!
         val shopOwnerId = 프리퍼_주인_상태.id!!
-        val handoutCouponCommand = HandoutCouponCommand(shopOwnerId, shopId, 나눠줄_쿠폰)
+        val handoutCouponCommand = HandoutCouponCommand(
+            shopOwnerId,
+            shopId,
+            나눠줄_쿠폰
+        )
         every { loadShopOwnerStatePort.findById(shopOwnerId) } returns 프리퍼_주인_상태
         every { loadCouponStatePort.exists(any()) } returns false
         every { createCouponStatePort.create(나눠줄_쿠폰) } returns 나눠준_비율_할인_쿠폰

@@ -5,8 +5,14 @@ import com.example.estdelivery.domain.fixture.게시할_쿠폰
 import com.example.estdelivery.domain.fixture.나눠주지_않은_쿠폰
 import com.example.estdelivery.domain.fixture.나눠줄_쿠폰
 import com.example.estdelivery.domain.fixture.이벤트하지_않은_쿠폰
-import com.example.estdelivery.domain.member.Member
-import com.example.estdelivery.domain.member.UnusedCouponBook
+import com.example.estdelivery.coupon.domain.member.Member
+import com.example.estdelivery.coupon.domain.member.UnusedCouponBook
+import com.example.estdelivery.coupon.domain.shop.HandOutCouponBook
+import com.example.estdelivery.coupon.domain.shop.PublishedCouponBook
+import com.example.estdelivery.coupon.domain.shop.PublishedEventCouponBook
+import com.example.estdelivery.coupon.domain.shop.RoyalCustomers
+import com.example.estdelivery.coupon.domain.shop.Shop
+import com.example.estdelivery.coupon.domain.shop.UsedCouponBook
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

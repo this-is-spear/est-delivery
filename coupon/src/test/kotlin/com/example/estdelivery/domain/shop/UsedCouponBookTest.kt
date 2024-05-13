@@ -1,6 +1,7 @@
 package com.example.estdelivery.domain.shop
 
-import com.example.estdelivery.domain.coupon.CouponBook
+import com.example.estdelivery.coupon.domain.coupon.CouponBook
+import com.example.estdelivery.coupon.domain.shop.UsedCouponBook
 import com.example.estdelivery.domain.fixture.게시되지_않은_쿠폰
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import io.kotest.assertions.throwables.shouldThrow

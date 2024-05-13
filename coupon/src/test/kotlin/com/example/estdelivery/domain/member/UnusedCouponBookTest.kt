@@ -1,5 +1,6 @@
 package com.example.estdelivery.domain.member
 
+import com.example.estdelivery.coupon.domain.member.UnusedCouponBook
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec

@@ -1,12 +1,12 @@
 package com.example.estdelivery.application
 
-import com.example.estdelivery.application.port.`in`.command.GiftCouponCommand
-import com.example.estdelivery.application.port.out.LoadCouponStatePort
-import com.example.estdelivery.application.port.out.LoadMemberStatePort
-import com.example.estdelivery.application.port.out.UpdateMemberStatePort
-import com.example.estdelivery.application.utils.TransactionArea
-import com.example.estdelivery.domain.coupon.Coupon
-import com.example.estdelivery.domain.coupon.CouponType
+import com.example.estdelivery.coupon.application.port.`in`.command.GiftCouponCommand
+import com.example.estdelivery.coupon.application.port.out.LoadCouponStatePort
+import com.example.estdelivery.coupon.application.port.out.LoadMemberStatePort
+import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
+import com.example.estdelivery.coupon.application.utils.TransactionArea
+import com.example.estdelivery.coupon.domain.coupon.Coupon
+import com.example.estdelivery.coupon.domain.coupon.CouponType
 import com.example.estdelivery.domain.fixture.이건창
 import com.example.estdelivery.domain.fixture.일건창
 import io.kotest.assertions.throwables.shouldNotThrow
@@ -20,11 +20,11 @@ class GiftCouponServiceTest : FreeSpec({
     val loadCouponStatePort = mockk<LoadCouponStatePort>()
     val updateMemberStatePort = mockk<UpdateMemberStatePort>()
     val transactionArea = TransactionArea()
-    lateinit var giftCouponService: GiftCouponService
+    lateinit var giftCouponService: com.example.estdelivery.coupon.application.GiftCouponService
 
     beforeTest {
         giftCouponService =
-            GiftCouponService(
+            com.example.estdelivery.coupon.application.GiftCouponService(
                 loadMemberStatePort,
                 loadCouponStatePort,
                 updateMemberStatePort,
@@ -47,7 +47,8 @@ class GiftCouponServiceTest : FreeSpec({
                 receiveCoupon(coupon)
             }
         val 받는자 = 일건창()
-        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 받는자.id)
+        val giftCouponCommand =
+            GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
         every { loadMemberStatePort.findById(주는자.id) } returns 주는자
         every { loadMemberStatePort.findById(받는자.id) } returns 받는자
@@ -64,7 +65,8 @@ class GiftCouponServiceTest : FreeSpec({
         // given
         val 주는자 = 이건창()
         val 받는자 = 일건창()
-        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 받는자.id)
+        val giftCouponCommand =
+            GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
         every { loadMemberStatePort.findById(주는자.id) } returns 주는자
         every { loadMemberStatePort.findById(받는자.id) } returns 받는자
@@ -89,7 +91,8 @@ class GiftCouponServiceTest : FreeSpec({
             이건창().apply {
                 receiveCoupon(coupon)
             }
-        val giftCouponCommand = GiftCouponCommand(1L, 주는자.id, 주는자.id)
+        val giftCouponCommand =
+            GiftCouponCommand(1L, 주는자.id, 주는자.id)
 
         every { loadMemberStatePort.findById(주는자.id) } returns 주는자
         every { loadMemberStatePort.findById(주는자.id) } returns 주는자

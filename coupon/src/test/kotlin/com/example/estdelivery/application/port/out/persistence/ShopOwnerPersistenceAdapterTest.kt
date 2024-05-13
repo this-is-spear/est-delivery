@@ -1,15 +1,16 @@
 package com.example.estdelivery.application.port.out.persistence
 
-import com.example.estdelivery.application.port.out.persistence.mapper.fromShop
-import com.example.estdelivery.application.port.out.persistence.mapper.fromShopOwner
-import com.example.estdelivery.application.port.out.persistence.mapper.toShopOwner
-import com.example.estdelivery.application.port.out.persistence.repository.ShopOwnerRepository
-import com.example.estdelivery.application.port.out.persistence.repository.ShopRepository
+import com.example.estdelivery.coupon.application.port.out.persistence.ShopOwnerPersistenceAdapter
+import com.example.estdelivery.coupon.application.port.out.persistence.mapper.fromShop
+import com.example.estdelivery.coupon.application.port.out.persistence.mapper.fromShopOwner
+import com.example.estdelivery.coupon.application.port.out.persistence.mapper.toShopOwner
+import com.example.estdelivery.coupon.application.port.out.persistence.repository.ShopOwnerRepository
+import com.example.estdelivery.coupon.application.port.out.persistence.repository.ShopRepository
+import com.example.estdelivery.coupon.domain.shop.ShopOwner
 import com.example.estdelivery.domain.fixture.게시할_쿠폰
 import com.example.estdelivery.domain.fixture.새로_창업해서_아무것도_없는_프리퍼
 import com.example.estdelivery.domain.fixture.이건창
 import com.example.estdelivery.domain.fixture.일건창
-import com.example.estdelivery.domain.shop.ShopOwner
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -27,7 +28,11 @@ class ShopOwnerPersistenceAdapterTest : FreeSpec({
     beforeTest {
         shopOwnerRepository = mockk<ShopOwnerRepository>()
         shopRepository = mockk<ShopRepository>()
-        shopOwnerPersistenceAdapter = ShopOwnerPersistenceAdapter(shopOwnerRepository, shopRepository)
+        shopOwnerPersistenceAdapter =
+            ShopOwnerPersistenceAdapter(
+                shopOwnerRepository,
+                shopRepository
+            )
     }
 
     "findById" - {

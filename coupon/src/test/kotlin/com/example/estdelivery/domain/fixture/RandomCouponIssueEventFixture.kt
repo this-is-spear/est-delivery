@@ -1,10 +1,10 @@
 package com.example.estdelivery.domain.fixture
 
-import com.example.estdelivery.domain.event.DiscountAmountProbability
-import com.example.estdelivery.domain.event.DiscountRange
-import com.example.estdelivery.domain.event.EventDiscountType
-import com.example.estdelivery.domain.event.ProbabilityRange
-import com.example.estdelivery.domain.event.RandomCouponIssueEvent
+import com.example.estdelivery.coupon.domain.event.DiscountAmountProbability
+import com.example.estdelivery.coupon.domain.event.DiscountRange
+import com.example.estdelivery.coupon.domain.event.EventDiscountType
+import com.example.estdelivery.coupon.domain.event.ProbabilityRange
+import com.example.estdelivery.coupon.domain.event.RandomCouponIssueEvent
 
 fun 랜덤_비율_할인_이벤트(isProgress: Boolean = true) =
     RandomCouponIssueEvent(

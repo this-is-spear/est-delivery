@@ -1,14 +1,14 @@
 package com.example.estdelivery.domain.fixture
 
-import com.example.estdelivery.domain.coupon.Coupon
-import com.example.estdelivery.domain.coupon.CouponBook
-import com.example.estdelivery.domain.member.Member
-import com.example.estdelivery.domain.shop.HandOutCouponBook
-import com.example.estdelivery.domain.shop.PublishedCouponBook
-import com.example.estdelivery.domain.shop.PublishedEventCouponBook
-import com.example.estdelivery.domain.shop.RoyalCustomers
-import com.example.estdelivery.domain.shop.Shop
-import com.example.estdelivery.domain.shop.UsedCouponBook
+import com.example.estdelivery.coupon.domain.coupon.Coupon
+import com.example.estdelivery.coupon.domain.coupon.CouponBook
+import com.example.estdelivery.coupon.domain.member.Member
+import com.example.estdelivery.coupon.domain.shop.HandOutCouponBook
+import com.example.estdelivery.coupon.domain.shop.PublishedCouponBook
+import com.example.estdelivery.coupon.domain.shop.PublishedEventCouponBook
+import com.example.estdelivery.coupon.domain.shop.RoyalCustomers
+import com.example.estdelivery.coupon.domain.shop.Shop
+import com.example.estdelivery.coupon.domain.shop.UsedCouponBook
 
 const val 가게_이름 = "프리퍼"
 

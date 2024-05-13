@@ -1,6 +1,6 @@
 package com.example.estdelivery.domain.event
 
-import com.example.estdelivery.domain.coupon.Coupon
+import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.domain.fixture.랜덤_고정_할인_이벤트
 import com.example.estdelivery.domain.fixture.랜덤_비율_할인_이벤트
 import com.example.estdelivery.domain.fixture.이건창

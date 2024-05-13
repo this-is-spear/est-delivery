@@ -1,18 +1,19 @@
 package com.example.estdelivery.application
 
-import com.example.estdelivery.application.port.`in`.command.IssuePublishedCouponCommand
-import com.example.estdelivery.application.port.out.LoadCouponStatePort
-import com.example.estdelivery.application.port.out.LoadMemberStatePort
-import com.example.estdelivery.application.port.out.LoadShopOwnerStatePort
-import com.example.estdelivery.application.port.out.UpdateMemberStatePort
-import com.example.estdelivery.application.port.out.UpdateShopOwnerStatePort
-import com.example.estdelivery.application.utils.TransactionArea
+import com.example.estdelivery.coupon.application.IssuePublishedCouponService
+import com.example.estdelivery.coupon.application.port.`in`.command.IssuePublishedCouponCommand
+import com.example.estdelivery.coupon.application.port.out.LoadCouponStatePort
+import com.example.estdelivery.coupon.application.port.out.LoadMemberStatePort
+import com.example.estdelivery.coupon.application.port.out.LoadShopOwnerStatePort
+import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
+import com.example.estdelivery.coupon.application.port.out.UpdateShopOwnerStatePort
+import com.example.estdelivery.coupon.application.utils.TransactionArea
+import com.example.estdelivery.coupon.domain.member.Member
+import com.example.estdelivery.coupon.domain.shop.ShopOwner
 import com.example.estdelivery.domain.fixture.게시된_고정_할인_쿠폰
 import com.example.estdelivery.domain.fixture.게시된_쿠폰이_있는_프리퍼
 import com.example.estdelivery.domain.fixture.새로_창업해서_아무것도_없는_프리퍼
 import com.example.estdelivery.domain.fixture.이건창
-import com.example.estdelivery.domain.member.Member
-import com.example.estdelivery.domain.shop.ShopOwner
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContain
@@ -61,7 +62,12 @@ class IssuePublishedCouponServiceTest : FreeSpec({
         val memberId = 회원_상태.id
         val shopId = 가게.id!!
         val couponId = 할인쿠폰.id!!
-        val issuePublishedCouponCommand = IssuePublishedCouponCommand(couponId, memberId, shopId)
+        val issuePublishedCouponCommand =
+            IssuePublishedCouponCommand(
+                couponId,
+                memberId,
+                shopId
+            )
         val 프리퍼_주인_상태 = ShopOwner(가게, 1L)
         val 변경된_프리퍼_주인_상태 = slot<ShopOwner>()
         val 변경된_회원_상태 = slot<Member>()
@@ -86,7 +92,12 @@ class IssuePublishedCouponServiceTest : FreeSpec({
         val memberId = 회원_상태.id
         val shopId = 가게.id!!
         val couponId = 게시된_고정_할인_쿠폰.id!!
-        val issuePublishedCouponCommand = IssuePublishedCouponCommand(couponId, memberId, shopId)
+        val issuePublishedCouponCommand =
+            IssuePublishedCouponCommand(
+                couponId,
+                memberId,
+                shopId
+            )
         val 프리퍼_주인_상태 = ShopOwner(게시된_쿠폰이_있는_프리퍼(게시된_고정_할인_쿠폰), 1L)
 
         every { loadMemberStatePort.findById(memberId) } returns 회원_상태
@@ -109,7 +120,12 @@ class IssuePublishedCouponServiceTest : FreeSpec({
         val memberId = 회원_상태.id
         val shopId = 가게.id!!
         val couponId = 할인쿠폰.id!!
-        val issuePublishedCouponCommand = IssuePublishedCouponCommand(couponId, memberId, shopId)
+        val issuePublishedCouponCommand =
+            IssuePublishedCouponCommand(
+                couponId,
+                memberId,
+                shopId
+            )
         val 프리퍼_주인_상태 = ShopOwner(새로_창업해서_아무것도_없는_프리퍼(), 1L)
 
         every { loadMemberStatePort.findById(memberId) } returns 회원_상태

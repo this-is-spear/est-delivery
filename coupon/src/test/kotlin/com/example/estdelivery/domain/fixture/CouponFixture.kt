@@ -1,7 +1,7 @@
 package com.example.estdelivery.domain.fixture
 
-import com.example.estdelivery.domain.coupon.Coupon
-import com.example.estdelivery.domain.coupon.CouponType
+import com.example.estdelivery.coupon.domain.coupon.Coupon
+import com.example.estdelivery.coupon.domain.coupon.CouponType
 
 val 나눠줄_쿠폰 = Coupon.RateDiscountCoupon(10, "10% 할인 쿠폰", "10% 할인 쿠폰 설명", CouponType.IS_HAND_OUT)
 val 나눠준_비율_할인_쿠폰 = Coupon.RateDiscountCoupon(10, "10% 할인 쿠폰", "10% 할인 쿠폰 설명", CouponType.IS_HAND_OUT, 1L)
