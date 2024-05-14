@@ -5,7 +5,7 @@ import com.example.estdelivery.coupon.domain.coupon.Coupon
 class Member(
     val id: Long,
     val name: String,
-    private val unusedCouponBook: UnusedCouponBook,
+    private val unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
 ) {
     fun useCoupon(coupon: Coupon) {
         unusedCouponBook.removeUsedCoupon(coupon)
