@@ -5,13 +5,18 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 
 @Entity
 @Table(name = "shop")
 class Shop(
-    var name: String,
+    @OneToMany
+    @JoinColumn(name = "shop_id")
+    val royalCustomers: List<RoyalCustomer>,
+    val name: String,
     @Id
     @Column(name = "shop_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

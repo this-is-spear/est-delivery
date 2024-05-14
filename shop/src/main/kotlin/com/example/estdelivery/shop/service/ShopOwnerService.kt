@@ -1,6 +1,7 @@
 package com.example.estdelivery.shop.service
 
 import com.example.estdelivery.shop.dto.ShopOwnerResponse
+import com.example.estdelivery.shop.dto.ShopResponse
 import com.example.estdelivery.shop.repository.ShopOwnerRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -18,8 +19,11 @@ class ShopOwnerService(
 
         return ShopOwnerResponse(
             shopOwnerId = id,
-            shopId = shopOwner.shop.id!!,
-            shopName = shopOwner.shop.name,
+            shop = ShopResponse(
+                shopOwner.shop.royalCustomers.map { it.memberId },
+                shopOwner.shop.name,
+                shopOwner.shop.id!!,
+            )
         )
     }
 
@@ -33,8 +37,11 @@ class ShopOwnerService(
 
         return ShopOwnerResponse(
             shopOwnerId = shopOwner.id!!,
-            shopId = shopOwner.shop.id!!,
-            shopName = shopOwner.shop.name,
+            shop = ShopResponse(
+                shopOwner.shop.royalCustomers.map { it.memberId },
+                shopOwner.shop.name,
+                shopOwner.shop.id!!,
+            )
         )
     }
 }

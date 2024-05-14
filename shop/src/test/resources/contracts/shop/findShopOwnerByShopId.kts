@@ -16,8 +16,11 @@ listOf(
             }
             body = body(
                 "shopOwnerId" to 1,
-                "shopId" to 1,
-                "shopName" to "첫 번째 가게"
+                "shop" to mapOf(
+                    "royalCustomers" to listOf(1, 2, 3),
+                    "name" to "첫 번째 가게",
+                    "id" to 1
+                )
             )
         }
     },
@@ -34,8 +37,11 @@ listOf(
             }
             body = body(
                 "shopOwnerId" to 2,
-                "shopId" to 2,
-                "shopName" to "두 번째 가게"
+                "shop" to mapOf(
+                    "royalCustomers" to emptyList<Int>(),
+                    "name" to "두 번째 가게",
+                    "id" to 2
+                )
             )
         }
     }
