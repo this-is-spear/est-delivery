@@ -24,7 +24,14 @@ contracts {
     contractsDslDir.set(file("src/test/resources/contracts"))
     testFramework.set(JUNIT5)
     packageWithBaseClasses.set("com.example.estdelivery.member")
-    stubsOutputDir.set(file("../contract-stubs"))
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.named("verifierStubsJar"))
+        }
+    }
 }
 
 tasks.withType<Delete> {

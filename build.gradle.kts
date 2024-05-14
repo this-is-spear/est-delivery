@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.google.osdetector") version "1.7.1"
+    id("maven-publish")
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.allopen") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
@@ -13,6 +14,7 @@ plugins {
 allprojects {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -25,6 +27,7 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.jpa")
         plugin("org.jetbrains.kotlin.plugin.allopen")
         plugin("com.google.osdetector")
+        plugin("maven-publish")
     }
 
     group = "com.example.estdelivery"
