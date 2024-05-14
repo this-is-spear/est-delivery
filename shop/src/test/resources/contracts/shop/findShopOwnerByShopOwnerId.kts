@@ -15,7 +15,7 @@ listOf(
                 contentType = "application/json"
             }
             body = body(
-                "shopOwnerId" to 1,
+                "id" to 1,
                 "shop" to mapOf(
                     "royalCustomers" to listOf(1, 2, 3),
                     "name" to "첫 번째 가게",
@@ -36,7 +36,7 @@ listOf(
                 contentType = "application/json"
             }
             body = body(
-                "shopOwnerId" to 2,
+                "id" to 2,
                 "shop" to mapOf(
                     "royalCustomers" to emptyList<Int>(),
                     "name" to "두 번째 가게",

@@ -5,7 +5,7 @@ import com.example.estdelivery.coupon.domain.member.Member
 
 class ShopOwner(
     private val shop: Shop,
-    internal val id: Long? = null,
+    val id: Long? = null,
 ) {
     fun handOutCouponToRoyalCustomersInShop(coupon: Coupon) = shop.handOutCouponToRoyalCustomers(coupon)
 

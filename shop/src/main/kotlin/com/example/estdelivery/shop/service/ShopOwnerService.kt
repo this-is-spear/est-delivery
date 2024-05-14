@@ -18,7 +18,7 @@ class ShopOwnerService(
         check(shopOwner.shop.id != null) { "Shop owner with id $id has no shop id" }
 
         return ShopOwnerResponse(
-            shopOwnerId = id,
+            id = id,
             shop = ShopResponse(
                 shopOwner.shop.royalCustomers.map { it.memberId },
                 shopOwner.shop.name,
@@ -36,7 +36,7 @@ class ShopOwnerService(
         check(shopOwner.id != null) { "Shop owner with shop id $shopId has no shop owner id" }
 
         return ShopOwnerResponse(
-            shopOwnerId = shopOwner.id!!,
+            id = shopOwner.id!!,
             shop = ShopResponse(
                 shopOwner.shop.royalCustomers.map { it.memberId },
                 shopOwner.shop.name,
