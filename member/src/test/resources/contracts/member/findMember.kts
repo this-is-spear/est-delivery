@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 contract {
     request {
         method = GET
-        url = url(v(consumer(regex("\\/members\\/[0-9]{1,10}")), producer("/members/1")))
+        url = url(v(regex("\\/members\\/[0-9]{1,10}")))
     }
     response {
         status = OK
@@ -13,7 +13,7 @@ contract {
             contentType = "application/json"
         }
         body = body(
-            "id" to 1,
+            "id" to value("${fromRequest().path(1)}"),
             "name" to "이건창"
         )
     }
