@@ -16,4 +16,8 @@ class CouponBook(
         require(coupons.contains(coupon).not()) { "이미 존재하는 쿠폰입니다." }
         coupons = coupons + coupon
     }
+
+    override fun toString(): String {
+        return "CouponBook(coupons=$coupons)"
+    }
 }

@@ -42,4 +42,8 @@ sealed class Coupon(
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    override fun toString(): String {
+        return "Coupon(name='$name', description='$description', couponType=$couponType, id=$id)"
+    }
 }

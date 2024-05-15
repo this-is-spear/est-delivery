@@ -33,7 +33,9 @@ class IssuePublishedCouponService(
         )
     },
     private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val updateRoyalCustomers: (ShopOwner, Member) -> Unit = { shopOwner, royalCustomer ->
+        updateShopOwnerStatePort.updateRoyalCustomers(shopOwner, royalCustomer)
+    },
 ) : IssuePublishedCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.
@@ -61,7 +63,7 @@ class IssuePublishedCouponService(
     ) {
         if (!shopOwner.showRoyalCustomersInShop().contains(member)) {
             shopOwner.addRoyalCustomersInShop(member)
-            updateShopOwner(shopOwner)
+            updateRoyalCustomers(shopOwner, member)
         }
     }
 }

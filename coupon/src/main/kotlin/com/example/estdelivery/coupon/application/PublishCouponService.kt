@@ -24,7 +24,7 @@ class PublishCouponService(
             it.coupon
         )
     },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
 ) : PublishCouponUseCase {
     /**
      * 1. 가게 주인 정보를 조회한다.

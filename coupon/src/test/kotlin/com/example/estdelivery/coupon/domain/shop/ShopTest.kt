@@ -30,6 +30,7 @@ class ShopTest : FreeSpec({
                 HandOutCouponBook(),
                 UsedCouponBook(),
                 단골_리스트,
+                1,
                 "프리퍼",
             )
     }

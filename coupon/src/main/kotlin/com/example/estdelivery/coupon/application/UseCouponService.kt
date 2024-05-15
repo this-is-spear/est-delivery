@@ -35,7 +35,7 @@ class UseCouponService(
         )
     },
     private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
 ) : UseCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.

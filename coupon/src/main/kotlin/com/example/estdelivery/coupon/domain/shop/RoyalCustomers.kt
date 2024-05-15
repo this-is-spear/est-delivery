@@ -22,4 +22,8 @@ class RoyalCustomers(
     fun showRoyalCustomers(): List<Member> {
         return customers.toList()
     }
+
+    override fun toString(): String {
+        return "RoyalCustomers(customers=$customers)"
+    }
 }

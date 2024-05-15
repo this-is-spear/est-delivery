@@ -18,4 +18,8 @@ class UsedCouponBook(
     fun showUsedCoupons(): List<Coupon> {
         return usedCoupons.showCoupons()
     }
+
+    override fun toString(): String {
+        return "UsedCouponBook(usedCoupons=$usedCoupons)"
+    }
 }

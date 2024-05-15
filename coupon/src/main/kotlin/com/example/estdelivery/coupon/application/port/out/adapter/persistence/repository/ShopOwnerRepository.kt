@@ -5,7 +5,6 @@ import com.example.estdelivery.coupon.application.port.out.adapter.persistence.e
 import java.util.Optional
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface ShopOwnerRepository :
-    JpaRepository<ShopOwnerEntity, Long> {
+interface ShopOwnerRepository : JpaRepository<ShopOwnerEntity, Long> {
     fun findByShopEntity(shopEntity: ShopEntity): Optional<ShopOwnerEntity>
 }

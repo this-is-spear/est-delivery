@@ -19,8 +19,8 @@ fun 새로_창업해서_아무것도_없는_프리퍼() =
         HandOutCouponBook(CouponBook(listOf())),
         UsedCouponBook(CouponBook(listOf())),
         RoyalCustomers(listOf()),
-        가게_이름,
         1L,
+        가게_이름,
     )
 
 fun 나눠준_쿠폰이_있는_프리퍼(vararg coupon: Coupon) =
@@ -30,8 +30,8 @@ fun 나눠준_쿠폰이_있는_프리퍼(vararg coupon: Coupon) =
         HandOutCouponBook(CouponBook(listOf(*coupon))),
         UsedCouponBook(CouponBook(listOf())),
         RoyalCustomers(listOf(나눠준_쿠폰을_가진_삼건창(), 일건창(), 이건창())),
-        가게_이름,
         1L,
+        가게_이름,
     )
 
 fun 게시된_쿠폰이_있는_프리퍼(vararg coupon: Coupon) =
@@ -41,8 +41,8 @@ fun 게시된_쿠폰이_있는_프리퍼(vararg coupon: Coupon) =
         HandOutCouponBook(CouponBook(listOf())),
         UsedCouponBook(CouponBook(listOf())),
         RoyalCustomers(listOf()),
-        "프리퍼",
         1L,
+        "프리퍼",
     )
 
 fun 단골이_있는_멋진_프리퍼(vararg member: Member) =
@@ -52,6 +52,6 @@ fun 단골이_있는_멋진_프리퍼(vararg member: Member) =
         HandOutCouponBook(CouponBook(listOf())),
         UsedCouponBook(CouponBook(listOf())),
         RoyalCustomers(listOf(*member)),
-        "프리퍼",
         1L,
+        "프리퍼",
     )

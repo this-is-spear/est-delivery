@@ -13,4 +13,8 @@ class PublishedEventCouponBook(
     }
 
     fun showEventCoupons() = publishedEventCoupons.showCoupons()
+
+    override fun toString(): String {
+        return "PublishedEventCouponBook(publishedEventCoupons=$publishedEventCoupons)"
+    }
 }

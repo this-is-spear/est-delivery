@@ -10,8 +10,8 @@ class Shop(
     private val handOutCouponBook: HandOutCouponBook,
     private val usedCouponBook: UsedCouponBook,
     private val royalCustomers: RoyalCustomers,
-    val name: String,
-    internal val id: Long? = null,
+    val id: Long,
+    val name: String? = null,
 ) {
     fun publishCoupon(coupon: Coupon) {
         publishedCoupons.publishCoupon(coupon)
@@ -60,5 +60,9 @@ class Shop(
         return id == other.id
     }
 
-    override fun hashCode() = id?.hashCode() ?: 0
+    override fun hashCode() = id.hashCode()
+
+    override fun toString(): String {
+        return "Shop(publishedCoupons=$publishedCoupons, publishedEventCoupons=$publishedEventCoupons, handOutCouponBook=$handOutCouponBook, usedCouponBook=$usedCouponBook, royalCustomers=$royalCustomers, id=$id, name=$name)"
+    }
 }

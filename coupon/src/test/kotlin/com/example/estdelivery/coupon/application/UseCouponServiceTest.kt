@@ -47,7 +47,7 @@ class UseCouponServiceTest : FreeSpec({
         val 프리퍼_주인 = ShopOwner(나눠준_쿠폰이_있는_프리퍼(나눠준_비율_할인_쿠폰), 1L)
         val 회원 = 나눠준_쿠폰을_가진_삼건창()
         val memberId = 회원.id
-        val shopId = 프리퍼_주인.showShop().id!!
+        val shopId = 프리퍼_주인.showShop().id
         val couponId = 나눠준_비율_할인_쿠폰.id!!
         val useCouponCommand =
             UseCouponCommand(
@@ -63,7 +63,7 @@ class UseCouponServiceTest : FreeSpec({
         every { loadCouponStatePort.findById(couponId) } returns 나눠준_비율_할인_쿠폰
         every { loadShopOwnerStatePort.findByShopId(shopId) } returns 프리퍼_주인
         every { updateMemberStatePort.updateMembersCoupon(capture(변경된_회원_상태)) } returns Unit
-        every { updateShopOwnerStatePort.update(capture(변경된_프리퍼_주인_상태)) } returns Unit
+        every { updateShopOwnerStatePort.updateShopOwnersCoupons(capture(변경된_프리퍼_주인_상태)) } returns Unit
 
         useCouponService.useCoupon(useCouponCommand)
 

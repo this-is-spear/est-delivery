@@ -28,4 +28,9 @@ class ShopInfraAdapterTest(
         val shopOwner = shopInfraAdapter.findShopOwnerByShopId(2L)
         assertThat(shopOwner.id).isEqualTo(2L)
     }
+
+    @Test
+    fun `가게 주인에게 단골 소님을 추가한다`() {
+        shopInfraAdapter.addRoyalCustomers(3L, 4L)
+    }
 }

@@ -36,7 +36,7 @@ class IssueRandomCouponService(
     },
     private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
     private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
     private val updateEvent: (RandomCouponIssueEvent) -> Unit = {
         updateRandomCouponIssueEventStatePort.update(UpdateRandomCouponIssueEventState.from(it))
     },

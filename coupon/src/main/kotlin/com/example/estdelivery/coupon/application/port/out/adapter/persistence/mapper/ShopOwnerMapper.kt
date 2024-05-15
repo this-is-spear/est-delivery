@@ -1,9 +1,9 @@
 package com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper
 
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberEntity
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.ShopEntity
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.ShopOwnerEntity
 import com.example.estdelivery.coupon.domain.coupon.CouponBook
-import com.example.estdelivery.coupon.domain.member.Member
 import com.example.estdelivery.coupon.domain.shop.HandOutCouponBook
 import com.example.estdelivery.coupon.domain.shop.PublishedCouponBook
 import com.example.estdelivery.coupon.domain.shop.PublishedEventCouponBook
@@ -45,11 +45,7 @@ internal fun toShop(entity: ShopEntity): Shop {
                 it
             )
         })),
-        RoyalCustomers(entity.royalCustomers.map {
-            //TODO: Member를 어떻게 가져올지 고민해보기
-            Member(it, "단골 손님")
-        }),
-        entity.name,
+        RoyalCustomers(),
         entity.id!!,
     )
 }
@@ -64,9 +60,6 @@ internal fun fromShop(shop: Shop): ShopEntity {
             .map { fromCoupon(it) },
         shop.showUsedCoupons()
             .map { fromCoupon(it) },
-        shop.showRoyalCustomers()
-            .map { it.id },
-        shop.name,
         shop.id,
     )
 }

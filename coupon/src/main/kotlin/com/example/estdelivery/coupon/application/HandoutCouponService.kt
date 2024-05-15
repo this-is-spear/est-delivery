@@ -23,7 +23,7 @@ class HandoutCouponService(
     },
     private val notExistCoupon: (Long) -> Boolean = { loadCouponStatePort.exists(it).not() },
     private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
     private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
 ) : HandoutCouponUseCase {
     /**

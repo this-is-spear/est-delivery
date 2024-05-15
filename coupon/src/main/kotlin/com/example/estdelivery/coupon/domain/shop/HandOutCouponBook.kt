@@ -17,4 +17,8 @@ class HandOutCouponBook(
         }
         handOutCoupons.addCoupon(coupon)
     }
+
+    override fun toString(): String {
+        return "HandOutCouponBook(handOutCoupons=$handOutCoupons)"
+    }
 }

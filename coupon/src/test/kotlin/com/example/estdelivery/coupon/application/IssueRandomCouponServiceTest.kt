@@ -90,7 +90,7 @@ class IssueRandomCouponServiceTest : FreeSpec({
         every { loadRandomCouponIssueEventStatePort.findById(1L) } returns 랜덤_쿠폰_뽑기_이벤트_상태
         every { loadShopOwnerStatePort.findByShopId(1L) } returns 가게주인
         every { updateMemberStatePort.updateMembersCoupon(capture(상태가_변경된_회원)) } returns Unit
-        every { updateShopOwnerStatePort.update(capture(상태가_변경된_가게주인)) } returns Unit
+        every { updateShopOwnerStatePort.updateShopOwnersCoupons(capture(상태가_변경된_가게주인)) } returns Unit
         every { updateRandomCouponIssueEventStatePort.update(capture(상태가_변경된_이벤트)) } returns Unit
         every { createCouponStatePort.create(any()) } returns 이벤트_쿠폰
 

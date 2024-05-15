@@ -45,8 +45,8 @@ class HandoutCouponServiceTest : FreeSpec({
         val 프리퍼_주인 = ShopOwner(가게, 1L)
         val 변경된_프리퍼_주인_상태 = slot<ShopOwner>()
 
-        val shopId = 가게.id!!
-        val shopOwnerId = 프리퍼_주인.id!!
+        val shopId = 가게.id
+        val shopOwnerId = 프리퍼_주인.id
 
         val handoutCouponCommand = HandoutCouponCommand(
             shopOwnerId,
@@ -57,7 +57,7 @@ class HandoutCouponServiceTest : FreeSpec({
         every { loadCouponStatePort.exists(any()) } returns false
         every { createCouponStatePort.create(나눠줄_쿠폰) } returns 나눠준_비율_할인_쿠폰
         every { loadCouponStatePort.findById(any()) } returns 나눠준_비율_할인_쿠폰
-        every { updateShopOwnerStatePort.update(capture(변경된_프리퍼_주인_상태)) } returns Unit
+        every { updateShopOwnerStatePort.updateShopOwnersCoupons(capture(변경된_프리퍼_주인_상태)) } returns Unit
 
         // when
         handoutCouponService.handoutCoupon(handoutCouponCommand)
@@ -76,8 +76,8 @@ class HandoutCouponServiceTest : FreeSpec({
         val 프리퍼_주인_상태 = ShopOwner(가게, 1L)
         val 변경된_프리퍼_주인_상태 = slot<ShopOwner>()
 
-        val shopId = 가게.id!!
-        val shopOwnerId = 프리퍼_주인_상태.id!!
+        val shopId = 가게.id
+        val shopOwnerId = 프리퍼_주인_상태.id
         val handoutCouponCommand = HandoutCouponCommand(
             shopOwnerId,
             shopId,
@@ -87,7 +87,7 @@ class HandoutCouponServiceTest : FreeSpec({
         every { loadCouponStatePort.exists(any()) } returns false
         every { createCouponStatePort.create(나눠줄_쿠폰) } returns 나눠준_비율_할인_쿠폰
         every { loadCouponStatePort.findById(any()) } returns 나눠준_비율_할인_쿠폰
-        every { updateShopOwnerStatePort.update(capture(변경된_프리퍼_주인_상태)) } returns Unit
+        every { updateShopOwnerStatePort.updateShopOwnersCoupons(capture(변경된_프리퍼_주인_상태)) } returns Unit
 
         // when
         handoutCouponService.handoutCoupon(handoutCouponCommand)

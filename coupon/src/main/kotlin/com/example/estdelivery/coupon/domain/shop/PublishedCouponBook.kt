@@ -20,4 +20,8 @@ class PublishedCouponBook(
         require(publishedCoupons.showCoupons().contains(coupon)) { "게시된 쿠폰이 아닙니다." }
         return publishedCoupons.showCoupons().find { it == coupon }!!
     }
+
+    override fun toString(): String {
+        return "PublishedCouponBook(publishedCoupons=$publishedCoupons)"
+    }
 }
