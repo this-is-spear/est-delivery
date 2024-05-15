@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component
 class MemberAdapter(
     private val memberInfraAdapter: MemberInfraAdapter,
     private val memberPersistenceAdapter: MemberPersistenceAdapter,
-): LoadMemberStatePort, UpdateMemberStatePort {
+) : LoadMemberStatePort, UpdateMemberStatePort {
     override fun findMember(memberId: Long): Member {
         val member = memberInfraAdapter.findMember(memberId)
-        val membersCoupon = memberPersistenceAdapter.findMemberCouponById(memberId)
+        val membersCoupon = memberPersistenceAdapter.findUnusedCouponByMemberId(memberId)
         return member.have(membersCoupon)
     }
 
     override fun updateMembersCoupon(member: Member) {
-        memberPersistenceAdapter.update(member)
+        memberPersistenceAdapter.updateUnusedCouponBook(member.id, member.showMyCouponBook())
     }
 }

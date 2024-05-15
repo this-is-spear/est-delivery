@@ -5,7 +5,7 @@ import com.example.estdelivery.coupon.domain.coupon.Coupon
 class Member(
     val id: Long,
     val name: String,
-    private var unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
+    private val unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
 ) {
     fun useCoupon(coupon: Coupon) {
         unusedCouponBook.removeUsedCoupon(coupon)
@@ -17,10 +17,6 @@ class Member(
 
     fun receiveCoupon(coupon: Coupon) {
         unusedCouponBook.addUnusedCoupon(coupon)
-    }
-
-    fun hasCoupon(coupon: Coupon): Boolean {
-        return unusedCouponBook.showUnusedCoupons().contains(coupon)
     }
 
     fun sendCoupon(
@@ -48,7 +44,7 @@ class Member(
         return "Member(id=$id, name='$name', unUsedCouponBook=$unusedCouponBook)"
     }
 
-    fun have(membersCoupon: Member): Member {
-        return Member(id, name, membersCoupon.unusedCouponBook)
+    fun have(unusedCouponBook: UnusedCouponBook): Member {
+        return Member(id, name, unusedCouponBook)
     }
 }
