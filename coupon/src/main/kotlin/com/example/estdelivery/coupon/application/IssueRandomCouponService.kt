@@ -26,7 +26,7 @@ class IssueRandomCouponService(
     createCouponStatePort: CreateCouponStatePort,
     private val transactionArea: TransactionArea,
     private val getMember: (IssueEventCouponCommand) -> Member = {
-        loadMemberStatePort.findById(it.memberId)
+        loadMemberStatePort.findMember(it.memberId)
     },
     private val getCouponIssueRandomCouponIssueEvent: (IssueEventCouponCommand) -> RandomCouponIssueEvent = {
         loadRandomCouponIssueEventStatePort.findById(it.eventId).toEvent()
@@ -35,7 +35,7 @@ class IssueRandomCouponService(
         loadShopOwnerStatePort.findByShopId(it.shopId)
     },
     private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
     private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
     private val updateEvent: (RandomCouponIssueEvent) -> Unit = {
         updateRandomCouponIssueEventStatePort.update(UpdateRandomCouponIssueEventState.from(it))

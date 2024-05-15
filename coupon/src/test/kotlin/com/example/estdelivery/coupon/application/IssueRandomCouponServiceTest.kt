@@ -86,10 +86,10 @@ class IssueRandomCouponServiceTest : FreeSpec({
         val 이건창 = 이건창()
 
         // when
-        every { loadMemberStatePort.findById(1L) } returns 이건창
+        every { loadMemberStatePort.findMember(1L) } returns 이건창
         every { loadRandomCouponIssueEventStatePort.findById(1L) } returns 랜덤_쿠폰_뽑기_이벤트_상태
         every { loadShopOwnerStatePort.findByShopId(1L) } returns 가게주인
-        every { updateMemberStatePort.update(capture(상태가_변경된_회원)) } returns Unit
+        every { updateMemberStatePort.updateMembersCoupon(capture(상태가_변경된_회원)) } returns Unit
         every { updateShopOwnerStatePort.update(capture(상태가_변경된_가게주인)) } returns Unit
         every { updateRandomCouponIssueEventStatePort.update(capture(상태가_변경된_이벤트)) } returns Unit
         every { createCouponStatePort.create(any()) } returns 이벤트_쿠폰

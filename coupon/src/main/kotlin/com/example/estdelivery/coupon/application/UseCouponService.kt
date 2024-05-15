@@ -20,7 +20,7 @@ class UseCouponService(
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
     private val getMember: (UseCouponCommand) -> Member = {
-        loadMemberStatePort.findById(
+        loadMemberStatePort.findMember(
             it.memberId
         )
     },
@@ -34,7 +34,7 @@ class UseCouponService(
             it.shopId
         )
     },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
     private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
 ) : UseCouponUseCase {
     /**

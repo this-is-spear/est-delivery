@@ -70,10 +70,10 @@ class IssuePublishedCouponServiceTest : FreeSpec({
         val 프리퍼_주인_상태 = ShopOwner(가게, 1L)
         val 변경된_프리퍼_주인_상태 = slot<ShopOwner>()
         val 변경된_회원_상태 = slot<Member>()
-        every { loadMemberStatePort.findById(memberId) } returns 회원_상태
+        every { loadMemberStatePort.findMember(memberId) } returns 회원_상태
         every { loadCouponStatePort.findById(couponId) } returns 할인쿠폰
         every { loadShopOwnerStatePort.findByShopId(shopId) } returns 프리퍼_주인_상태
-        every { updateMemberStatePort.update(capture(변경된_회원_상태)) } returns Unit
+        every { updateMemberStatePort.updateMembersCoupon(capture(변경된_회원_상태)) } returns Unit
         every { updateShopOwnerStatePort.update(capture(변경된_프리퍼_주인_상태)) } returns Unit
 
         // when
@@ -99,9 +99,9 @@ class IssuePublishedCouponServiceTest : FreeSpec({
             )
         val 프리퍼_주인_상태 = ShopOwner(게시된_쿠폰이_있는_프리퍼(게시된_고정_할인_쿠폰), 1L)
 
-        every { loadMemberStatePort.findById(memberId) } returns 회원_상태
+        every { loadMemberStatePort.findMember(memberId) } returns 회원_상태
         every { loadCouponStatePort.findById(couponId) } returns 게시된_고정_할인_쿠폰
-        every { updateMemberStatePort.update(any()) } returns Unit
+        every { updateMemberStatePort.updateMembersCoupon(any()) } returns Unit
         every { loadShopOwnerStatePort.findByShopId(shopId) } returns 프리퍼_주인_상태
         every { updateShopOwnerStatePort.update(any()) } returns Unit
 
@@ -127,9 +127,9 @@ class IssuePublishedCouponServiceTest : FreeSpec({
             )
         val 프리퍼_주인_상태 = ShopOwner(새로_창업해서_아무것도_없는_프리퍼(), 1L)
 
-        every { loadMemberStatePort.findById(memberId) } returns 회원_상태
+        every { loadMemberStatePort.findMember(memberId) } returns 회원_상태
         every { loadCouponStatePort.findById(couponId) } returns 할인쿠폰
-        every { updateMemberStatePort.update(any()) } returns Unit
+        every { updateMemberStatePort.updateMembersCoupon(any()) } returns Unit
         every { loadShopOwnerStatePort.findByShopId(shopId) } returns 프리퍼_주인_상태
         every { updateShopOwnerStatePort.update(any()) } returns Unit
 

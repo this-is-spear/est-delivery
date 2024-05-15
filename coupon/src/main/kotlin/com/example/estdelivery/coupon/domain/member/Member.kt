@@ -5,7 +5,7 @@ import com.example.estdelivery.coupon.domain.coupon.Coupon
 class Member(
     val id: Long,
     val name: String,
-    private val unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
+    private var unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
 ) {
     fun useCoupon(coupon: Coupon) {
         unusedCouponBook.removeUsedCoupon(coupon)
@@ -46,5 +46,9 @@ class Member(
 
     override fun toString(): String {
         return "Member(id=$id, name='$name', unUsedCouponBook=$unusedCouponBook)"
+    }
+
+    fun have(membersCoupon: Member): Member {
+        return Member(id, name, membersCoupon.unusedCouponBook)
     }
 }

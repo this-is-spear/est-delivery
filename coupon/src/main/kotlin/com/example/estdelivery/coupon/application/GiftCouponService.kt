@@ -15,21 +15,17 @@ class GiftCouponService(
     updateMemberStatePort: UpdateMemberStatePort,
     private val transactionArea: TransactionArea,
     private val getReceiver: (GiftCouponCommand) -> Member = {
-        loadMemberStatePort.findById(
-            it.receiverId
-        )
+        loadMemberStatePort.findMember(it.receiverId)
     },
     private val getSender: (GiftCouponCommand) -> Member = {
-        loadMemberStatePort.findById(
-            it.senderId
-        )
+        loadMemberStatePort.findMember(it.senderId)
     },
     private val getCoupon: (GiftCouponCommand) -> Coupon = {
         loadCouponStatePort.findById(
             it.couponId
         )
     },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
 ) : GiftCouponUseCase {
     /**
      * 선물 할 쿠폰과 선물 할 회원의 식별자를 입력해 쿠폰을 나눠준다.
