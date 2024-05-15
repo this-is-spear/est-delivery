@@ -19,4 +19,8 @@ class UnusedCouponBook(
         require(unUsedCoupons.showCoupons().contains(coupon)) { "존재하지 않는 쿠폰입니다." }
         unUsedCoupons.deleteCoupon(coupon)
     }
+
+    override fun toString(): String {
+        return "UnusedCouponBook(unUsedCoupons=$unUsedCoupons)"
+    }
 }

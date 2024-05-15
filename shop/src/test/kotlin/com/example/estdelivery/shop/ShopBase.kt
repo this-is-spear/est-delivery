@@ -6,6 +6,7 @@ import com.example.estdelivery.shop.dto.ShopResponse
 import com.example.estdelivery.shop.service.ShopOwnerService
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import org.junit.jupiter.api.BeforeEach
 
@@ -13,12 +14,20 @@ open class ShopBase {
     @BeforeEach
     fun setup() {
         val shopOwnerService = mockk<ShopOwnerService>()
-        val 첫_번째_가게 = ShopResponse(listOf(1, 2, 3), "첫 번째 가게", 1)
-        val 두_번째_가게 = ShopResponse(emptyList(), "두 번째 가게", 2)
-        every { shopOwnerService.findShopOwnerById(1) } returns ShopOwnerResponse(1, 첫_번째_가게)
-        every { shopOwnerService.findShopOwnerById(2) } returns ShopOwnerResponse(2, 두_번째_가게)
-        every { shopOwnerService.findShopOwnerByShopId(1) } returns ShopOwnerResponse(1, 첫_번째_가게)
-        every { shopOwnerService.findShopOwnerByShopId(2) } returns ShopOwnerResponse(2, 두_번째_가게)
+        val id = slot<Long>()
+        every { shopOwnerService.findShopOwnerById(capture(id)) } answers {
+            ShopOwnerResponse(
+                id.captured,
+                ShopResponse(listOf(1, 2, 3), "가게", id.captured)
+            )
+        }
+        every { shopOwnerService.findShopOwnerByShopId(capture(id)) } answers {
+            ShopOwnerResponse(
+                id.captured,
+                ShopResponse(listOf(1, 2, 3), "가게", id.captured)
+            )
+        }
+        every { shopOwnerService.addRoyalCustomers(any(), any()) } returns Unit
         RestAssuredMockMvc.standaloneSetup(ShopOwnerController(shopOwnerService))
     }
 }

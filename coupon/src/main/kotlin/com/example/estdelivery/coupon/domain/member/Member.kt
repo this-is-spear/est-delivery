@@ -19,10 +19,6 @@ class Member(
         unusedCouponBook.addUnusedCoupon(coupon)
     }
 
-    fun hasCoupon(coupon: Coupon): Boolean {
-        return unusedCouponBook.showUnusedCoupons().contains(coupon)
-    }
-
     fun sendCoupon(
         coupon: Coupon,
         target: Member,
@@ -46,5 +42,9 @@ class Member(
 
     override fun toString(): String {
         return "Member(id=$id, name='$name', unUsedCouponBook=$unusedCouponBook)"
+    }
+
+    fun have(unusedCouponBook: UnusedCouponBook): Member {
+        return Member(id, name, unusedCouponBook)
     }
 }

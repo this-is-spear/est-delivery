@@ -75,7 +75,7 @@ class DiscountAmountProbabilityTest : FreeSpec({
                 ),
                 DiscountRange(10, 30),
             )
-        checkAll<Int> { a ->
+        checkAll<Int> {
             val discountAmount = discountAmountProbability.getAmountBetween()
 
             collect(discountAmount)

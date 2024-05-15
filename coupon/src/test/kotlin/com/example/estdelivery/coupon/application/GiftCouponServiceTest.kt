@@ -50,10 +50,10 @@ class GiftCouponServiceTest : FreeSpec({
         val giftCouponCommand =
             GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
-        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
-        every { loadMemberStatePort.findById(받는자.id) } returns 받는자
+        every { loadMemberStatePort.findMember(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findMember(받는자.id) } returns 받는자
         every { loadCouponStatePort.findById(giftCouponCommand.couponId) } returns coupon
-        every { updateMemberStatePort.update(any()) } returns Unit
+        every { updateMemberStatePort.updateMembersCoupon(any()) } returns Unit
 
         // when &  then
         shouldNotThrow<Exception> {
@@ -68,8 +68,8 @@ class GiftCouponServiceTest : FreeSpec({
         val giftCouponCommand =
             GiftCouponCommand(1L, 주는자.id, 받는자.id)
 
-        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
-        every { loadMemberStatePort.findById(받는자.id) } returns 받는자
+        every { loadMemberStatePort.findMember(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findMember(받는자.id) } returns 받는자
 
         // when &  then
         shouldThrow<IllegalArgumentException> {
@@ -94,8 +94,8 @@ class GiftCouponServiceTest : FreeSpec({
         val giftCouponCommand =
             GiftCouponCommand(1L, 주는자.id, 주는자.id)
 
-        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
-        every { loadMemberStatePort.findById(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findMember(주는자.id) } returns 주는자
+        every { loadMemberStatePort.findMember(주는자.id) } returns 주는자
 
         // when &  then
         shouldThrow<Exception> {

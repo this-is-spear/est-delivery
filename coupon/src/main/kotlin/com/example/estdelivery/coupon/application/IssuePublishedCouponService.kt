@@ -11,7 +11,9 @@ import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.member.Member
 import com.example.estdelivery.coupon.domain.shop.ShopOwner
+import org.springframework.stereotype.Service
 
+@Service
 class IssuePublishedCouponService(
     loadMemberStatePort: LoadMemberStatePort,
     loadCouponStatePort: LoadCouponStatePort,
@@ -19,23 +21,6 @@ class IssuePublishedCouponService(
     updateMemberStatePort: UpdateMemberStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
-    private val getMember: (IssuePublishedCouponCommand) -> Member = {
-        loadMemberStatePort.findById(
-            it.memberId
-        )
-    },
-    private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = {
-        loadCouponStatePort.findById(
-            it.couponId
-        )
-    },
-    private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = {
-        loadShopOwnerStatePort.findByShopId(
-            it.shopId
-        )
-    },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.update(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
 ) : IssuePublishedCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.
@@ -63,7 +48,25 @@ class IssuePublishedCouponService(
     ) {
         if (!shopOwner.showRoyalCustomersInShop().contains(member)) {
             shopOwner.addRoyalCustomersInShop(member)
-            updateShopOwner(shopOwner)
+            updateRoyalCustomers(shopOwner, member)
         }
+    }
+
+    private val getMember: (IssuePublishedCouponCommand) -> Member = {
+        loadMemberStatePort.findMember(it.memberId)
+    }
+    private val getCoupon: (IssuePublishedCouponCommand) -> Coupon = {
+        loadCouponStatePort.findById(
+            it.couponId
+        )
+    }
+    private val getShopOwner: (IssuePublishedCouponCommand) -> ShopOwner = {
+        loadShopOwnerStatePort.findByShopId(
+            it.shopId
+        )
+    }
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) }
+    private val updateRoyalCustomers: (ShopOwner, Member) -> Unit = { shopOwner, royalCustomer ->
+        updateShopOwnerStatePort.updateRoyalCustomers(shopOwner, royalCustomer)
     }
 }

@@ -1,7 +1,7 @@
 package com.example.estdelivery.coupon.application.port.out
 
-import com.example.estdelivery.coupon.application.port.out.state.LoadRandomCouponIssueEventState
+import com.example.estdelivery.coupon.domain.event.RandomCouponIssueEvent
 
 interface LoadRandomCouponIssueEventStatePort {
-    fun findById(eventId: Long): LoadRandomCouponIssueEventState
+    fun findEvent(eventId: Long): RandomCouponIssueEvent
 }

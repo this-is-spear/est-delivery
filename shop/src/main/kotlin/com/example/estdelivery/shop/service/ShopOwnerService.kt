@@ -2,6 +2,7 @@ package com.example.estdelivery.shop.service
 
 import com.example.estdelivery.shop.dto.ShopOwnerResponse
 import com.example.estdelivery.shop.dto.ShopResponse
+import com.example.estdelivery.shop.entity.RoyalCustomer
 import com.example.estdelivery.shop.repository.ShopOwnerRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -43,5 +44,14 @@ class ShopOwnerService(
                 shopOwner.shop.id!!,
             )
         )
+    }
+
+    fun addRoyalCustomers(shopId: Long, royalCustomerId: Long) {
+        shopOwnerRepository.findByShopId(shopId)
+            ?.let { shopOwner ->
+                shopOwner.shop.royalCustomers += RoyalCustomer(royalCustomerId)
+                shopOwnerRepository.save(shopOwner)
+            }
+            ?: throw IllegalArgumentException("Shop owner not found")
     }
 }

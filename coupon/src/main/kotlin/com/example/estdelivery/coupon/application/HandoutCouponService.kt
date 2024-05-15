@@ -9,22 +9,15 @@ import com.example.estdelivery.coupon.application.port.out.UpdateShopOwnerStateP
 import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.shop.ShopOwner
+import org.springframework.stereotype.Service
 
+@Service
 class HandoutCouponService(
     loadShopOwnerStatePort: LoadShopOwnerStatePort,
     loadCouponStatePort: LoadCouponStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     createCouponStatePort: CreateCouponStatePort,
     private val transactionArea: TransactionArea,
-    private val getShopOwner: (HandoutCouponCommand) -> ShopOwner = {
-        loadShopOwnerStatePort.findById(
-            it.shopOwnerId
-        )
-    },
-    private val notExistCoupon: (Long) -> Boolean = { loadCouponStatePort.exists(it).not() },
-    private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.update(it) },
-    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
 ) : HandoutCouponUseCase {
     /**
      * 1. 가게 주인 정보를 조회한다.
@@ -50,4 +43,14 @@ class HandoutCouponService(
 
         return getCoupon(id)
     }
+
+    private val getShopOwner: (HandoutCouponCommand) -> ShopOwner = {
+        loadShopOwnerStatePort.findById(
+            it.shopOwnerId
+        )
+    }
+    private val notExistCoupon: (Long) -> Boolean = { loadCouponStatePort.exists(it).not() }
+    private val getCoupon: (Long) -> Coupon = { loadCouponStatePort.findById(it) }
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) }
+    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) }
 }

@@ -16,6 +16,7 @@ class ShopOwnerTest : FreeSpec({
             HandOutCouponBook(),
             UsedCouponBook(),
             RoyalCustomers(),
+            1,
             "프리퍼",
         )
 
@@ -34,8 +35,10 @@ class ShopOwnerTest : FreeSpec({
                     HandOutCouponBook(),
                     UsedCouponBook(),
                     단골_리스트,
+                    2,
                     "프리퍼",
                 ),
+                1
             )
 
         // when
@@ -47,7 +50,7 @@ class ShopOwnerTest : FreeSpec({
 
     "쿠폰을 가게에 게시한다." {
         // given
-        val 가게_주인 = ShopOwner(프리퍼)
+        val 가게_주인 = ShopOwner(프리퍼, 1)
 
         // when
         가게_주인.publishCouponInShop(게시할_쿠폰)
@@ -58,7 +61,7 @@ class ShopOwnerTest : FreeSpec({
 
     "단골 회원을 가게에 추가한다." {
         // given
-        val 가게_주인 = ShopOwner(프리퍼)
+        val 가게_주인 = ShopOwner(프리퍼, 2)
         val 홍길동 = Member(1, "홍길동", UnusedCouponBook())
         val 김철수 = Member(2, "김철수", UnusedCouponBook())
 
@@ -72,7 +75,7 @@ class ShopOwnerTest : FreeSpec({
 
     "이벤트 쿠폰을 가게에 발행한다." {
         // given
-        val 가게_주인 = ShopOwner(프리퍼)
+        val 가게_주인 = ShopOwner(프리퍼, 3)
 
         // when
         가게_주인.issueEventCouponInShop(이벤트_쿠폰)

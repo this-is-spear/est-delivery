@@ -5,7 +5,7 @@ import com.example.estdelivery.coupon.domain.member.Member
 
 class ShopOwner(
     private val shop: Shop,
-    val id: Long? = null,
+    val id: Long,
 ) {
     fun handOutCouponToRoyalCustomersInShop(coupon: Coupon) = shop.handOutCouponToRoyalCustomers(coupon)
 
@@ -41,6 +41,10 @@ class ShopOwner(
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
+        return id.hashCode()
+    }
+
+    override fun toString(): String {
+        return "ShopOwner(shop=$shop, id=$id)"
     }
 }
