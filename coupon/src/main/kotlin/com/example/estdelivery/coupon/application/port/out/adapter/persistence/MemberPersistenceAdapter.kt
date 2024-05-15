@@ -1,26 +1,38 @@
 package com.example.estdelivery.coupon.application.port.out.adapter.persistence
 
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.fromCouponMember
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.toMember
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberRepository
-import com.example.estdelivery.coupon.domain.member.Member
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.UnusedCouponEntity
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.fromCoupon
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.toCoupon
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.UnusedCouponRepository
+import com.example.estdelivery.coupon.domain.coupon.Coupon
+import com.example.estdelivery.coupon.domain.coupon.CouponBook
+import com.example.estdelivery.coupon.domain.member.UnusedCouponBook
 import jakarta.transaction.Transactional
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
 class MemberPersistenceAdapter(
-    private val memberRepository: MemberRepository,
+    private val unusedCouponRepository: UnusedCouponRepository,
 ) {
-    fun findMemberCouponById(memberId: Long): Member {
-        return toMember(
-            memberRepository.findByIdOrNull(memberId)
-                ?: throw IllegalArgumentException("Member not found")
-        )
-    }
+    fun findMemberCouponByMemberId(memberId: Long) =
+        unusedCouponRepository.findAllByMemberId(memberId)
+            .map {
+                toCoupon(it.coupon)
+            }.let {
+                UnusedCouponBook(CouponBook(it))
+            }
 
     @Transactional
-    fun update(member: Member) {
-        memberRepository.save(fromCouponMember(member))
+    fun updateUnusedCouponBook(memberId: Long, unusedCoupons: List<Coupon>) {
+        val collectedCoupons = unusedCouponRepository.findAllByMemberId(memberId)
+            .map { toCoupon(it.coupon) }
+            .toSet()
+
+        unusedCoupons.filter { !collectedCoupons.contains(it) }
+            .map {
+                UnusedCouponEntity(memberId, fromCoupon(it))
+            }.let {
+                unusedCouponRepository.saveAll(it)
+            }
     }
 }
