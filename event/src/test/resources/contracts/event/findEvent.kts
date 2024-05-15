@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 contract {
     request {
         method = GET
-        url = url("/events/1")
+        url = url(v(regex("/events/[0-9]{1,9}")))
     }
     response {
         status = OK
@@ -13,7 +13,7 @@ contract {
             contentType = "application/json"
         }
         body = body(
-            "id" to 1,
+            "id" to value("${fromRequest().path(1)}"),
             "description" to "이벤트 설명",
             "isProgress" to true,
             "discountType" to "FIXED",

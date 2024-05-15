@@ -1,6 +1,5 @@
 package com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper
 
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberEntity
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.ShopEntity
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.ShopOwnerEntity
 import com.example.estdelivery.coupon.domain.coupon.CouponBook

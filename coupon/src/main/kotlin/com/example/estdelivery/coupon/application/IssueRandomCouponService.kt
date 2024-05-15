@@ -9,7 +9,6 @@ import com.example.estdelivery.coupon.application.port.out.LoadShopOwnerStatePor
 import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
 import com.example.estdelivery.coupon.application.port.out.UpdateRandomCouponIssueEventStatePort
 import com.example.estdelivery.coupon.application.port.out.UpdateShopOwnerStatePort
-import com.example.estdelivery.coupon.application.port.out.state.UpdateRandomCouponIssueEventState
 import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.event.RandomCouponIssueEvent
@@ -29,7 +28,7 @@ class IssueRandomCouponService(
         loadMemberStatePort.findMember(it.memberId)
     },
     private val getCouponIssueRandomCouponIssueEvent: (IssueEventCouponCommand) -> RandomCouponIssueEvent = {
-        loadRandomCouponIssueEventStatePort.findById(it.eventId).toEvent()
+        loadRandomCouponIssueEventStatePort.findEvent(it.eventId)
     },
     private val getShopOwner: (IssueEventCouponCommand) -> ShopOwner = {
         loadShopOwnerStatePort.findByShopId(it.shopId)
@@ -37,8 +36,8 @@ class IssueRandomCouponService(
     private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
     private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
     private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
-    private val updateEvent: (RandomCouponIssueEvent) -> Unit = {
-        updateRandomCouponIssueEventStatePort.update(UpdateRandomCouponIssueEventState.from(it))
+    private val participateEvent: (RandomCouponIssueEvent, Member) -> Unit = { event, member ->
+        updateRandomCouponIssueEventStatePort.participate(event, member)
     },
 ) : IssueEventCouponUseCase {
     /**
@@ -56,7 +55,7 @@ class IssueRandomCouponService(
             member.receiveCoupon(eventCoupon)
             updateMember(member)
             updateShopOwner(shopOwner)
-            updateEvent(event)
+            participateEvent(event, member)
         }
     }
 }
