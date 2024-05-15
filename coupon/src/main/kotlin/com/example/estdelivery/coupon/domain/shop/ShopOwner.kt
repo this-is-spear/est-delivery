@@ -41,7 +41,7 @@ class ShopOwner(
     }
 
     override fun hashCode(): Int {
-        return id.hashCode() ?: 0
+        return id.hashCode()
     }
 
     override fun toString(): String {
