@@ -5,7 +5,7 @@ import io.kotest.property.checkAll
 
 class EqualDistributionRandomDoubleGeneratorKtTest : FreeSpec({
     "난수 값 생성 분포도를 확인한다." {
-        checkAll<Int> { a ->
+        checkAll<Int> {
             val random = generateDouble()
             when (random) {
                 in 0.0..0.1 -> collect("statistic", "0.0..0.1")
@@ -21,7 +21,7 @@ class EqualDistributionRandomDoubleGeneratorKtTest : FreeSpec({
             }
         }
 
-        checkAll<Int> { a ->
+        checkAll<Int> {
             val random = generateInt(0, 10)
             collect(random)
         }
