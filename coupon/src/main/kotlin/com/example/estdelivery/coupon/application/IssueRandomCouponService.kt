@@ -14,7 +14,9 @@ import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.event.RandomCouponIssueEvent
 import com.example.estdelivery.coupon.domain.member.Member
 import com.example.estdelivery.coupon.domain.shop.ShopOwner
+import org.springframework.stereotype.Service
 
+@Service
 class IssueRandomCouponService(
     loadMemberStatePort: LoadMemberStatePort,
     loadRandomCouponIssueEventStatePort: LoadRandomCouponIssueEventStatePort,
@@ -24,21 +26,6 @@ class IssueRandomCouponService(
     updateRandomCouponIssueEventStatePort: UpdateRandomCouponIssueEventStatePort,
     createCouponStatePort: CreateCouponStatePort,
     private val transactionArea: TransactionArea,
-    private val getMember: (IssueEventCouponCommand) -> Member = {
-        loadMemberStatePort.findMember(it.memberId)
-    },
-    private val getCouponIssueRandomCouponIssueEvent: (IssueEventCouponCommand) -> RandomCouponIssueEvent = {
-        loadRandomCouponIssueEventStatePort.findEvent(it.eventId)
-    },
-    private val getShopOwner: (IssueEventCouponCommand) -> ShopOwner = {
-        loadShopOwnerStatePort.findByShopId(it.shopId)
-    },
-    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
-    private val participateEvent: (RandomCouponIssueEvent, Member) -> Unit = { event, member ->
-        updateRandomCouponIssueEventStatePort.participate(event, member)
-    },
 ) : IssueEventCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.
@@ -57,5 +44,21 @@ class IssueRandomCouponService(
             updateShopOwner(shopOwner)
             participateEvent(event, member)
         }
+    }
+
+    private val getMember: (IssueEventCouponCommand) -> Member = {
+        loadMemberStatePort.findMember(it.memberId)
+    }
+    private val getCouponIssueRandomCouponIssueEvent: (IssueEventCouponCommand) -> RandomCouponIssueEvent = {
+        loadRandomCouponIssueEventStatePort.findEvent(it.eventId)
+    }
+    private val getShopOwner: (IssueEventCouponCommand) -> ShopOwner = {
+        loadShopOwnerStatePort.findByShopId(it.shopId)
+    }
+    private val createCoupon: (Coupon) -> Coupon = { createCouponStatePort.create(it) }
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) }
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) }
+    private val participateEvent: (RandomCouponIssueEvent, Member) -> Unit = { event, member ->
+        updateRandomCouponIssueEventStatePort.participate(event, member)
     }
 }

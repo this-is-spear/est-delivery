@@ -8,24 +8,14 @@ import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
 import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.member.Member
+import org.springframework.stereotype.Service
 
+@Service
 class GiftCouponService(
     loadMemberStatePort: LoadMemberStatePort,
     loadCouponStatePort: LoadCouponStatePort,
     updateMemberStatePort: UpdateMemberStatePort,
     private val transactionArea: TransactionArea,
-    private val getReceiver: (GiftCouponCommand) -> Member = {
-        loadMemberStatePort.findMember(it.receiverId)
-    },
-    private val getSender: (GiftCouponCommand) -> Member = {
-        loadMemberStatePort.findMember(it.senderId)
-    },
-    private val getCoupon: (GiftCouponCommand) -> Coupon = {
-        loadCouponStatePort.findById(
-            it.couponId
-        )
-    },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
 ) : GiftCouponUseCase {
     /**
      * 선물 할 쿠폰과 선물 할 회원의 식별자를 입력해 쿠폰을 나눠준다.
@@ -53,4 +43,17 @@ class GiftCouponService(
             updateMember(sender)
         }
     }
+
+    private val getReceiver: (GiftCouponCommand) -> Member = {
+        loadMemberStatePort.findMember(it.receiverId)
+    }
+    private val getSender: (GiftCouponCommand) -> Member = {
+        loadMemberStatePort.findMember(it.senderId)
+    }
+    private val getCoupon: (GiftCouponCommand) -> Coupon = {
+        loadCouponStatePort.findById(
+            it.couponId
+        )
+    }
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) }
 }

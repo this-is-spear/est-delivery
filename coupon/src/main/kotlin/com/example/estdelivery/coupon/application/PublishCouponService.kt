@@ -8,23 +8,14 @@ import com.example.estdelivery.coupon.application.port.out.UpdateShopOwnerStateP
 import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.shop.ShopOwner
+import org.springframework.stereotype.Service
 
+@Service
 class PublishCouponService(
     loadShopOwnerPort: LoadShopOwnerStatePort,
     createCouponStatePort: CreateCouponStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
-    private val findShopOwner: (PublishCouponCommand) -> ShopOwner = {
-        loadShopOwnerPort.findById(
-            it.shopOwnerId
-        )
-    },
-    private val createCoupon: (PublishCouponCommand) -> Coupon = {
-        createCouponStatePort.create(
-            it.coupon
-        )
-    },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
 ) : PublishCouponUseCase {
     /**
      * 1. 가게 주인 정보를 조회한다.
@@ -42,4 +33,16 @@ class PublishCouponService(
             updateShopOwner(shopOwner)
         }
     }
+
+    private val findShopOwner: (PublishCouponCommand) -> ShopOwner = {
+        loadShopOwnerPort.findById(
+            it.shopOwnerId
+        )
+    }
+    private val createCoupon: (PublishCouponCommand) -> Coupon = {
+        createCouponStatePort.create(
+            it.coupon
+        )
+    }
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) }
 }

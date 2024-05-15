@@ -11,7 +11,9 @@ import com.example.estdelivery.coupon.application.utils.TransactionArea
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.member.Member
 import com.example.estdelivery.coupon.domain.shop.ShopOwner
+import org.springframework.stereotype.Service
 
+@Service
 class UseCouponService(
     loadMemberStatePort: LoadMemberStatePort,
     loadCouponStatePort: LoadCouponStatePort,
@@ -19,23 +21,6 @@ class UseCouponService(
     updateMemberStatePort: UpdateMemberStatePort,
     updateShopOwnerStatePort: UpdateShopOwnerStatePort,
     private val transactionArea: TransactionArea,
-    private val getMember: (UseCouponCommand) -> Member = {
-        loadMemberStatePort.findMember(
-            it.memberId
-        )
-    },
-    private val getCoupon: (UseCouponCommand) -> Coupon = {
-        loadCouponStatePort.findById(
-            it.couponId
-        )
-    },
-    private val getShopOwner: (UseCouponCommand) -> ShopOwner = {
-        loadShopOwnerStatePort.findByShopId(
-            it.shopId
-        )
-    },
-    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
-    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) },
 ) : UseCouponUseCase {
     /**
      * 1. 회원 정보를 조회한다.
@@ -58,4 +43,22 @@ class UseCouponService(
             updateShopOwner(shopOwner)
         }
     }
+
+    private val getMember: (UseCouponCommand) -> Member = {
+        loadMemberStatePort.findMember(
+            it.memberId
+        )
+    }
+    private val getCoupon: (UseCouponCommand) -> Coupon = {
+        loadCouponStatePort.findById(
+            it.couponId
+        )
+    }
+    private val getShopOwner: (UseCouponCommand) -> ShopOwner = {
+        loadShopOwnerStatePort.findByShopId(
+            it.shopId
+        )
+    }
+    private val updateMember: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) }
+    private val updateShopOwner: (ShopOwner) -> Unit = { updateShopOwnerStatePort.updateShopOwnersCoupons(it) }
 }
