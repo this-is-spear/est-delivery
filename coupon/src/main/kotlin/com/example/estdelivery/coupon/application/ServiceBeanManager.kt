@@ -5,6 +5,7 @@ import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageU
 import com.example.estdelivery.coupon.application.port.out.CreateGiftCouponMessageStatePort
 import com.example.estdelivery.coupon.application.port.out.LoadMemberStatePort
 import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
+import com.example.estdelivery.coupon.application.port.out.ValidateGiftCouponCodeStatePort
 import com.example.estdelivery.coupon.application.utils.TransactionArea
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,11 +21,13 @@ class ServiceBeanManager {
         transactionArea: TransactionArea,
         loadMemberStatePort: LoadMemberStatePort,
         createGiftCouponMessageStatePort: CreateGiftCouponMessageStatePort,
+        validateGiftCouponCodeStatePort: ValidateGiftCouponCodeStatePort,
         updateMemberStatePort: UpdateMemberStatePort,
     ): GiftCouponByMessageUseCase = GiftCouponByMessageService(
         loadMemberStatePort,
         createGiftCouponMessageStatePort,
         updateMemberStatePort,
+        validateGiftCouponCodeStatePort,
         transactionArea,
     )
 }
