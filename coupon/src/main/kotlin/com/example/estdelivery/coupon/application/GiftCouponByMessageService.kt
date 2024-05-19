@@ -20,6 +20,18 @@ class GiftCouponByMessageService(
     },
     private val updateMembersCoupon: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) }
 ) : GiftCouponByMessageUseCase {
+    /**
+     * 선물 메시지를 통해 쿠폰을 선물한다.
+     *
+     * 1. 보낼 사람의 정보를 조회한다.
+     * 2. 보낼 쿠폰의 정보를 조회한다.
+     * 3. 보낼 사람의 쿠폰북에서 쿠폰을 삭제한다.
+     * 4. 선물 메시지를 생성한다.
+     *
+     * @param memberId 선물하는 회원 식별자
+     * @param couponId 선물할 쿠폰 식별자
+     * @param giftMessage 선물 메시지
+     */
     override fun sendGiftAvailableCoupon(memberId: Long, couponId: Long, giftMessage: String): GiftMessage {
         return transactionArea.run {
             val sender = findMember(memberId)
