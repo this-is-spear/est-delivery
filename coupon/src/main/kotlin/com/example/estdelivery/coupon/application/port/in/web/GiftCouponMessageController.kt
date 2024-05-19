@@ -51,7 +51,7 @@ class GiftCouponMessageController(
             GiftMessageResponse(
                 senderName = it.sender.name,
                 description = it.giftMessage,
-                enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/${it.giftCouponCode}")
+                enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/${it.giftCouponCode.code}")
             )
         }
 }
