@@ -3,6 +3,7 @@ package com.example.estdelivery.coupon.application.port.`in`.web
 import com.example.estdelivery.coupon.application.port.`in`.FindAvailableGiftCouponUseCase
 import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageUseCase
 import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
+import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
 import com.example.estdelivery.coupon.domain.coupon.GiftMessage
 import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.coupon.domain.fixture.일건창
@@ -68,7 +69,7 @@ class GiftCouponMessageControllerTest {
             sender = 일건창,
             giftMessage = messageDescription,
             giftCoupon = 선물할_쿠폰,
-            giftCode = giftCode
+            giftCouponCode = GiftCouponCode(giftCode)
         )
 
         // then
