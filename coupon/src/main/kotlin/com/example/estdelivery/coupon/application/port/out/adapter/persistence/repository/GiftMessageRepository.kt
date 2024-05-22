@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface GiftMessageRepository : JpaRepository<GiftMessageEntity, Long> {
     fun existsByEnrollCode(enrollCode: String): Boolean
+    fun findByEnrollCode(enrollCode: String): GiftMessageEntity?
 }

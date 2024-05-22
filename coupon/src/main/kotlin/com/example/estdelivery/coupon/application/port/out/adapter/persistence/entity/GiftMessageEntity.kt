@@ -14,14 +14,16 @@ import java.time.LocalDate
 @Table(name = "gift_message")
 class GiftMessageEntity(
     val message: String,
-    @Column(name = "sender_id")
+    @Column(name = "sender_id", nullable = false)
     val sender: Long,
+    @Column(unique = true, nullable = false)
     val enrollCode: String,
     @OneToOne
-    @JoinColumn(name = "coupon_id")
+    @JoinColumn(name = "coupon_id", nullable = false)
     val coupon: CouponEntity,
+    @Column(nullable = false)
     val enrollDate: LocalDate = LocalDate.now(),
-    val isUsed: Boolean = false,
+    var isUsed: Boolean = false,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
