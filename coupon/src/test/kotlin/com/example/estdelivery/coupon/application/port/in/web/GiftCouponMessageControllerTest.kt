@@ -1,5 +1,6 @@
 package com.example.estdelivery.coupon.application.port.`in`.web
 
+import com.example.estdelivery.coupon.application.port.`in`.EnrollCouponByMessageUseCase
 import com.example.estdelivery.coupon.application.port.`in`.FindAvailableGiftCouponUseCase
 import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageUseCase
 import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
@@ -27,6 +28,9 @@ class GiftCouponMessageControllerTest {
 
     @MockkBean
     lateinit var giftCouponByMessageUseCase: GiftCouponByMessageUseCase
+
+    @MockkBean
+    lateinit var enrollCouponByMessageUseCase: EnrollCouponByMessageUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -83,6 +87,23 @@ class GiftCouponMessageControllerTest {
                 jsonPath("$.senderName") { value(일건창.name) }
                 jsonPath("$.description") { value(messageDescription) }
             }
+        }
+    }
+
+    @Test
+    fun `쿠폰 코드를 입력해 쿠폰을 등록한다`() {
+        // given
+        val giftCouponCode = GiftCouponCode.create()
+        val 일건창 = 일건창()
+
+        // when
+        every { enrollCouponByMessageUseCase.enroll(일건창.id, giftCouponCode) } returns Unit
+
+        // then
+        mockMvc.get("/gift-coupons/enroll/{code}", giftCouponCode.code) {
+            header(MEMBER_ID, 일건창.id)
+        }.andExpect {
+            status { isOk() }
         }
     }
 }
