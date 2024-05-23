@@ -14,5 +14,6 @@ data class GiftCoupon(
     init {
         require(!coupon.isPublished()) { "발행한 쿠폰은 선물할 수 없습니다." }
         require(enrollEndDate.isAfter(LocalDate.now())) { "유효기간이 지난 쿠폰은 선물할 수 없습니다." }
+        require(!isUsed) { "이미 사용된 쿠폰은 선물할 수 없습니다." }
     }
 }

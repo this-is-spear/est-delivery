@@ -55,21 +55,4 @@ class EnrollCouponByMessageServiceTest : FreeSpec({
         // then
         updatedMember.captured.showMyCouponBook() shouldContain coupon
     }
-
-    "메시지로 받은 쿠폰 코드는 사용된적이 있으면 예외가 발생한다." {
-        // given
-        val member = 일건창()
-        val giftCouponCode = GiftCouponCode.create()
-        val coupon = 나눠준_비율_할인_쿠폰
-        val giftCoupon = GiftCoupon(coupon, LocalDate.now().plusDays(1), true)
-
-        // when
-        every { loadMemberStatePort.findMember(member.id) } returns member
-        every { loadGiftCouponStatePort.findGiftCoupon(giftCouponCode) } returns giftCoupon
-
-        // then
-        shouldThrow<IllegalArgumentException> {
-            enrollCouponByMessageService.enroll(member.id, giftCouponCode)
-        }
-    }
 })
