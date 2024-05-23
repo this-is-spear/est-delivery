@@ -34,7 +34,7 @@ class GiftCouponMessageAdapter(
             sender = sender,
             giftMessage = giftMessageEntity.message,
             giftCouponCode = GiftCouponCode(giftMessageEntity.enrollCode),
-            giftCoupon = GiftCoupon(coupon)
+            giftCoupon = GiftCoupon(coupon, giftMessageEntity.enrollEndDate, giftMessageEntity.isUsed)
         )
     }
 
@@ -51,7 +51,7 @@ class GiftCouponMessageAdapter(
 
     override fun findGiftCoupon(giftCouponCode: GiftCouponCode): GiftCoupon {
         return giftMessageRepository.findByEnrollCode(giftCouponCode.code)
-            ?.let { GiftCoupon(toCoupon(it.coupon), it.isUsed) }
+            ?.let { GiftCoupon(toCoupon(it.coupon), it.enrollEndDate, it.isUsed) }
             ?: throw IllegalArgumentException("GiftCouponCode not found")
     }
 }
