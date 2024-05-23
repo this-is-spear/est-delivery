@@ -8,7 +8,6 @@ import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponRe
 import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftMessageResponse
 import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
 import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
-import com.example.estdelivery.coupon.domain.coupon.GiftMessage
 import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.coupon.domain.fixture.일건창
 import com.ninjasquad.springmockk.MockkBean

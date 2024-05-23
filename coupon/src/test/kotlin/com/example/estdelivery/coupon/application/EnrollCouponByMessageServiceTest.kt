@@ -10,7 +10,6 @@ import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
 import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.coupon.domain.fixture.일건창
 import com.example.estdelivery.coupon.domain.member.Member
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.mockk.every
