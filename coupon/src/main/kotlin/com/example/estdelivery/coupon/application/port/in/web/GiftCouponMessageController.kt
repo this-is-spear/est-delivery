@@ -6,7 +6,6 @@ import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageU
 import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponses
 import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftMessageResponse
 import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
-import java.net.URL
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -36,14 +35,6 @@ class GiftCouponMessageController(
         @PathVariable couponId: Long,
     ): GiftMessageResponse =
         giftCouponByMessageUseCase.sendGiftAvailableCoupon(memberId, couponId, message)
-            .let {
-                GiftMessageResponse(
-                    senderName = it.sender.name,
-                    description = it.giftMessage,
-                    enrollEndDate = it.giftCoupon.enrollEndDate,
-                    enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/${it.giftCouponCode.code}")
-                )
-        }
 
     @GetMapping("/enroll/{code}")
     fun enrollGiftCoupon(

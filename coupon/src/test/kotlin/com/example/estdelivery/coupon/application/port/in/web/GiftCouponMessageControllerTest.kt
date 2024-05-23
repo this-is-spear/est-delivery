@@ -5,6 +5,7 @@ import com.example.estdelivery.coupon.application.port.`in`.FindAvailableGiftCou
 import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageUseCase
 import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponse
 import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponses
+import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftMessageResponse
 import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
 import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
 import com.example.estdelivery.coupon.domain.coupon.GiftMessage
@@ -12,6 +13,7 @@ import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠
 import com.example.estdelivery.coupon.domain.fixture.일건창
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import java.net.URL
 import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -78,11 +80,11 @@ class GiftCouponMessageControllerTest {
 
         every {
             giftCouponByMessageUseCase.sendGiftAvailableCoupon(일건창.id, 선물할_쿠폰.coupon.id!!, messageDescription)
-        } returns GiftMessage(
-            sender = 일건창,
-            giftMessage = messageDescription,
-            giftCoupon = 선물할_쿠폰,
-            giftCouponCode = GiftCouponCode(giftCode)
+        } returns GiftMessageResponse(
+            senderName = 일건창.name,
+            description = messageDescription,
+            enrollEndDate = 선물할_쿠폰.enrollEndDate,
+            enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/$giftCode")
         )
 
         // then
