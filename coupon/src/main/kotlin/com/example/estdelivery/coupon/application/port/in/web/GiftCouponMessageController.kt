@@ -35,16 +35,14 @@ class GiftCouponMessageController(
         @RequestParam message: String,
         @PathVariable couponId: Long,
     ): GiftMessageResponse =
-        giftCouponByMessageUseCase.sendGiftAvailableCoupon(
-            memberId,
-            couponId,
-            message,
-        ).let {
-            GiftMessageResponse(
-                senderName = it.sender.name,
-                description = it.giftMessage,
-                enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/${it.giftCouponCode.code}")
-            )
+        giftCouponByMessageUseCase.sendGiftAvailableCoupon(memberId, couponId, message)
+            .let {
+                GiftMessageResponse(
+                    senderName = it.sender.name,
+                    description = it.giftMessage,
+                    enrollEndDate = it.giftCoupon.enrollEndDate,
+                    enrollHref = URL("http", "localhost", 8080, "/gift-coupons/enroll/${it.giftCouponCode.code}")
+                )
         }
 
     @GetMapping("/enroll/{code}")
