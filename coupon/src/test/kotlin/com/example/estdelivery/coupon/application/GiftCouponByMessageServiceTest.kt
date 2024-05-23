@@ -16,6 +16,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import java.time.LocalDate
 
 class GiftCouponByMessageServiceTest : FreeSpec({
     val loadMemberStatePort = mockk<LoadMemberStatePort>()
@@ -50,7 +51,7 @@ class GiftCouponByMessageServiceTest : FreeSpec({
             일건창,
             선물_메시지,
             쿠폰_코드,
-            GiftCoupon(선물할_쿠폰)
+            GiftCoupon(선물할_쿠폰, LocalDate.now().plusDays(1))
         )
         every { validateGiftCouponCodeStatePort.validate(any()) } returns true
         every { updateMemberStatePort.updateMembersCoupon(capture(변경된_회원_정보)) } returns Unit

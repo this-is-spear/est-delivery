@@ -16,6 +16,7 @@ import io.kotest.matchers.collections.shouldContain
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import java.time.LocalDate
 
 class EnrollCouponByMessageServiceTest : FreeSpec({
     val loadMemberStatePort = mockk<LoadMemberStatePort>()
@@ -40,7 +41,7 @@ class EnrollCouponByMessageServiceTest : FreeSpec({
         val member = 일건창()
         val giftCouponCode = GiftCouponCode.create()
         val coupon = 나눠준_비율_할인_쿠폰
-        val giftCoupon = GiftCoupon(coupon)
+        val giftCoupon = GiftCoupon(coupon, LocalDate.now().plusDays(1))
         val updatedMember = slot<Member>()
 
         // when
@@ -55,12 +56,12 @@ class EnrollCouponByMessageServiceTest : FreeSpec({
         updatedMember.captured.showMyCouponBook() shouldContain coupon
     }
 
-    "메시지로 받은 쿠폰 코드는 사용된적이 없으면 예외가 발생한다." {
+    "메시지로 받은 쿠폰 코드는 사용된적이 있으면 예외가 발생한다." {
         // given
         val member = 일건창()
         val giftCouponCode = GiftCouponCode.create()
         val coupon = 나눠준_비율_할인_쿠폰
-        val giftCoupon = GiftCoupon(coupon, true)
+        val giftCoupon = GiftCoupon(coupon, LocalDate.now().plusDays(1), true)
 
         // when
         every { loadMemberStatePort.findMember(member.id) } returns member

@@ -3,6 +3,8 @@ package com.example.estdelivery.coupon.application.port.`in`.web
 import com.example.estdelivery.coupon.application.port.`in`.EnrollCouponByMessageUseCase
 import com.example.estdelivery.coupon.application.port.`in`.FindAvailableGiftCouponUseCase
 import com.example.estdelivery.coupon.application.port.`in`.GiftCouponByMessageUseCase
+import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponse
+import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponses
 import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
 import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
 import com.example.estdelivery.coupon.domain.coupon.GiftMessage
@@ -10,6 +12,7 @@ import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠
 import com.example.estdelivery.coupon.domain.fixture.일건창
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -40,11 +43,17 @@ class GiftCouponMessageControllerTest {
         // given
         val memberId = 1L
         // when
-        every { findAvailableGiftCouponUseCase.findAvailableGiftCoupon(memberId) } returns listOf(
-            GiftCoupon(
-                나눠준_비율_할인_쿠폰
+        every { findAvailableGiftCouponUseCase.findAvailableGiftCoupon(memberId) } returns GiftCouponResponses(
+            listOf(
+                GiftCouponResponse(
+                    id = 나눠준_비율_할인_쿠폰.id!!,
+                    name = 나눠준_비율_할인_쿠폰.name,
+                    discountAmount = 나눠준_비율_할인_쿠폰.discountRate,
+                    discountType = 나눠준_비율_할인_쿠폰.couponType
+                )
             )
         )
+
         // then
         mockMvc.get("/gift-coupons") {
             header(MEMBER_ID, memberId)
@@ -61,7 +70,7 @@ class GiftCouponMessageControllerTest {
     fun `쿠폰 선물할 메시지를 전달받는다`() {
         // given
         val 일건창 = 일건창()
-        val 선물할_쿠폰 = GiftCoupon(나눠준_비율_할인_쿠폰)
+        val 선물할_쿠폰 = GiftCoupon(나눠준_비율_할인_쿠폰, LocalDate.now().plusDays(1))
 
         // when
         val messageDescription = "선물 메시지"
