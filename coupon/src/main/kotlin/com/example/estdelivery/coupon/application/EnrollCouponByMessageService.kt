@@ -19,10 +19,8 @@ class EnrollCouponByMessageService(
     private val transactionArea: TransactionArea,
     private val findMember: (Long) -> Member = { loadMemberStatePort.findMember(it) },
     private val useGiftCouponCode: (GiftCouponCode) -> GiftCoupon = {
-        val giftCoupon = loadGiftCouponStatePort.findGiftCoupon(it)
-        if (giftCoupon.isUsed) throw IllegalArgumentException("이미 사용된 쿠폰입니다.")
         useGiftCouponCodeStatePort.useBy(it)
-        giftCoupon
+        loadGiftCouponStatePort.findGiftCoupon(it)
     },
     private val updateMembersCoupon: (Member) -> Unit = { updateMemberStatePort.updateMembersCoupon(it) },
 ) : EnrollCouponByMessageUseCase {
