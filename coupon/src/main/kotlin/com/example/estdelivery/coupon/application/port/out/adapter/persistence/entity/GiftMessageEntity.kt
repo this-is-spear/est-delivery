@@ -24,7 +24,7 @@ class GiftMessageEntity(
     @Column(nullable = false)
     val enrollDate: LocalDate = LocalDate.now(),
     @Column(nullable = false)
-    val enrollEndDate: LocalDate = enrollDate.plusMonths(6),
+    val enrollEndDate: LocalDate,
     var isUsed: Boolean = false,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
