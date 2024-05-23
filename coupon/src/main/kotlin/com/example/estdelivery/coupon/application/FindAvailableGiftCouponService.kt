@@ -1,9 +1,12 @@
 package com.example.estdelivery.coupon.application
 
 import com.example.estdelivery.coupon.application.port.`in`.FindAvailableGiftCouponUseCase
+import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponse
+import com.example.estdelivery.coupon.application.port.`in`.web.dto.GiftCouponResponses
 import com.example.estdelivery.coupon.application.port.out.LoadMemberStatePort
 import com.example.estdelivery.coupon.domain.coupon.Coupon
-import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
+import com.example.estdelivery.coupon.domain.coupon.Coupon.FixDiscountCoupon
+import com.example.estdelivery.coupon.domain.coupon.Coupon.RateDiscountCoupon
 import com.example.estdelivery.coupon.domain.member.Member
 
 class FindAvailableGiftCouponService(
@@ -16,12 +19,22 @@ class FindAvailableGiftCouponService(
      * 3. 선물 가능한 쿠폰을 고른다.
      * 4. 선물 가능한 쿠폰을 반환한다.
      */
-    override fun findAvailableGiftCoupon(memberId: Long): List<GiftCoupon> {
+    override fun findAvailableGiftCoupon(memberId: Long): GiftCouponResponses {
         val member = findMember(memberId)
         val myCouponBook = member.showMyCouponBook()
         return myCouponBook
             .filter { isGiftAvailable(it) }
-            .map { GiftCoupon(it) }
+            .map {
+                GiftCouponResponse(
+                    id = it.id!!,
+                    name = it.name,
+                    discountAmount = if (it is FixDiscountCoupon) it.discountAmount
+                    else (it as RateDiscountCoupon).discountRate,
+                    discountType = it.couponType
+                )
+            }.let {
+                GiftCouponResponses(it)
+            }
     }
 
     private fun isGiftAvailable(coupon: Coupon): Boolean {

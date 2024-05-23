@@ -2,6 +2,8 @@ package com.example.estdelivery.coupon.domain.fixture
 
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.coupon.CouponType
+import com.example.estdelivery.coupon.domain.coupon.GiftCoupon
+import java.time.LocalDate
 
 val 나눠줄_쿠폰 = Coupon.RateDiscountCoupon(10, "10% 할인 쿠폰", "10% 할인 쿠폰 설명", CouponType.IS_HAND_OUT)
 val 나눠준_비율_할인_쿠폰 = Coupon.RateDiscountCoupon(10, "10% 할인 쿠폰", "10% 할인 쿠폰 설명", CouponType.IS_HAND_OUT, 1L)
@@ -11,3 +13,4 @@ val 게시되지_않은_쿠폰 = Coupon.FixDiscountCoupon(1000, "1000원 할인 
 val 나눠주지_않은_쿠폰 = Coupon.FixDiscountCoupon(1000, "1000원 할인 쿠폰", "1000원 할인 쿠폰 설명", CouponType.IS_PUBLISHED, 2L)
 val 이벤트하지_않은_쿠폰 = Coupon.FixDiscountCoupon(1000, "1000원 할인 쿠폰", "1000원 할인 쿠폰 설명", CouponType.IS_EVENT, 10L)
 val 이벤트_쿠폰 = Coupon.RateDiscountCoupon(13, "13% 이벤트 쿠폰", "13% 할인 쿠폰 설명", CouponType.IS_EVENT, 3L)
+val 선물할_쿠폰 = GiftCoupon(나눠준_비율_할인_쿠폰, LocalDate.now().plusDays(1))

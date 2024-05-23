@@ -23,6 +23,8 @@ class GiftMessageEntity(
     val coupon: CouponEntity,
     @Column(nullable = false)
     val enrollDate: LocalDate = LocalDate.now(),
+    @Column(nullable = false)
+    val enrollEndDate: LocalDate,
     var isUsed: Boolean = false,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
