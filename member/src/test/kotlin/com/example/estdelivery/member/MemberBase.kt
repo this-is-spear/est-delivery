@@ -21,12 +21,12 @@ open class MemberBase {
 
     @BeforeEach
     fun setup() {
-        val id = slot<Long>()
-        every { memberService.findMemberById(capture(id)) } answers {
-            if (id.captured % 2 == 0L) {
+        every { memberService.findMemberById(any()) } answers {
+            val capturedId = firstArg<Long>()
+            if (capturedId % 2 == 0L) {
                 throw IllegalArgumentException("Invalid id")
             }
-            MemberResponse(id.captured, "이건창")
+            MemberResponse(capturedId, "이건창")
         }
 
         RestAssuredMockMvc.webAppContextSetup(this.context)
