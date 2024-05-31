@@ -1,12 +1,22 @@
-
 import org.springframework.cloud.contract.spec.ContractDsl.Companion.contract
 
-contract {
-    request {
-        method = PUT
-        url = url(v(regex("/events/[0-9]{1,9}/participants/[0-9]{1,9}")))
+arrayOf(
+    contract {
+        request {
+            method = PUT
+            url = url(v(regex("\\/events\\/[0-9]{1,9}\\/participants\\/[0-9]{1,7}[13579]")))
+        }
+        response {
+            status = OK
+        }
+    },
+    contract {
+        request {
+            method = PUT
+            url = url(v(regex("\\/events\\/[0-9]{1,9}\\/participants\\/[0-9]{1,7}[02468]")))
+        }
+        response {
+            status = BAD_REQUEST
+        }
     }
-    response {
-        status = OK
-    }
-}
+)
