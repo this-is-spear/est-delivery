@@ -37,7 +37,7 @@ arrayOf(
                 ),
                 "discountRangeMin" to 1000,
                 "discountRangeMax" to 2500,
-                "participatedMembers" to listOf(1, 2, 3)
+                "participatedMembers" to listOf(1, 3, 5)
             )
         }
     },
