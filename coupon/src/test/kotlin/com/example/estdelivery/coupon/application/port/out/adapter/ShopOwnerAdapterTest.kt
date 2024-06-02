@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
+import org.springframework.data.repository.findByIdOrNull
 
 @SpringBootTest
 @AutoConfigureStubRunner(
@@ -37,21 +38,17 @@ class ShopOwnerAdapterTest(
     @Autowired
     private val shopOwnerAdapter: ShopOwnerAdapter,
 ) {
+    lateinit var ownerEntity: ShopOwnerEntity
 
     @BeforeEach
     fun setUp() {
-        memberRepository.deleteAll()
-        shopOwnerRepository.deleteAll()
-        couponRepository.deleteAll()
+        ownerEntity = shopOwnerRepository.findByIdOrNull(1) ?: shopOwnerRepository.save(
+            ShopOwnerEntity(ShopEntity(listOf(), listOf(), listOf(), listOf()))
+        )
     }
 
     @Test
     fun `가게 주인 식별자로 가게 주인을 찾는다`() {
-        val shopEntity = ShopEntity(listOf(), listOf(), listOf(), listOf())
-        val shopOwnerEntity = ShopOwnerEntity(shopEntity)
-
-        val ownerEntity = shopOwnerRepository.save(shopOwnerEntity)
-
         // when
         val owner = shopOwnerAdapter.findById(ownerEntity.id!!)
 
@@ -61,10 +58,6 @@ class ShopOwnerAdapterTest(
 
     @Test
     fun `가게 식별자로 가게 주인을 찾는다`() {
-        val shopEntity = ShopEntity(listOf(), listOf(), listOf(), listOf())
-        val shopOwnerEntity = ShopOwnerEntity(shopEntity)
-        val ownerEntity = shopOwnerRepository.save(shopOwnerEntity)
-
         val owner = shopOwnerAdapter.findByShopId(ownerEntity.shopEntity.id!!)
 
         // then
@@ -73,10 +66,6 @@ class ShopOwnerAdapterTest(
 
     @Test
     fun `수정된 쿠폰 목록을 저장한다`() {
-        val shopEntity = ShopEntity(listOf(), listOf(), listOf(), listOf())
-        val shopOwnerEntity = ShopOwnerEntity(shopEntity)
-        val ownerEntity = shopOwnerRepository.save(shopOwnerEntity)
-
         val owner = shopOwnerAdapter.findById(ownerEntity.id!!)
         val 게시할_쿠폰 = toCoupon(couponRepository.save(fromCoupon(게시할_쿠폰)))
         val 나눠줄_쿠폰 = toCoupon(couponRepository.save(fromCoupon(나눠줄_쿠폰)))
@@ -93,10 +82,7 @@ class ShopOwnerAdapterTest(
 
     @Test
     fun `단골 고객을 추가한다`() {
-        val shopEntity = ShopEntity(listOf(), listOf(), listOf(), listOf())
-        val shopOwnerEntity = ShopOwnerEntity(shopEntity)
-        val ownerEntity = shopOwnerRepository.save(shopOwnerEntity)
-        val member = memberAdapter.findMember(10L)
+        val member = memberAdapter.findMember(9L)
         val owner = shopOwnerAdapter.findById(ownerEntity.id!!)
 
         owner.addRoyalCustomersInShop(member)

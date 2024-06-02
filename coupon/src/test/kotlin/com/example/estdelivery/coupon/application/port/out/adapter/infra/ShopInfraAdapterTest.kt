@@ -25,12 +25,12 @@ class ShopInfraAdapterTest(
 
     @Test
     fun `가게 식별자로 가게 주인을 찾는다`() {
-        val shopOwner = shopInfraAdapter.findShopOwnerByShopId(2L)
-        assertThat(shopOwner.id).isEqualTo(2L)
+        val shopOwner = shopInfraAdapter.findShopOwnerByShopId(1L)
+        assertThat(shopOwner.id).isEqualTo(1L)
     }
 
     @Test
     fun `가게 주인에게 단골 소님을 추가한다`() {
-        shopInfraAdapter.addRoyalCustomers(3L, 4L)
+        shopInfraAdapter.addRoyalCustomers(3L, 7L)
     }
 }
