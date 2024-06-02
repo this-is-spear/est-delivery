@@ -4,7 +4,7 @@ arrayOf(
     contract {
         request {
             method = PUT
-            url = url(v(regex("\\/events\\/[0-9]{1,9}\\/participants\\/[0-9]{1,7}[13579]")))
+            url = url(v(regex("/events/[0-9]{1,9}/participants/[1-9]{0,7}[13579]")))
         }
         response {
             status = OK
@@ -13,7 +13,7 @@ arrayOf(
     contract {
         request {
             method = PUT
-            url = url(v(regex("\\/events\\/[0-9]{1,9}\\/participants\\/[0-9]{1,7}[02468]")))
+            url = url(v(regex("/events/[0-9]{1,9}/participants/[1-9]{0,7}[02468]")))
         }
         response {
             status = BAD_REQUEST

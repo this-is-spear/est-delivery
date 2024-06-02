@@ -9,7 +9,7 @@ arrayOf(
         name = "add royal customers"
         request {
             method = POST
-            url = url(v(regex("\\/owners\\/shop\\/[0-9]{1,8}\\/royal-customers\\/[0-9]{1,7}[13579]")))
+            url = url(v(regex("/owners/shop/[0-9]{1,8}/royal-customers/[0-9]{1,7}[13579]")))
         }
         response {
             status = OK
@@ -18,7 +18,7 @@ arrayOf(
     contract {
         request {
             method = POST
-            url = url(v(regex("\\/owners\\/shop\\/[0-9]{1,8}\\/royal-customers\\/[0-9]{1,7}[02468]")))
+            url = url(v(regex("/owners/shop/[0-9]{1,8}/royal-customers/[0-9]{1,7}[02468]")))
         }
         response {
             status = BAD_REQUEST

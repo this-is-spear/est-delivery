@@ -6,7 +6,7 @@ arrayOf(
     contract {
         request {
             method = GET
-            url = url(v(regex("\\/owners\\/[0-9]{1,7}[13579]")))
+            url = url(v(regex("/owners/[1-9]{0,7}[13579]")))
         }
         response {
             status = OK
@@ -26,7 +26,7 @@ arrayOf(
     contract {
         request {
             method = GET
-            url = url(v(regex("\\/owners\\/[0-9]{1,7}[02468]")))
+            url = url(v(regex("/owners/[1-9]{0,7}[02468]")))
         }
         response {
             status = BAD_REQUEST

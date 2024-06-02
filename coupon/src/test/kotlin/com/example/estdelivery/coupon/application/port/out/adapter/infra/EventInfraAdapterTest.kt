@@ -20,7 +20,7 @@ class EventInfraAdapterTest(
     @Test
     fun `이벤트를 조회한다`() {
         val event = eventInfraAdapter.findEvent(1)
-        assertEquals(1L, event.id)
+        assertEquals(1, event.id)
     }
 
     @Test
