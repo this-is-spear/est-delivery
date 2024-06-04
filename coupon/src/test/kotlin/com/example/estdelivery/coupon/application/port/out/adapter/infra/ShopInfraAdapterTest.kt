@@ -2,10 +2,13 @@ package com.example.estdelivery.coupon.application.port.out.adapter.infra
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
+import org.springframework.web.client.HttpClientErrorException
+import org.springframework.web.client.HttpServerErrorException
 
 @SpringBootTest
 @AutoConfigureStubRunner(
@@ -32,5 +35,33 @@ class ShopInfraAdapterTest(
     @Test
     fun `가게 주인에게 단골 소님을 추가한다`() {
         shopInfraAdapter.addRoyalCustomers(3L, 7L)
+    }
+
+    @Test
+    fun `1000번 식별자를 조회하면 400 에러가 발생한다`() {
+        assertThrows<HttpClientErrorException.BadRequest> {
+            shopInfraAdapter.findShopOwner(1000)
+        }
+    }
+
+    @Test
+    fun `1001번 식별자를 조회하면 429 에러가 발생한다`() {
+        assertThrows<HttpClientErrorException.TooManyRequests> {
+            shopInfraAdapter.findShopOwner(1001)
+        }
+    }
+
+    @Test
+    fun `1100번 식별자를 조회하면 500 에러가 발생한다`() {
+        assertThrows<HttpServerErrorException.InternalServerError> {
+            shopInfraAdapter.findShopOwner(1100)
+        }
+    }
+
+    @Test
+    fun `1101번 식별자를 조회하면 503 에러가 발생한다`() {
+        assertThrows<HttpServerErrorException.ServiceUnavailable> {
+            shopInfraAdapter.findShopOwner(1101)
+        }
     }
 }
