@@ -1,5 +1,9 @@
 package com.example.estdelivery.member
 
+import com.example.estdelivery.member.controller.BadRequestException
+import com.example.estdelivery.member.controller.InternalServerErrorException
+import com.example.estdelivery.member.controller.ServiceUnavailableException
+import com.example.estdelivery.member.controller.TooManyRequestsException
 import com.example.estdelivery.member.dto.MemberResponse
 import com.example.estdelivery.member.service.MemberService
 import com.ninjasquad.springmockk.MockkBean
@@ -22,13 +26,29 @@ open class MemberBase {
     @BeforeEach
     fun setup() {
         every { memberService.findMemberById(any()) } answers {
-            val capturedId = firstArg<Long>()
-            if (capturedId % 2 == 0L) {
-                throw IllegalArgumentException("Invalid id")
-            }
-            MemberResponse(capturedId, "이건창")
+            val id = firstArg<Long>()
+            handleDefaultException(id)
+            MemberResponse(id, "이건창")
         }
 
         RestAssuredMockMvc.webAppContextSetup(this.context)
+    }
+
+    private fun handleDefaultException(id: Long) {
+        if (id == 1000L) {
+            throw BadRequestException()
+        }
+
+        if (id == 1001L) {
+            throw TooManyRequestsException()
+        }
+
+        if (id == 1100L) {
+            throw InternalServerErrorException()
+        }
+
+        if (id == 1101L) {
+            throw ServiceUnavailableException()
+        }
     }
 }
