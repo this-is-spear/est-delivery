@@ -6,7 +6,7 @@ arrayOf(
     contract {
         request {
             method = GET
-            url = url(v(regex("/events/[1-9]{0,7}[13579]")))
+            url = url(v(regex("/events/[0-9]{1,3}")))
         }
         response {
             status = OK
@@ -37,17 +37,44 @@ arrayOf(
                 ),
                 "discountRangeMin" to 1000,
                 "discountRangeMax" to 2500,
-                "participatedMembers" to listOf(1, 3, 5)
+                "participatedMembers" to listOf(1, 2, 3)
             )
         }
     },
     contract {
         request {
             method = GET
-            url = url(v(regex("/events/[1-9]{0,7}[02468]")))
+            url = url(v(regex("/events/1000")))
         }
         response {
             status = BAD_REQUEST
+        }
+    },
+    contract {
+        request {
+            method = GET
+            url = url(v(regex("/events/1001")))
+        }
+        response {
+            status = TOO_MANY_REQUESTS
+        }
+    },
+    contract {
+        request {
+            method = GET
+            url = url(v(regex("/events/1100")))
+        }
+        response {
+            status = INTERNAL_SERVER_ERROR
+        }
+    },
+    contract {
+        request {
+            method = GET
+            url = url(v(regex("/events/1101")))
+        }
+        response {
+            status = SERVICE_UNAVAILABLE
         }
     }
 )
