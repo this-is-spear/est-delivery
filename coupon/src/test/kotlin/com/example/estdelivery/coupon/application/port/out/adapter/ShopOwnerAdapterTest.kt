@@ -42,7 +42,7 @@ class ShopOwnerAdapterTest(
 
     @BeforeEach
     fun setUp() {
-        ownerEntity = shopOwnerRepository.findByIdOrNull(1) ?: shopOwnerRepository.save(
+        ownerEntity = shopOwnerRepository.save(
             ShopOwnerEntity(ShopEntity(listOf(), listOf(), listOf(), listOf()))
         )
     }
