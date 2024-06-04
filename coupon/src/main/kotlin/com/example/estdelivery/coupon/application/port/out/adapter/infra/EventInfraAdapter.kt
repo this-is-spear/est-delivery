@@ -20,6 +20,5 @@ class EventInfraAdapter(
         eventClient.get()
             .uri("/events/{eventId}", eventId)
             .retrieve()
-            .body(EventState::class.java)
-            ?: throw RuntimeException("Event not found")
+            .body(EventState::class.java)!!
 }
