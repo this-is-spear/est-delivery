@@ -1,22 +1,22 @@
 package com.example.estdelivery.coupon.application.port.out.adapter.persistence
 
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberEntity
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberCouponEntity
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberCouponUseState
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.fromCoupon
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberRepository
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberCouponRepository
 import com.example.estdelivery.coupon.domain.fixture.나눠준_비율_할인_쿠폰
 import com.example.estdelivery.coupon.domain.fixture.일건창
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.data.repository.findByIdOrNull
 
 class MemberPersistenceAdapterTest : FreeSpec({
-    val memberRepository = mockk<MemberRepository>()
+    val memberCouponRepository = mockk<MemberCouponRepository>()
     lateinit var memberPersistenceAdapter: MemberPersistenceAdapter
 
     beforeTest {
-        memberPersistenceAdapter = MemberPersistenceAdapter(memberRepository)
+        memberPersistenceAdapter = MemberPersistenceAdapter(memberCouponRepository)
     }
 
     "findById" - {
@@ -26,9 +26,13 @@ class MemberPersistenceAdapterTest : FreeSpec({
             val unusedCouponEntity = fromCoupon(나눠준_비율_할인_쿠폰)
 
             // when
-            every { memberRepository.findByIdOrNull(memberId) } returns MemberEntity(
-                listOf(unusedCouponEntity),
-                memberId
+            every { memberCouponRepository.findMembersUnusedCoupon(memberId) } returns listOf(
+                MemberCouponEntity(
+                    unusedCouponEntity,
+                    memberId,
+                    MemberCouponUseState.UNUSED,
+                    1L
+                )
             )
             val unusedCouponBook = memberPersistenceAdapter.findUnusedCouponByMemberId(memberId)
 
@@ -43,8 +47,9 @@ class MemberPersistenceAdapterTest : FreeSpec({
             val member = 일건창()
             // when
             member.receiveCoupon(나눠준_비율_할인_쿠폰)
+            val unusedCouponEntity = fromCoupon(나눠준_비율_할인_쿠폰)
 
-            every { memberRepository.findByIdOrNull(member.id) } returns MemberEntity(listOf(), member.id)
+            every { memberCouponRepository.findByMemberIdAndCoupon(member.id, unusedCouponEntity) }
             memberPersistenceAdapter.updateUnusedCouponBook(member.id, member.showMyCouponBook())
         }
     }

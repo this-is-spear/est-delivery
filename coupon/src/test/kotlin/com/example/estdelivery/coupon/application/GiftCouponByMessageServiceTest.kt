@@ -5,7 +5,6 @@ import com.example.estdelivery.coupon.application.port.out.LoadMemberStatePort
 import com.example.estdelivery.coupon.application.port.out.UpdateMemberStatePort
 import com.example.estdelivery.coupon.application.port.out.ValidateGiftCouponCodeStatePort
 import com.example.estdelivery.coupon.application.utils.TransactionArea
-import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.coupon.GiftCouponCode
 import com.example.estdelivery.coupon.domain.coupon.GiftMessage
 import com.example.estdelivery.coupon.domain.fixture.선물할_쿠폰
@@ -13,7 +12,6 @@ import com.example.estdelivery.coupon.domain.fixture.일건창
 import com.example.estdelivery.coupon.domain.member.Member
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
