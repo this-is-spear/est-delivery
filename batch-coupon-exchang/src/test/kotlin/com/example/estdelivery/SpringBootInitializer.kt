@@ -10,6 +10,10 @@ import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 
+/**
+ * `SpringBoot`가 제공하는 `auto configure`를 제공받았기 때문에 `SpringBootTest`를 추가했다.
+ *  자동 설정되는 영역을 [org.springframework.test.context.junit.jupiter.SpringJUnitConfig] 애너테이션을 이용하면 구성할 수 있지만 어렵게 가지 않겠다.
+ */
 @SpringBatchTest
 @SpringBootTest
 @Testcontainers
