@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: ${PROD_DATASOURCE_DRIVER_CLASS_NAME}
+    url: ${PROD_DATASOURCE_URL}
+    username: ${PROD_DATASOURCE_USERNAME}
+    password: ${PROD_DATASOURCE_PASSWORD}
+
+batch:
+  chunk:
+    commit-size: ${PROD_BATCH_READ_SIZE}
+    process-size: ${PROD_BATCH_PROCESS_SIZE}
+    write-size: ${PROD_BATCH_WRITE_SIZE}

@@ -1,0 +1,7 @@
+spring:
+  batch:
+    job:
+      enabled: true
+      name: EXCHANGE_COUPON_JOB
+  profiles:
+    active: dev
