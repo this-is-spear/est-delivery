@@ -50,6 +50,7 @@ private fun getCouponAmount(coupon: Coupon): Int {
     return when (coupon) {
         is Coupon.RateDiscountCoupon -> coupon.discountRate
         is Coupon.FixDiscountCoupon -> coupon.discountAmount
+        else -> throw IllegalArgumentException("UsedCoupon is not supported")
     }
 }
 
@@ -65,6 +66,7 @@ private fun getCouponStateAmountType(coupon: Coupon): CouponStateAmountType {
     return when (coupon) {
         is Coupon.RateDiscountCoupon -> RATE
         is Coupon.FixDiscountCoupon -> FIX
+        else -> throw IllegalArgumentException("UsedCoupon is not supported")
     }
 }
 

@@ -1,7 +1,6 @@
 package com.example.estdelivery.coupon.application.port.out.adapter
 
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.CouponRepository
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberRepository
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.ShopOwnerRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -25,8 +24,6 @@ class EventAdapterTest(
     @Autowired
     private val memberAdapter: MemberAdapter,
     @Autowired
-    private val memberRepository: MemberRepository,
-    @Autowired
     private val eventAdapter: EventAdapter,
     @Autowired
     private val shopOwnerRepository: ShopOwnerRepository,
@@ -34,7 +31,6 @@ class EventAdapterTest(
 
     @BeforeEach
     fun setUp() {
-        memberRepository.deleteAll()
         shopOwnerRepository.deleteAll()
         couponRepository.deleteAll()
     }

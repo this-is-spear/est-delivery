@@ -5,7 +5,6 @@ import com.example.estdelivery.coupon.application.port.out.adapter.persistence.e
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.fromCoupon
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.toCoupon
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.CouponRepository
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberRepository
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.ShopOwnerRepository
 import com.example.estdelivery.coupon.domain.fixture.게시할_쿠폰
 import com.example.estdelivery.coupon.domain.fixture.나눠줄_쿠폰
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
-import org.springframework.data.repository.findByIdOrNull
 
 @SpringBootTest
 @AutoConfigureStubRunner(
@@ -31,8 +29,6 @@ class ShopOwnerAdapterTest(
     private val couponRepository: CouponRepository,
     @Autowired
     private val memberAdapter: MemberAdapter,
-    @Autowired
-    private val memberRepository: MemberRepository,
     @Autowired
     private val shopOwnerRepository: ShopOwnerRepository,
     @Autowired

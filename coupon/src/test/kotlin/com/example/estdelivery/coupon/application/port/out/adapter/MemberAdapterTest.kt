@@ -1,10 +1,11 @@
 package com.example.estdelivery.coupon.application.port.out.adapter
 
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberEntity
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberCouponEntity
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.entity.MemberCouponUseState
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.fromCoupon
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.mapper.toCoupon
 import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.CouponRepository
-import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberRepository
+import com.example.estdelivery.coupon.application.port.out.adapter.persistence.repository.MemberCouponRepository
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.coupon.CouponType
 import io.kotest.matchers.shouldBe
@@ -24,13 +25,13 @@ class MemberAdapterTest(
     @Autowired
     private val memberAdapter: MemberAdapter,
     @Autowired
-    private val memberRepository: MemberRepository,
+    private val memberCouponRepository: MemberCouponRepository,
     @Autowired
     private val couponRepository: CouponRepository,
 ) {
     @BeforeEach
     fun setUp() {
-        memberRepository.deleteAll()
+        memberCouponRepository.deleteAll()
         couponRepository.deleteAll()
     }
 
@@ -44,14 +45,15 @@ class MemberAdapterTest(
                 )
             )
         )
-        val 회원 = memberRepository.save(MemberEntity(listOf(할인_쿠폰), 1))
+        val 회원_식별자 = 1L
+        memberCouponRepository.save(MemberCouponEntity(할인_쿠폰, 회원_식별자, MemberCouponUseState.UNUSED))
 
         // when
-        val member = memberAdapter.findMember(회원.id)
+        val member = memberAdapter.findMember(회원_식별자)
 
         // then
-        member.id shouldBe 회원.id
-        member.showMyCouponBook().size shouldBe 회원.unusedCoupons.size
+        member.id shouldBe 회원_식별자
+        member.showMyCouponBook().size shouldBe 1
     }
 
     @Test
@@ -64,10 +66,11 @@ class MemberAdapterTest(
                 )
             )
         )
-        val 회원 = memberRepository.save(MemberEntity(listOf(), 1))
+
+        val 회원_식별자 = 1L
 
         // when
-        val member = memberAdapter.findMember(회원.id)
+        val member = memberAdapter.findMember(회원_식별자)
         val previousCouponSize = member.showMyCouponBook().size
         member.receiveCoupon(toCoupon(할인_쿠폰))
         memberAdapter.updateMembersCoupon(member)

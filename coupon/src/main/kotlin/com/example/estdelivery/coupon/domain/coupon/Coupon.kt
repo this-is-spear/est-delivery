@@ -4,14 +4,14 @@ sealed class Coupon(
     open val name: String,
     open val description: String,
     internal val couponType: CouponType,
-    internal val id: Long? = null,
+    internal val id: Long = 0,
 ) {
     class RateDiscountCoupon(
         val discountRate: Int,
         override val name: String,
         override val description: String,
         couponType: CouponType,
-        id: Long? = null,
+        id: Long = 0,
     ) : Coupon(name, description, couponType, id)
 
     class FixDiscountCoupon(
@@ -19,8 +19,12 @@ sealed class Coupon(
         override val name: String,
         override val description: String,
         couponType: CouponType,
-        id: Long? = null,
+        id: Long = 0,
     ) : Coupon(name, description, couponType, id)
+
+    class UsedCoupon(
+        val coupon: Coupon,
+    ) : Coupon(coupon.name, coupon.description, coupon.couponType, coupon.id)
 
     fun isPublished(): Boolean {
         return couponType == CouponType.IS_PUBLISHED
