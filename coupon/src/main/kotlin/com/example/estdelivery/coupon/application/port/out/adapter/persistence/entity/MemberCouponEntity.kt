@@ -23,7 +23,7 @@ class MemberCouponEntity(
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is MemberEntity) return false
+        if (other !is MemberCouponEntity) return false
 
         if (other.id == 0L) return false
         if (id != other.id) return false
