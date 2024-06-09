@@ -6,26 +6,26 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 
 @Entity
-@Table(name = "coupon")
-class CouponEntity(
-    var name: String,
-    var description: String,
+class MemberCouponEntity(
+    @ManyToOne
+    @JoinColumn(name = "coupon_id")
+    val coupon: CouponEntity,
+    val memberId: Long,
     @Enumerated(EnumType.STRING)
-    var amountType: CouponStateAmountType,
-    @Enumerated(EnumType.STRING)
-    var type: CouponStateType,
-    var amount: Int,
+    var status: MemberCouponUseState,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0,
+    val id: Long = 0,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is CouponEntity) return false
+        if (other !is MemberCouponEntity) return false
 
+        if (other.id == 0L) return false
         if (id != other.id) return false
 
         return true

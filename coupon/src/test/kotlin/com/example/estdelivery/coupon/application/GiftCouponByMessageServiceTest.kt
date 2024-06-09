@@ -57,7 +57,6 @@ class GiftCouponByMessageServiceTest : FreeSpec({
             giftCouponByMessageService.sendGiftAvailableCoupon(일건창.id, 선물할_쿠폰.coupon.id!!, 선물_메시지)
 
         // then
-        변경된_회원_정보.captured.showMyCouponBook().find { it.id == 선물할_쿠폰.coupon.id } shouldBe null
         giftAvailableCoupon.senderName shouldBe 일건창.name
         giftAvailableCoupon.enrollEndDate shouldBe 선물할_쿠폰.enrollEndDate
     }

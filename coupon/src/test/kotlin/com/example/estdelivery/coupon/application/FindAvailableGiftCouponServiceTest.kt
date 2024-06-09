@@ -31,6 +31,7 @@ class FindAvailableGiftCouponServiceTest : FreeSpec({
         val availableGiftCoupons = findAvailableGiftCouponService.findAvailableGiftCoupon(memberId)
 
         // then
-        availableGiftCoupons.coupons.map { it.id } shouldBe 일건창.showMyCouponBook().filter { !it.isPublished() }.map { it.id }
+        availableGiftCoupons.coupons.map { it.id } shouldBe 일건창.showMyCouponBook().filter { !it.isPublished() }
+            .map { it.id }
     }
 })

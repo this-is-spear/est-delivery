@@ -7,7 +7,7 @@ class CouponBook(
         return coupons.toList()
     }
 
-    fun deleteCoupon(coupon: Coupon) {
+    fun removeCoupon(coupon: Coupon) {
         require(coupons.contains(coupon)) { "존재하지 않는 쿠폰입니다." }
         coupons = coupons - coupon
     }
