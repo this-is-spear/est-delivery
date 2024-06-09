@@ -49,7 +49,17 @@ class MemberPersistenceAdapterTest : FreeSpec({
             member.receiveCoupon(나눠준_비율_할인_쿠폰)
             val unusedCouponEntity = fromCoupon(나눠준_비율_할인_쿠폰)
 
-            every { memberCouponRepository.findByMemberIdAndCoupon(member.id, unusedCouponEntity) }
+            every {
+                memberCouponRepository.findByMemberIdAndCoupon(
+                    member.id,
+                    unusedCouponEntity
+                )
+            } returns MemberCouponEntity(
+                unusedCouponEntity,
+                member.id,
+                MemberCouponUseState.UNUSED,
+                1L
+            )
             memberPersistenceAdapter.updateUnusedCouponBook(member.id, member.showMyCouponBook())
         }
     }

@@ -9,6 +9,7 @@ import com.example.estdelivery.coupon.application.port.out.adapter.persistence.r
 import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.coupon.CouponType
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -28,6 +29,7 @@ class MemberAdapterTest(
     @Autowired
     private val couponRepository: CouponRepository,
 ) {
+    @BeforeEach
     fun setUp() {
         memberCouponRepository.deleteAll()
         couponRepository.deleteAll()
