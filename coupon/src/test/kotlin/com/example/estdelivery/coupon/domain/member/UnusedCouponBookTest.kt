@@ -1,8 +1,10 @@
 package com.example.estdelivery.coupon.domain.member
 
+import com.example.estdelivery.coupon.domain.coupon.Coupon
 import com.example.estdelivery.coupon.domain.fixture.게시된_고정_할인_쿠폰
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
 
 class UnusedCouponBookTest : FreeSpec({
@@ -24,9 +26,10 @@ class UnusedCouponBookTest : FreeSpec({
         unusedCouponBook.addUnusedCoupon(게시된_고정_할인_쿠폰)
 
         // when
-        unusedCouponBook.removeUsedCoupon(게시된_고정_할인_쿠폰)
+        unusedCouponBook.useCoupon(게시된_고정_할인_쿠폰)
 
         // then
+        unusedCouponBook.showUnusedCoupons().filterIsInstance<Coupon.UsedCoupon>().size shouldBeExactly 1
         unusedCouponBook.showUnusedCoupons().contains(게시된_고정_할인_쿠폰) shouldBe false
     }
 
@@ -45,7 +48,7 @@ class UnusedCouponBookTest : FreeSpec({
         val unusedCouponBook = UnusedCouponBook()
 
         // then
-        shouldThrow<IllegalArgumentException> { unusedCouponBook.removeUsedCoupon(게시된_고정_할인_쿠폰) }
+        shouldThrow<IllegalArgumentException> { unusedCouponBook.useCoupon(게시된_고정_할인_쿠폰) }
             .message shouldBe "존재하지 않는 쿠폰입니다."
     }
 })

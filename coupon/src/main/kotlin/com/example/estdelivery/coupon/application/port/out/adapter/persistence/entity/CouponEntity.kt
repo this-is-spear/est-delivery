@@ -20,7 +20,7 @@ class CouponEntity(
     var amount: Int,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var id: Long = 0,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -32,6 +32,6 @@ class CouponEntity(
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
+        return id.hashCode()
     }
 }

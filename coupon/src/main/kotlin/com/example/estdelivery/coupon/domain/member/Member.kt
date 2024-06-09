@@ -8,7 +8,7 @@ class Member(
     private val unusedCouponBook: UnusedCouponBook = UnusedCouponBook(),
 ) {
     fun useCoupon(coupon: Coupon) {
-        unusedCouponBook.removeUsedCoupon(coupon)
+        unusedCouponBook.useCoupon(coupon)
     }
 
     fun showMyCouponBook(): List<Coupon> {
@@ -23,7 +23,7 @@ class Member(
         coupon: Coupon,
         target: Member,
     ) {
-        unusedCouponBook.removeUsedCoupon(coupon)
+        unusedCouponBook.useCoupon(coupon)
         target.receiveCoupon(coupon)
     }
 
