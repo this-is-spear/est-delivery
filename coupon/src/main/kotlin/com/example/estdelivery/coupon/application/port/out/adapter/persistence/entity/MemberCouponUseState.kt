@@ -3,6 +3,5 @@ package com.example.estdelivery.coupon.application.port.out.adapter.persistence.
 enum class MemberCouponUseState {
     USED,
     UNUSED,
-    EXPIRED,
     ;
 }
