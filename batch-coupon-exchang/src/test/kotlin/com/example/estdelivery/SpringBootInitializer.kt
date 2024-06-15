@@ -3,6 +3,8 @@ package com.example.estdelivery
 import org.springframework.batch.test.context.SpringBatchTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
+import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
+import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.MySQLContainer
@@ -17,6 +19,10 @@ import org.testcontainers.utility.DockerImageName
 @SpringBatchTest
 @SpringBootTest
 @Testcontainers
+@AutoConfigureStubRunner(
+    stubsMode = StubRunnerProperties.StubsMode.LOCAL,
+    ids = ["com.example.estdelivery.member:member:1.0-SNAPSHOT:8081"]
+)
 class SpringBootInitializer {
     companion object {
         @Container

@@ -1,4 +1,4 @@
-package com.example.estdelivery.entity
+package com.example.estdelivery.domain
 
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -13,9 +13,9 @@ import jakarta.persistence.Table
 @Table(name = "coupon")
 @NamedQuery(
     name = "couponFinaAll",
-    query = "SELECT c FROM CouponEntity c"
+    query = "SELECT c FROM Coupon c"
 )
-class CouponEntity(
+class Coupon(
     val name: String,
     val description: String,
     @Enumerated(EnumType.STRING)
@@ -27,18 +27,9 @@ class CouponEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 ) {
-    fun expire() = CouponEntity(
-        name = name,
-        description = description,
-        amountType = amountType,
-        type = CouponStateType.EXPIRED,
-        amount = amount,
-        id = id,
-    )
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is CouponEntity) return false
+        if (other !is Coupon) return false
 
         if (id != other.id) return false
 
@@ -47,16 +38,5 @@ class CouponEntity(
 
     override fun hashCode(): Int {
         return id.hashCode()
-    }
-
-    companion object {
-        fun rewardCoupon(name: String, description: String, amountType: CouponStateAmountType, amount: Int) =
-            CouponEntity(
-                name = name,
-                description = description,
-                amountType = amountType,
-                type = CouponStateType.REWARD,
-                amount = amount,
-            )
     }
 }

@@ -1,6 +1,6 @@
 package com.example.estdelivery
 
-import com.example.estdelivery.entity.CouponEntity
+import com.example.estdelivery.domain.Coupon
 import com.navercorp.fixturemonkey.FixtureMonkey
 import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector
 import com.navercorp.fixturemonkey.kotlin.KotlinPlugin
@@ -12,5 +12,5 @@ var SUT: FixtureMonkey = FixtureMonkey.builder()
     .plugin(KotlinPlugin())
     .build()
 
-val couponBuilder = SUT.giveMeBuilder<CouponEntity>()
-    .set(CouponEntity::id, 0)
+val couponBuilder = SUT.giveMeBuilder<Coupon>()
+    .set(Coupon::id, 0)

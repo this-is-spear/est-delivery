@@ -1,4 +1,4 @@
-package com.example.estdelivery.entity
+package com.example.estdelivery.domain
 
 enum class CouponStateAmountType {
     RATE,

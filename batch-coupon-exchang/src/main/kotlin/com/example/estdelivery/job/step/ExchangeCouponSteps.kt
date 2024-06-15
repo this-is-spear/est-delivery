@@ -1,31 +1,38 @@
 package com.example.estdelivery.job.step
 
-import com.example.estdelivery.ChunkSizeProperty
-import com.example.estdelivery.entity.CouponEntity
+import com.example.estdelivery.domain.CouponStateAmountType
+import com.example.estdelivery.job.step.service.CouponService
+import org.springframework.batch.core.StepExecutionListener
+import org.springframework.batch.core.configuration.annotation.JobScope
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
-import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.ItemWriter
-import org.springframework.batch.item.database.JpaCursorItemReader
+import org.springframework.batch.repeat.RepeatStatus.FINISHED
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
+
+private const val CREATE_COUPON_TO_BE_EXCHANGE = "CREATE_COUPON_TO_BE_EXCHANGE"
 
 @Configuration
 class ExchangeCouponSteps {
 
     @Bean
-    fun exchangeCouponStep(
+    @JobScope
+    fun createCouponToBeExchangeStep(
         jobRepository: JobRepository,
         transactionManager: PlatformTransactionManager,
-        chunkSizeProperty: ChunkSizeProperty,
-        couponReader: JpaCursorItemReader<CouponEntity>,
-        couponProcessor: ItemProcessor<CouponEntity, CouponEntity>,
-        couponWriter: ItemWriter<CouponEntity>,
-    ) = StepBuilder("EXCHANGE_COUPON_STEP", jobRepository)
-        .chunk<CouponEntity, CouponEntity>(chunkSizeProperty.commitSize, transactionManager)
-        .reader(couponReader)
-        .processor(couponProcessor)
-        .writer(couponWriter)
+        couponService: CouponService,
+        @Value("#{jobParameters['name']}") name: String,
+        @Value("#{jobParameters['description']}") description: String,
+        @Value("#{jobParameters['amountType']}") amountType: CouponStateAmountType,
+        @Value("#{jobParameters['amount']}") amount: Int,
+    ) = StepBuilder(CREATE_COUPON_TO_BE_EXCHANGE, jobRepository)
+        .tasklet({ _, chunkContext ->
+            val createdCouponId = couponService.createCouponToBeExchange(name, description, amountType, amount)
+            chunkContext.stepContext.stepExecution.executionContext.put("exchangeCouponId", createdCouponId)
+            FINISHED
+        }, transactionManager)
         .build()
 }

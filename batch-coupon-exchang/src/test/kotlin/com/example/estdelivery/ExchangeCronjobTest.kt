@@ -1,6 +1,6 @@
 package com.example.estdelivery
 
-import com.example.estdelivery.entity.CouponStateAmountType
+import com.example.estdelivery.domain.CouponStateAmountType
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManagerFactory
 import org.junit.jupiter.api.BeforeEach
@@ -41,6 +41,7 @@ class ExchangeCronjobTest(
                     "description" to JobParameter("설명", String::class.java),
                     "amountType" to JobParameter(CouponStateAmountType.FIX, CouponStateAmountType::class.java),
                     "amount" to JobParameter(1000, Int::class.java),
+                    "expiredCouponId" to JobParameter(1L, Long::class.java),
                 )
             )
         )
