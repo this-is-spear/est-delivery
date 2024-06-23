@@ -2,9 +2,7 @@ package com.example.estdelivery.job.step
 
 import com.example.estdelivery.domain.CouponStateAmountType
 import com.example.estdelivery.job.step.service.CouponService
-import org.springframework.batch.core.StepExecutionListener
 import org.springframework.batch.core.configuration.annotation.JobScope
-import org.springframework.batch.core.listener.ExecutionContextPromotionListener
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.repeat.RepeatStatus.FINISHED
@@ -28,10 +26,12 @@ class ExchangeCouponSteps {
         @Value("#{jobParameters['description']}") description: String,
         @Value("#{jobParameters['amountType']}") amountType: CouponStateAmountType,
         @Value("#{jobParameters['amount']}") amount: Int,
+        @Value("#{jobParameters['expiredCouponId']}") expiredCouponId: Long,
     ) = StepBuilder(CREATE_COUPON_TO_BE_EXCHANGE, jobRepository)
         .tasklet({ _, chunkContext ->
             val createdCouponId = couponService.createCouponToBeExchange(name, description, amountType, amount)
-            chunkContext.stepContext.stepExecution.executionContext.put("exchangeCouponId", createdCouponId)
+            val jobExecutionId = chunkContext.stepContext.stepExecution.jobExecutionId
+            couponService.createExchangeHistory(expiredCouponId, createdCouponId, jobExecutionId)
             FINISHED
         }, transactionManager)
         .build()

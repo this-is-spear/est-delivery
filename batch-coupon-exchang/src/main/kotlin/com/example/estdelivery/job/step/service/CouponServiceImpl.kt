@@ -3,12 +3,15 @@ package com.example.estdelivery.job.step.service
 import com.example.estdelivery.domain.Coupon
 import com.example.estdelivery.domain.CouponStateAmountType
 import com.example.estdelivery.domain.CouponStateType
+import com.example.estdelivery.domain.ExchangeCouponHistory
 import com.example.estdelivery.job.step.service.repository.CouponRepository
+import com.example.estdelivery.job.step.service.repository.ExchangeCouponHistoryRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CouponServiceImpl(
-    private val couponRepository: CouponRepository
+    private val couponRepository: CouponRepository,
+    private val exchangeCouponHistoryRepository: ExchangeCouponHistoryRepository
 ) : CouponService {
     override fun createCouponToBeExchange(
         name: String,
@@ -32,5 +35,15 @@ class CouponServiceImpl(
 
         check(id != 0L) { "Coupon creation failed" }
         return id
+    }
+
+    override fun createExchangeHistory(expiredCouponId: Long, createdCouponId: Long, jobExecutionId: Long) {
+        exchangeCouponHistoryRepository.save(
+            ExchangeCouponHistory(
+                expiredCouponId = expiredCouponId,
+                jobExecutionId = jobExecutionId,
+                rewardCouponId = createdCouponId,
+            )
+        )
     }
 }
