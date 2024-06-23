@@ -22,7 +22,7 @@ class RunnerConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "spring.batch.job", name = ["enabled"], havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "spring.batch.job", name = ["enabled"])
     fun jobLauncherApplicationRunner(
         jobLauncher: JobLauncher,
         jobExplorer: JobExplorer,
