@@ -28,7 +28,7 @@ class SpringBootInitializer {
         @Container
         @ServiceConnection
         val batchMariaDBContainer: MySQLContainer<*> = MySQLContainer(DockerImageName.parse("mysql:latest"))
-            .withDatabaseName("coupon")
+            .withDatabaseName("batch")
             .withUsername("root")
             .withPassword("")
             .withInitScript("schema-mysql.sql")

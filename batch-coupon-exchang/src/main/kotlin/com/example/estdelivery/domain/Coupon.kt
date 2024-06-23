@@ -10,11 +10,11 @@ import jakarta.persistence.NamedQuery
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "coupon")
 @NamedQuery(
     name = "couponFinaAll",
     query = "SELECT c FROM Coupon c"
 )
+@Table(name = "coupon", catalog = "coupon")
 class Coupon(
     val name: String,
     val description: String,

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.NamedQuery
+import jakarta.persistence.Table
 
 @Entity
 @NamedQuery(
@@ -19,6 +20,7 @@ import jakarta.persistence.NamedQuery
         AND c.couponId = :couponId
         """
 )
+@Table(name = "member_coupon", catalog = "coupon")
 class MemberCoupon(
     val couponId: Long,
     val memberId: Long,
