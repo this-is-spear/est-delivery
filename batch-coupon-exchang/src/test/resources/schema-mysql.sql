@@ -120,12 +120,6 @@ create table coupon.exchange_coupon_history
     job_execution_id  bigint null
 );
 
-create table exchange_user_history
-(
-    id bigint auto_increment
-        primary key
-);
-
 create table member_coupon
 (
     coupon_id bigint                  not null,
