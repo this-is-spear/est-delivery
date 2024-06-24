@@ -1,3 +1,12 @@
 spring:
-  profiles:
-    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:55003/batch?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+batch:
+  chunk:
+    commit-size: 100
+    process-size: 100
+    write-size: 100

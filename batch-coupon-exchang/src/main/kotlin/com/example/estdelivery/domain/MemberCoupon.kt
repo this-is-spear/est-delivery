@@ -10,14 +10,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.NamedQuery
 import jakarta.persistence.Table
 
+const val UNUSED_MEMBER_COUPON_FIND_ALL = "unusedMemberCouponFinaAll"
+
 @Entity
 @NamedQuery(
-    name = "unusedMemberCouponFinaAll",
+    name = UNUSED_MEMBER_COUPON_FIND_ALL,
     query = """
         SELECT c 
         FROM MemberCoupon c 
-        WHERE c.status = com.example.estdelivery.domain.MemberCouponUseState.UNUSED
-        AND c.couponId = :couponId
+        WHERE c.couponId = :couponId
         """
 )
 @Table(name = "member_coupon", catalog = "coupon")

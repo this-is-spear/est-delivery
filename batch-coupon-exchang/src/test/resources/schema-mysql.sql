@@ -111,12 +111,13 @@ create table coupon
     type        enum ('PUBLISHED', 'HANDOUT', 'EVENT', 'EXPIRED', 'REWARD') null
 );
 
-create table exchange_coupon_history
+create table coupon.exchange_coupon_history
 (
     expired_coupon_id bigint not null,
     id                bigint auto_increment
         primary key,
-    reward_coupon_id  bigint not null
+    reward_coupon_id  bigint not null,
+    job_execution_id  bigint null
 );
 
 create table exchange_user_history
