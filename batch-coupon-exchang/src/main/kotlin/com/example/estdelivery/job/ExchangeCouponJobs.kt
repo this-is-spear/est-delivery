@@ -22,8 +22,10 @@ class ExchangeCouponJobs {
         jobRepository: JobRepository,
         createCouponToBeExchangeStep: Step,
         exchangeCouponStep: Step,
+        alimTalkStep: Step,
     ) = JobBuilder(EXCHANGE_COUPON_JOB, jobRepository)
         .start(createCouponToBeExchangeStep)
         .next(exchangeCouponStep)
+        .next(alimTalkStep)
         .build()
 }

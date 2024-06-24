@@ -19,6 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager
 
 private const val CREATE_COUPON_TO_BE_EXCHANGE = "CREATE_COUPON_TO_BE_EXCHANGE"
 private const val EXCHANGE_COUPON = "EXCHANGE_COUPON"
+private const val EXCHANGE_COUPON_ALIM_TALK = "EXCHANGE_COUPON_ALIM_TALK"
 
 @Configuration
 class ExchangeCouponSteps {
@@ -58,5 +59,13 @@ class ExchangeCouponSteps {
             exchangedCouponIdStorage.couponId = createdCouponId
             FINISHED
         }, transactionManager)
+        .build()
+
+    @Bean
+    fun alimTalkStep(
+        jobRepository: JobRepository,
+        transactionManager: PlatformTransactionManager,
+    ) = StepBuilder(EXCHANGE_COUPON_ALIM_TALK, jobRepository)
+        .tasklet({ _, _ -> FINISHED }, transactionManager)
         .build()
 }
