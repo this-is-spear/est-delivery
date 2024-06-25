@@ -5,3 +5,6 @@ spring:
       name: EXCHANGE_COUPON_JOB
   profiles:
     active: dev
+
+batch:
+  expire-coupon-id: ${EXPIRE_COUPON_ID:0}
