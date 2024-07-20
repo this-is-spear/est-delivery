@@ -6,4 +6,6 @@ data class UserName(
     init {
         require(name.isNotBlank()) { "이름은 비어있을 수 없습니다." }
     }
+
+    override fun toString() = name
 }
