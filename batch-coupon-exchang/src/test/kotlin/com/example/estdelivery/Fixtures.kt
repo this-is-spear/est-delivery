@@ -2,13 +2,15 @@ package com.example.estdelivery
 
 import com.example.estdelivery.domain.Coupon
 import com.example.estdelivery.domain.MemberCoupon
-import com.example.estdelivery.domain.MemberCouponUseState
 import com.navercorp.fixturemonkey.FixtureMonkey
+import com.navercorp.fixturemonkey.api.arbitrary.CombinableArbitrary
 import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector
+import com.navercorp.fixturemonkey.customizer.Values
 import com.navercorp.fixturemonkey.kotlin.KotlinPlugin
 import com.navercorp.fixturemonkey.kotlin.giveMeBuilder
 import com.navercorp.fixturemonkey.kotlin.set
 import net.jqwik.api.Arbitraries
+
 
 var SUT: FixtureMonkey = FixtureMonkey.builder()
     .objectIntrospector(ConstructorPropertiesArbitraryIntrospector.INSTANCE)
@@ -22,3 +24,7 @@ val couponBuilder = SUT.giveMeBuilder<Coupon>()
 val couponMemberBuilder = SUT.giveMeBuilder<MemberCoupon>()
     .set(MemberCoupon::id, 0)
     .set(MemberCoupon::couponId, Arbitraries.longs().between(1, 100))
+    .set(
+        MemberCoupon::memberId,
+        Values.just(CombinableArbitrary.from { Arbitraries.longs().greaterOrEqual(1).sample() }.unique())
+    )
