@@ -17,7 +17,9 @@ import org.testcontainers.utility.DockerImageName
  */
 @SpringBatchTest
 @SpringBootTest
-@Testcontainers
+@Testcontainers(
+    disabledWithoutDocker = true
+)
 @ActiveProfiles("test")
 class SpringBootInitializer {
     companion object {
