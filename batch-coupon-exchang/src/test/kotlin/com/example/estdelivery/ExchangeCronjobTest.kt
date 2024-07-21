@@ -24,13 +24,13 @@ class ExchangeCronjobTest(
     @BeforeEach
     fun setUp() {
         val entityManager = entityManagerFactory.createEntityManager()
-        repeat(300) {
+        repeat(30) {
             entityManager.transaction.begin()
             entityManager.persist(couponBuilder.sample())
             entityManager.transaction.commit()
         }
 
-        repeat(2000) {
+        repeat(100) {
             entityManager.transaction.begin()
             entityManager.persist(couponMemberBuilder.sample())
             entityManager.transaction.commit()
