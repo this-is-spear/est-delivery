@@ -18,7 +18,7 @@ class ExchangeCouponProcessors {
             if (memberCoupon.status != MemberCouponUseState.UNUSED) {
                 return@ItemProcessor null
             }
-            memberCoupon.exchange(exchangedCouponIdStorage.couponId)
+            memberCoupon.exchange(exchangedCouponIdStorage.couponIdAfterExchange)
         }
     }
 }

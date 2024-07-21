@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 @Component
 class ExchangedCouponIdStorage {
     @Value("\${batch.expire-coupon-id}")
-    var couponId: Long = 0
+    var couponIdAfterExchange: Long = 0
         get() {
             require(field != 0L) { "CouponId is not set" }
             return field
