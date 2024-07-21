@@ -6,6 +6,7 @@ import com.example.estdelivery.domain.CouponStateType
 import com.example.estdelivery.domain.ExchangeCouponHistory
 import com.example.estdelivery.job.step.service.repository.CouponRepository
 import com.example.estdelivery.job.step.service.repository.ExchangeCouponHistoryRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -46,4 +47,7 @@ class CouponServiceImpl(
             )
         )
     }
+
+    override fun findCouponById(couponId: Long) =
+        couponRepository.findByIdOrNull(couponId) ?: throw IllegalArgumentException("Coupon not found")
 }

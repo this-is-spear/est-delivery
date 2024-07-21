@@ -1,5 +1,6 @@
 package com.example.estdelivery.job.step.service
 
+import com.example.estdelivery.domain.Coupon
 import com.example.estdelivery.domain.CouponStateAmountType
 
 interface CouponService {
@@ -11,4 +12,6 @@ interface CouponService {
     ): Long
 
     fun createExchangeHistory(expiredCouponId: Long, createdCouponId: Long, jobExecutionId: Long)
+
+    fun findCouponById(couponId: Long): Coupon
 }
