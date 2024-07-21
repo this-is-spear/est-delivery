@@ -3,6 +3,7 @@ package com.example.estdelivery
 import org.springframework.batch.test.context.SpringBatchTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.MySQLContainer
@@ -17,6 +18,7 @@ import org.testcontainers.utility.DockerImageName
 @SpringBatchTest
 @SpringBootTest
 @Testcontainers
+@ActiveProfiles("test")
 class SpringBootInitializer {
     companion object {
         @Container
