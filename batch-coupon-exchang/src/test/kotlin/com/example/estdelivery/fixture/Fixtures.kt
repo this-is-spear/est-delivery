@@ -1,4 +1,4 @@
-package com.example.estdelivery
+package com.example.estdelivery.fixture
 
 import com.example.estdelivery.domain.Coupon
 import com.example.estdelivery.domain.MemberCoupon

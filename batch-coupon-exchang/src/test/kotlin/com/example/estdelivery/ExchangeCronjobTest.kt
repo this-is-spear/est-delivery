@@ -1,6 +1,8 @@
 package com.example.estdelivery
 
 import com.example.estdelivery.domain.CouponStateAmountType
+import com.example.estdelivery.fixture.couponBuilder
+import com.example.estdelivery.fixture.couponMemberBuilder
 import io.kotest.matchers.shouldBe
 import jakarta.persistence.EntityManagerFactory
 import org.junit.jupiter.api.BeforeEach
