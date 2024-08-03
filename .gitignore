@@ -148,4 +148,7 @@ gradle-app.setting
 
 **/.jqwik-database
 
+### env file ###
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/gradle,intellij+all,kotlin
