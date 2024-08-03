@@ -33,7 +33,6 @@ subprojects {
     }
 
     group = "com.example.estdelivery"
-    version = "1.0-SNAPSHOT"
 
     kotlin {
         jvmToolchain(17)
@@ -81,31 +80,5 @@ subprojects {
         annotation("jakarta.persistence.Entity")
         annotation("jakarta.persistence.Embeddable")
         annotation("jakarta.persistence.MappedSuperclass")
-    }
-
-    val dockerUsername = System.getProperty("DOCKER_USERNAME")
-    val dockerPassword = System.getProperty("DOCKER_PASSWORD")
-
-    jib {
-        from {
-            image = "openjdk:17.0.2-slim"
-            platforms {
-                platform {
-                    architecture = "arm64"
-                    os = "linux"
-                }
-            }
-        }
-        to {
-            image = "geonc123/tis-${project.name}"
-            auth {
-                username = dockerUsername
-                password = dockerPassword
-            }
-            tags = setOf("latest", project.version.toString().lowercase())
-        }
-        container {
-            jvmFlags = listOf("-Xms256m", "-Xmx512m")
-        }
     }
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.example.estdelivery.shop"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 tasks.withType<Jar> {
     enabled = true
@@ -37,5 +37,31 @@ publishing {
 tasks.withType<Delete> {
     doFirst {
         delete("~/.m2/repository/com/example/estdelivery/shop")
+    }
+}
+
+val dockerUsername: String = System.getProperty("DOCKER_USERNAME")
+val dockerPassword: String = System.getProperty("DOCKER_PASSWORD")
+
+jib {
+    from {
+        image = "openjdk:17.0.2-slim"
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+        }
+    }
+    to {
+        image = "geonc123/tis-${project.name}"
+        auth {
+            username = dockerUsername
+            password = dockerPassword
+        }
+        tags = setOf("latest", project.version.toString().lowercase())
+    }
+    container {
+        jvmFlags = listOf("-Xms256m", "-Xmx512m")
     }
 }
