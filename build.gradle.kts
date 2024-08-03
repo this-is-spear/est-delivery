@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
+    id("com.google.cloud.tools.jib") version "3.4.3"
 }
 
 allprojects {
@@ -28,6 +29,7 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.allopen")
         plugin("com.google.osdetector")
         plugin("maven-publish")
+        plugin("com.google.cloud.tools.jib")
     }
 
     group = "com.example.estdelivery"
@@ -79,5 +81,31 @@ subprojects {
         annotation("jakarta.persistence.Entity")
         annotation("jakarta.persistence.Embeddable")
         annotation("jakarta.persistence.MappedSuperclass")
+    }
+
+    val dockerUsername = System.getProperty("DOCKER_USERNAME")
+    val dockerPassword = System.getProperty("DOCKER_PASSWORD")
+
+    jib {
+        from {
+            image = "openjdk:17.0.2-slim"
+            platforms {
+                platform {
+                    architecture = "arm64"
+                    os = "linux"
+                }
+            }
+        }
+        to {
+            image = "geonc123/${project.name}-${project.version.toString().lowercase()}"
+            auth {
+                username = dockerUsername
+                password = dockerPassword
+            }
+            tags = setOf("latest", "1.0.0")
+        }
+        container {
+            jvmFlags = listOf("-Xms256m", "-Xmx512m")
+        }
     }
 }
