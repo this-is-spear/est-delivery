@@ -97,12 +97,12 @@ subprojects {
             }
         }
         to {
-            image = "geonc123/${project.name}-${project.version.toString().lowercase()}"
+            image = "geonc123/tis-${project.name}"
             auth {
                 username = dockerUsername
                 password = dockerPassword
             }
-            tags = setOf("latest", "1.0.0")
+            tags = setOf("latest", project.version.toString().lowercase())
         }
         container {
             jvmFlags = listOf("-Xms256m", "-Xmx512m")
