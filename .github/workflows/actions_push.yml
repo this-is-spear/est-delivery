@@ -1,0 +1,54 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push_public_doker_registry:
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🛠 Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: ☑️ Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
+      - name: ✅ Coupon container with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: :coupon:jib -DDOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} -DDOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+
+      - name: ✅ Shop container with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: :shop:jib -DDOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} -DDOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+
+      - name: ✅ Event container with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: :event:jib -DDOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} -DDOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+
+      - name: ✅ Member container with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: :member:jib -DDOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} -DDOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
