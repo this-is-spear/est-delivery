@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tis-shop
+  labels:
+    app: tis-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tis-shop
+  template:
+    metadata:
+      name: tis-shop
+      labels:
+        app: tis-shop
+    spec:
+      containers:
+        - name: tis-shop
+          image: geonc123/tis-shop:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tis-shop
+  labels:
+    app: tis-shop
+spec:
+    selector:
+        app: tis-shop
+    type: NodePort
+    ports:
+        - protocol: TCP
+          port: 8082 # 다른 파드가 서비스에 접근하기 위해 사용하는 포트
+          targetPort: 8082 # 대상 파스에 트래픽을 전달하는 포트
