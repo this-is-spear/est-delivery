@@ -50,4 +50,4 @@ metadata:
   name: mysql-secret
 type: Opaque
 data:
-  root-password: cGFzc3dvcmQ=
+  root-password: cGFzc3dvcmQ= # password
