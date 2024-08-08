@@ -40,8 +40,8 @@ tasks.withType<Delete> {
     }
 }
 
-val dockerUsername: String = System.getProperty("DOCKER_USERNAME")
-val dockerPassword: String = System.getProperty("DOCKER_PASSWORD")
+val dockerUsername: String? = System.getProperty("DOCKER_USERNAME")
+val dockerPassword: String? = System.getProperty("DOCKER_PASSWORD")
 
 jib {
     from {

@@ -11,8 +11,8 @@ dependencies {
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
 }
 
-val dockerUsername: String = System.getProperty("DOCKER_USERNAME")
-val dockerPassword: String = System.getProperty("DOCKER_PASSWORD")
+val dockerUsername: String? = System.getProperty("DOCKER_USERNAME")
+val dockerPassword: String? = System.getProperty("DOCKER_PASSWORD")
 
 jib {
     from {
