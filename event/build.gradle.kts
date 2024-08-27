@@ -12,6 +12,7 @@ tasks.withType<Jar> {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
 }

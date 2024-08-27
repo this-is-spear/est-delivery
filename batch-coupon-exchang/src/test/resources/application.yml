@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:55001/batch?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+batch:
+  chunk:
+    commit-size: 10
+    process-size: 10
+    write-size: 10
+  expire-coupon-id: ${EXPIRE_COUPON_ID:0}

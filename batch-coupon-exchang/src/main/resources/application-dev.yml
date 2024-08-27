@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:l
+    username: sa
+    password:
+
+batch:
+  chunk:
+    commit-size: 100
+    process-size: 100
+    write-size: 100
